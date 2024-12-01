@@ -1,0 +1,29 @@
+{
+  "name": "wordsmith",
+  "private": true,
+  "scripts": {
+    "changeset": "changeset",
+    "publish:packages": "changeset publish",
+    "version:packages": "turbo build && changeset version",
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "format": "turbo format --continue --",
+    "format:fix": "turbo format --continue -- --write",
+    "lint": "turbo lint --continue --",
+    "lint:fix": "turbo lint --continue -- --apply",
+    "clean": "turbo clean"
+  },
+  "dependencies": {
+    "@changesets/changelog-github": "^0.5.0",
+    "@changesets/cli": "^2.27.1",
+    "turbo": "2.3.3"
+  },
+  "engines": {
+    "node": "20.17.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.7.2",
+    "postcss": "^8.4.27"
+  },
+  "packageManager": "pnpm@9.12.3"
+}
