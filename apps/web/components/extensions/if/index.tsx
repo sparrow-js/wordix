@@ -19,8 +19,6 @@ const DetailsContentComponent = observer((props: NodeViewProps) => {
       return;
     }
 
-    console.log("currentIfElse", currentIfElse);
-
     currentIfElse.addItem({
       id: props.node.attrs.id,
       type: props.node.attrs.type,

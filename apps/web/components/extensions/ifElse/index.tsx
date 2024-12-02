@@ -251,8 +251,6 @@ export const IfElse = Node.create({
             insertPos = ifElsePos + 1 + lastIfNode.offset + lastIfNode.node.nodeSize;
           }
 
-          console.log("Insert position:", insertPos);
-
           return chain()
             .insertContentAt(insertPos, {
               type: "if",

@@ -149,7 +149,6 @@ export const Comment = Node.create({
               const { state } = editor;
               const { selection, tr } = state;
               const { $from } = selection;
-              // console.log($from.node(0));
               const newParagraph = state.schema.nodes.paragraph.create();
 
               tr.insert($from.end(-1) - 1, newParagraph);

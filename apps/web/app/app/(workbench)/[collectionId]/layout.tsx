@@ -1,8 +1,9 @@
-'use client'
+"use client";
 
-import { type ReactNode, Suspense } from "react";
-import { VerticalTabBar } from "@/components/layouts/vertical-tab-bar";
 import TopBar from "@/components/layouts/top-bar";
+import { VerticalTabBar } from "@/components/layouts/vertical-tab-bar";
+import type { ReactNode } from "react";
+import { Toaster } from "sonner";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
@@ -10,10 +11,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       <TopBar />
       <div className="flex h-[calc(100svh-60px)]">
         <VerticalTabBar />
-        <div className="w-full">
-          {children}
-        </div>
+        <div className="w-full">{children}</div>
       </div>
+      <Toaster />
     </div>
   );
 }

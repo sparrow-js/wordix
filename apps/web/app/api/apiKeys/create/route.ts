@@ -1,7 +1,7 @@
 import prisma from "@/backend/prisma";
 import { auth } from "@/lib/auth";
-import { respData } from "@/lib/resp";
-import { nanoid } from "nanoid";
+import { respData, respErr } from "@/lib/resp";
+import { generateId } from "@/lib/utils";
 export async function POST(request: Request) {
   const body = await request.json();
   const { name } = body;
@@ -9,10 +9,10 @@ export async function POST(request: Request) {
   const session = await auth();
 
   if (!session?.user) {
-    return new Response("Unauthorized", { status: 401 });
+    return respErr("Unauthorized");
   }
 
-  const hash = nanoid(16);
+  const hash = `wx-${generateId(24)}`;
 
   const apiKey = await prisma.apiKey.create({
     data: {

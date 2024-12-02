@@ -53,6 +53,12 @@ export default class Document extends ParanoidModel {
   @observable
   workspaceId?: string;
 
+  @observable
+  description?: string;
+
+  @observable
+  bannerImage?: string;
+
   declare store: DocumentsStore;
 
   constructor(fields: Record<string, any>, store: DocumentsStore) {
@@ -65,8 +71,6 @@ export default class Document extends ParanoidModel {
   save = async (fields?: Properties<typeof this>, options?: SaveOptions): Promise<Document> => {
     const params = fields ?? this.toAPI();
     this.isSaving = true;
-
-    console.log("params", params);
 
     try {
       const model = await this.store.save({ ...params, ...fields, id: this.id }, options);

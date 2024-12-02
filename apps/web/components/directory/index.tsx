@@ -211,7 +211,6 @@ function Directory() {
                       indent={INDENT_STEP}
                       overscanCount={8}
                       onSelect={(selected) => {
-                        console.log("selected", selected);
                         const node = selected[0];
                         if (!node || Array.isArray(node.children)) return;
                         router.push(`/app/${collectionId}/docs/${node.id}`);
@@ -438,12 +437,9 @@ function Input({ node, updateFolderName }) {
         onFocus={(e) => e.currentTarget.select()}
         // onBlur={() => node.reset()}
         onChange={(e) => {
-          console.log("e", e.target.value);
           setValue(e.target.value);
         }}
         onKeyDown={(e) => {
-          console.log("e", e.currentTarget.value);
-
           if (e.key === "Escape") node.reset();
           if (e.key === "Enter") {
             node.submit(value);

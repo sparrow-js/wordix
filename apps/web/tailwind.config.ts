@@ -11,6 +11,9 @@ const config = {
   ],
   prefix: "",
   theme: {
+    fontFamily: {
+      'fascinate-inline': ['Fascinate Inline', 'sans-serif'],
+    },
     container: {
       center: true,
       padding: "2rem",

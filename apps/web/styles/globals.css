@@ -93,11 +93,15 @@
   body {
     @apply bg-background text-foreground;
   }
+  @font-face {
+    font-family: 'Fascinate Inline';
+    src: url('/FascinateInline-Regular.ttf');
+  }
 }
 
 
 pre {
-  background: #0d0d0d;
+  /* background: #0d0d0d; */
   border-radius: 0.5rem;
   color: #fff;
   font-family: "JetBrainsMono", monospace;
@@ -162,3 +166,5 @@ pre {
     font-weight: 700;
   }
 }
+
+

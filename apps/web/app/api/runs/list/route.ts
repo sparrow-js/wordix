@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   const body = await request.json();
 
-  const { collectionId, limit = 25, offset = 0 } = body;
+  const { collectionId, documentId, limit = 25, offset = 0 } = body;
 
   try {
     const session = await auth();
@@ -14,11 +14,19 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // Build where clause based on provided parameters
+    const whereClause = documentId
+      ? {
+          collectionId: collectionId,
+          documentId: documentId,
+        }
+      : {
+          collectionId: collectionId,
+        };
+
     // Get runs for user with pagination
     const runs = await prisma.run.findMany({
-      where: {
-        collectionId: collectionId,
-      },
+      where: whereClause,
       orderBy: {
         createdAt: "desc",
       },
@@ -35,9 +43,7 @@ export async function POST(request: Request) {
 
     // Add total count
     const total = await prisma.run.count({
-      where: {
-        collectionId: collectionId,
-      },
+      where: whereClause,
     });
 
     return respData(runs, {

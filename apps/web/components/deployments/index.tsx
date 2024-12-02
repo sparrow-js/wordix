@@ -90,34 +90,47 @@ export default function Page() {
                               </TableRow>
                             </TableHeader>
                             <TableBody>
-                              {documents.publishedList.map((document) => (
-                                <TableRow
-                                  className="cursor-pointer"
-                                  key={document.id}
-                                  onClick={() => {
-                                    router.push(`/${document.collectionId}/deployments/${document.id}/overview`);
-                                  }}
-                                >
-                                  <TableCell>
-                                    <div className="flex items-center justify-center overflow-hidden rounded-md h-6 w-6">
-                                      {/* ... existing image code ... */}
-                                    </div>
-                                  </TableCell>
-                                  <TableCell className="pl-2">{document.title}</TableCell>
-                                  <TableCell>{document.collection?.name}</TableCell>
-                                  <TableCell>0</TableCell>
-                                  <TableCell>
-                                    <div className="inline-flex items-center rounded-full border px-2.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 w-fit py-0">
-                                      {document.version}
-                                    </div>
-                                  </TableCell>
-                                  <TableCell>
-                                    <div className="border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent flex w-fit items-center gap-1 rounded-sm bg-green-50 text-green-700 hover:bg-green-50">
-                                      {document.visibility}
+                              {documents.publishedList.length === 0 ? (
+                                <TableRow>
+                                  <TableCell colSpan={6} className="h-32 text-center">
+                                    <div className="flex flex-col items-center justify-center gap-2">
+                                      <p className="text-sm text-muted-foreground">No deployments found</p>
+                                      <p className="text-xs text-muted-foreground">
+                                        Create a deployment to get started
+                                      </p>
                                     </div>
                                   </TableCell>
                                 </TableRow>
-                              ))}
+                              ) : (
+                                documents.publishedList.map((document) => (
+                                  <TableRow
+                                    className="cursor-pointer"
+                                    key={document.id}
+                                    onClick={() => {
+                                      router.push(`/${document.collectionId}/deployments/${document.id}/overview`);
+                                    }}
+                                  >
+                                    <TableCell>
+                                      <div className="flex items-center justify-center overflow-hidden rounded-md h-6 w-6">
+                                        {/* ... existing image code ... */}
+                                      </div>
+                                    </TableCell>
+                                    <TableCell className="pl-2">{document.title}</TableCell>
+                                    <TableCell>{document.collection?.name}</TableCell>
+                                    <TableCell>0</TableCell>
+                                    <TableCell>
+                                      <div className="inline-flex items-center rounded-full border px-2.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 w-fit py-0">
+                                        {document.version}
+                                      </div>
+                                    </TableCell>
+                                    <TableCell>
+                                      <div className="border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent flex w-fit items-center gap-1 rounded-sm bg-green-50 text-green-700 hover:bg-green-50">
+                                        {document.visibility}
+                                      </div>
+                                    </TableCell>
+                                  </TableRow>
+                                ))
+                              )}
                             </TableBody>
                           </Table>
                         </div>

@@ -44,6 +44,7 @@ model User {
   runs                 Run[]
   workspaces           MemberInWorkspace[]
   collaboratorsOnCollections CollaboratorsOnCollections[]
+  revisions            Revision[]
 }
 
 model Account {
@@ -141,6 +142,7 @@ model Document {
   color            String?
   text             String?
   content          Json?
+  bannerImage      String?
   publishedContent Json?
   state            Bytes?
   isWelcome        Boolean           @default(false)
@@ -170,6 +172,7 @@ model Document {
   userMemberships  UserMembership[]
   runs             Run[]
   workspace        Workspace?        @relation(fields: [workspaceId], references: [id])
+  revisions        Revision[]
   
   @@index([workspaceId])
   @@index([collectionId])
@@ -446,4 +449,26 @@ model CollaboratorsOnCollections {
   user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, collectionId])
+}
+
+
+model Revision {
+  id            String    @id @default(uuid())
+  version       Int?      @db.SmallInt
+  editorVersion String    @db.VarChar(255)
+  title         String    @db.VarChar(255)
+  text          String    @db.Text
+  content       Json?
+  icon          String?   @db.VarChar(50)
+  color         String?   @db.VarChar(7)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  documentId    String
+  userId        String
+  document      Document  @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([documentId])
+  @@index([userId])
+  @@index([createdAt])
 }

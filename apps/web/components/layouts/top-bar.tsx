@@ -43,7 +43,7 @@ const TopBar = observer(() => {
         <a href="/app">
           <img
             alt="Logo"
-            className="block dark:hidden w-[36px] h-[36px]"
+            className="block dark:hidden w-[64px] h-[48px]"
             style={{ color: "transparent" }}
             src="/logo.svg"
           />

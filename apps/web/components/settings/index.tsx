@@ -34,7 +34,6 @@ const Settings: React.FC<InputSettingProps> = ({ editor }) => {
   const [Comp, setComp] = useState<any>(null);
 
   useEffect(() => {
-    console.log(MapComp[setting.settingComponentName], setting.settingComponentName);
     setComp(MapComp[setting.settingComponentName] || MapComp.inputSetting);
   }, [setting.settingComponentName]);
 

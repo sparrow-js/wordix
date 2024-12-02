@@ -108,46 +108,56 @@ export default observer(function RunsPage() {
                                   </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                  {publishedRuns.map((run) => (
-                                    <TableRow
-                                      key={run.id}
-                                      className={cn(
-                                        "cursor-pointer font-semibold",
-                                        selectedRunId === run.id && "bg-muted/80",
-                                      )}
-                                      onClick={() => {
-                                        setSelectedRunId(run.id);
-                                        workbench.setShowRunDetails();
-                                        console.log(run);
-                                        execute.setInjectChatList([
-                                          {
-                                            id: uuidv4(),
-                                            content: run.metadata.markdownOutput,
-                                            isAnswer: true,
-                                          },
-                                        ]);
-                                      }}
-                                    >
-                                      <TableCell className="w-12 p-4">
-                                        <div className="flex items-center justify-center overflow-hidden rounded-md h-8 w-8" />
+                                  {publishedRuns.length === 0 ? (
+                                    <TableRow>
+                                      <TableCell colSpan={6} className="h-24 text-center">
+                                        <div className="flex flex-col items-center justify-center gap-2 text-sm text-muted-foreground">
+                                          <p>No runs found</p>
+                                          <p>When you execute flows, they will appear here</p>
+                                        </div>
                                       </TableCell>
-                                      <TableCell>
-                                        <span className="max-w-28">{run.document?.title}</span>
-                                      </TableCell>
-                                      <TableCell>
-                                        <span className="cursor-default">{formatDistanceToNow(run.updatedAt)}</span>
-                                      </TableCell>
-                                      <TableCell>
-                                        <span className="ml-2 flex min-w-10 cursor-pointer items-center">
-                                          <CheckCircle className="mr-2 h-4 w-4 text-muted-foreground/50" />
-                                        </span>
-                                      </TableCell>
-                                      <TableCell>
-                                        <span className="w-[500px]">-s</span>
-                                      </TableCell>
-                                      <TableCell className="w-12 p-4">{/* ... existing button code ... */}</TableCell>
                                     </TableRow>
-                                  ))}
+                                  ) : (
+                                    publishedRuns.map((run) => (
+                                      <TableRow
+                                        key={run.id}
+                                        className={cn(
+                                          "cursor-pointer font-semibold",
+                                          selectedRunId === run.id && "bg-muted/80",
+                                        )}
+                                        onClick={() => {
+                                          setSelectedRunId(run.id);
+                                          workbench.setShowRunDetails();
+                                          execute.setInjectChatList([
+                                            {
+                                              id: uuidv4(),
+                                              content: run.metadata.markdownOutput,
+                                              isAnswer: true,
+                                            },
+                                          ]);
+                                        }}
+                                      >
+                                        <TableCell className="w-12 p-4">
+                                          <div className="flex items-center justify-center overflow-hidden rounded-md h-8 w-8" />
+                                        </TableCell>
+                                        <TableCell>
+                                          <span className="max-w-28">{run.document?.title}</span>
+                                        </TableCell>
+                                        <TableCell>
+                                          <span className="cursor-default">{formatDistanceToNow(run.updatedAt)}</span>
+                                        </TableCell>
+                                        <TableCell>
+                                          <span className="ml-2 flex min-w-10 cursor-pointer items-center">
+                                            <CheckCircle className="mr-2 h-4 w-4 text-muted-foreground/50" />
+                                          </span>
+                                        </TableCell>
+                                        <TableCell>
+                                          <span className="w-[500px]">-s</span>
+                                        </TableCell>
+                                        <TableCell className="w-12 p-4">{/* ... existing button code ... */}</TableCell>
+                                      </TableRow>
+                                    ))
+                                  )}
                                 </TableBody>
                               </Table>
                             </div>

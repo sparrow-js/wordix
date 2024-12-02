@@ -1,276 +1,93 @@
-export default function RunsPage() {
-    return (
+"use client";
+
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import useStores from "@/hooks/useStores";
+import { PAGINATION_SYMBOL } from "@/stores/base/const";
+import { formatDistanceToNow } from "date-fns";
+import { observer } from "mobx-react";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
+
+export default observer(function RunsPage() {
+  const { collectionId, documentId } = useParams<{ collectionId: string; documentId: string }>();
+  const [ref, inView] = useInView();
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(0);
+  const { runs } = useStores();
+  const publishedRuns = runs.publishedInCollection(collectionId);
+
+  const fetchRuns = async (page: number) => {
+    setIsLoading(true);
+    const res = await runs.fetchPage({
+      limit: 25,
+      page: page,
+      collectionId: collectionId as string,
+      documentId: documentId as string,
+      visibility: "published",
+      sort: "updatedAt",
+    });
+    if (res[PAGINATION_SYMBOL].total <= runs.publishedList.length) {
+      setHasMore(false);
+    } else {
+      setPage(page + 1);
+    }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    if (inView && !isLoading && hasMore) {
+      fetchRuns(page);
+    }
+  }, [inView]);
+
+  return (
     <div className="w-full rounded-lg border border-border bg-background">
-        <div className="relative w-full overflow-auto">
-          <table
-            className="w-full caption-bottom text-sm"
-            data-sentry-element="Table"
-            data-sentry-component="RunsTable"
-            data-sentry-source-file="RunsTable.tsx"
-          >
-            <thead
-              className="[&_tr]:border-b"
-              data-sentry-element="TableHeader"
-              data-sentry-source-file="RunsTable.tsx"
-            >
-              <tr
-                className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
-                data-sentry-element="TableRow"
-                data-sentry-source-file="RunsTable.tsx"
-              >
-                <th
-                  className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0"
-                  data-sentry-element="TableHead"
-                  data-sentry-source-file="RunsTable.tsx"
-                >
-                  User
-                </th>
-                <th
-                  className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0"
-                  data-sentry-element="TableHead"
-                  data-sentry-source-file="RunsTable.tsx"
-                >
-                  Organization
-                </th>
-                <th
-                  className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0"
-                  data-sentry-element="TableHead"
-                  data-sentry-source-file="RunsTable.tsx"
-                >
-                  Time
-                </th>
-                <th
-                  className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0"
-                  data-sentry-element="TableHead"
-                  data-sentry-source-file="RunsTable.tsx"
-                >
-                  Duration
-                </th>
-                <th
-                  className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0"
-                  data-sentry-element="TableHead"
-                  data-sentry-source-file="RunsTable.tsx"
-                >
-                  Version
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              className="[&_tr:last-child]:border-0"
-              data-sentry-element="TableBody"
-              data-sentry-source-file="RunsTable.tsx"
-            >
-              <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted cursor-pointer">
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">-</td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">-</td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <span
-                    data-state="closed"
-                    data-sentry-element="TooltipTrigger"
-                    data-sentry-source-file="tooltip.tsx"
-                  >
-                    an hour ago
-                  </span>
-                </td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <span>1s</span>
-                </td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <div
-                    className="inline-flex items-center rounded-full border px-2.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 w-fit py-0"
-                    data-sentry-element="Badge"
-                    data-sentry-component="Badge"
-                    data-sentry-source-file="badge.tsx"
-                  >
-                    1.0
+      <div className="relative w-full overflow-auto">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>User</TableHead>
+              <TableHead>Organization</TableHead>
+              <TableHead>Time</TableHead>
+              <TableHead>Duration</TableHead>
+              <TableHead>Version</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {publishedRuns.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={5} className="h-24 text-center">
+                  <div className="flex flex-col items-center justify-center gap-2 text-sm text-muted-foreground">
+                    <p>No runs found</p>
+                    <p>When you execute flows, they will appear here</p>
                   </div>
-                </td>
-              </tr>
-              <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted cursor-pointer">
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">-</td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">-</td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <span
-                    data-state="closed"
-                    data-sentry-element="TooltipTrigger"
-                    data-sentry-source-file="tooltip.tsx"
-                  >
-                    an hour ago
-                  </span>
-                </td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <span>1s</span>
-                </td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <div
-                    className="inline-flex items-center rounded-full border px-2.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 w-fit py-0"
-                    data-sentry-element="Badge"
-                    data-sentry-component="Badge"
-                    data-sentry-source-file="badge.tsx"
-                  >
-                    1.0
-                  </div>
-                </td>
-              </tr>
-              <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted cursor-pointer">
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">-</td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">-</td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <span
-                    data-state="closed"
-                    data-sentry-element="TooltipTrigger"
-                    data-sentry-source-file="tooltip.tsx"
-                  >
-                    an hour ago
-                  </span>
-                </td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <span>1s</span>
-                </td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <div
-                    className="inline-flex items-center rounded-full border px-2.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 w-fit py-0"
-                    data-sentry-element="Badge"
-                    data-sentry-component="Badge"
-                    data-sentry-source-file="badge.tsx"
-                  >
-                    1.0
-                  </div>
-                </td>
-              </tr>
-              <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted cursor-pointer">
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">-</td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">-</td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <span
-                    data-state="closed"
-                    data-sentry-element="TooltipTrigger"
-                    data-sentry-source-file="tooltip.tsx"
-                  >
-                    an hour ago
-                  </span>
-                </td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <span>1s</span>
-                </td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <div
-                    className="inline-flex items-center rounded-full border px-2.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 w-fit py-0"
-                    data-sentry-element="Badge"
-                    data-sentry-component="Badge"
-                    data-sentry-source-file="badge.tsx"
-                  >
-                    1.0
-                  </div>
-                </td>
-              </tr>
-              <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted cursor-pointer">
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">-</td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">-</td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <span
-                    data-state="closed"
-                    data-sentry-element="TooltipTrigger"
-                    data-sentry-source-file="tooltip.tsx"
-                  >
-                    an hour ago
-                  </span>
-                </td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <span>2s</span>
-                </td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <div
-                    className="inline-flex items-center rounded-full border px-2.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 w-fit py-0"
-                    data-sentry-element="Badge"
-                    data-sentry-component="Badge"
-                    data-sentry-source-file="badge.tsx"
-                  >
-                    1.0
-                  </div>
-                </td>
-              </tr>
-              <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted cursor-pointer">
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">haitao wu</td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">haitao wu's Projects</td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <span
-                    data-state="closed"
-                    data-sentry-element="TooltipTrigger"
-                    data-sentry-source-file="tooltip.tsx"
-                  >
-                    an hour ago
-                  </span>
-                </td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <span>2s</span>
-                </td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <div
-                    className="inline-flex items-center rounded-full border px-2.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 w-fit py-0"
-                    data-sentry-element="Badge"
-                    data-sentry-component="Badge"
-                    data-sentry-source-file="badge.tsx"
-                  >
-                    1.0
-                  </div>
-                </td>
-              </tr>
-              <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted cursor-pointer">
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">haitao wu</td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">haitao wu's Projects</td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <span
-                    data-state="closed"
-                    data-sentry-element="TooltipTrigger"
-                    data-sentry-source-file="tooltip.tsx"
-                  >
-                    an hour ago
-                  </span>
-                </td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <span>3s</span>
-                </td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <div
-                    className="inline-flex items-center rounded-full border px-2.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 w-fit py-0"
-                    data-sentry-element="Badge"
-                    data-sentry-component="Badge"
-                    data-sentry-source-file="badge.tsx"
-                  >
-                    1.0
-                  </div>
-                </td>
-              </tr>
-              <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted cursor-pointer">
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">haitao wu</td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">haitao wu's Projects</td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <span
-                    data-state="closed"
-                    data-sentry-element="TooltipTrigger"
-                    data-sentry-source-file="tooltip.tsx"
-                  >
-                    an hour ago
-                  </span>
-                </td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <span>2s</span>
-                </td>
-                <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                  <div
-                    className="inline-flex items-center rounded-full border px-2.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 w-fit py-0"
-                    data-sentry-element="Badge"
-                    data-sentry-component="Badge"
-                    data-sentry-source-file="badge.tsx"
-                  >
-                    1.0
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                </TableCell>
+              </TableRow>
+            ) : (
+              publishedRuns.map((run) => (
+                <TableRow key={run.id} className="cursor-pointer">
+                  <TableCell>{run.user?.name || "-"}</TableCell>
+                  <TableCell>{run.organization?.name || "-"}</TableCell>
+                  <TableCell>
+                    <span data-state="closed">{formatDistanceToNow(run.updatedAt)}</span>
+                  </TableCell>
+                  <TableCell>
+                    <span>{run.duration || "-"}s</span>
+                  </TableCell>
+                  <TableCell>
+                    <div className="inline-flex items-center rounded-full border px-2.5 py-0 text-xs font-semibold transition-colors border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 w-fit">
+                      {run.version || "1.0"}
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
       </div>
-    )
-}
+      <div ref={ref} style={{ height: "1px" }} />
+    </div>
+  );
+});

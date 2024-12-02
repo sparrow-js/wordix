@@ -8,7 +8,6 @@ import { nanoid } from "nanoid";
 export async function POST(request: Request) {
   const body = await request.json();
   const { name, privacy, template, tools, workspaceId } = body;
-  console.log("body", body);
 
   const session = await auth();
 

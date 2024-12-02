@@ -26,6 +26,18 @@ export default class Run extends ParanoidModel {
   @observable
   metadata: any;
 
+  @observable
+  version: string;
+
+  @observable
+  duration: number;
+
+  @observable
+  user: any;
+
+  @observable
+  organization: any;
+
   declare store: RunsStore;
 
   constructor(fields: Record<string, any>, store: RunsStore) {
@@ -38,8 +50,6 @@ export default class Run extends ParanoidModel {
   save = async (fields?: Properties<typeof this>, options?: SaveOptions): Promise<Run> => {
     const params = fields ?? this.toAPI();
     this.isSaving = true;
-
-    console.log("params", params);
 
     try {
       const model = await this.store.save({ ...params, ...fields, id: this.id }, options);

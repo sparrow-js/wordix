@@ -48,6 +48,9 @@ export default class Workspace extends ParanoidModel {
   @observable
   isVerified?: boolean;
 
+  @observable
+  members: any[] = [];
+
   constructor(fields: Record<string, any>, store: WorkspaceStore) {
     super(fields, store);
     makeObservable(this);

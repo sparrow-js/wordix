@@ -342,8 +342,6 @@ const AIButton = () => {
               <Button
                 className="w-full bg-purple-500 hover:bg-purple-600 text-white"
                 onClick={() => {
-                  console.log("Image:", uploadedImage);
-                  console.log("Prompt:", promptText);
                   // setOpen(false);
                   setShowMarkdownGen(true);
                   ssePost(
@@ -364,7 +362,6 @@ const AIButton = () => {
                         setMarkdownGen(contentRef.current);
                       },
                       onCompleted: () => {
-                        console.log("completed");
                         // @ts-ignore
                         const docSize = window.editor?.state.doc.content.size;
                         // 使用 ref 的当前值，保证是最新的
@@ -373,7 +370,6 @@ const AIButton = () => {
                         setOpen(false);
                       },
                       onWorkflowStarted: () => {
-                        console.log("workflow_started");
                         setMarkdownGen("");
                       },
                     },
@@ -397,8 +393,6 @@ const PageBar = () => {
   const document = documents.get(id as string);
 
   const visibility = document?.visibility;
-
-  console.log(document, visibility);
 
   return (
     <div className="flex h-[60px] items-center justify-between border-b bg-background px-1 md:px-5 flex-shrink-0">

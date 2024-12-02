@@ -251,7 +251,6 @@ const StandardLayout = observer(() => {
                     <Button
                       className="w-full mt-2"
                       onClick={() => {
-                        console.log("create project");
                         handleSubmit();
                       }}
                     >

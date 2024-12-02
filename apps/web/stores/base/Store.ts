@@ -174,8 +174,6 @@ export default abstract class Store<T extends Model> {
   save(params: Properties<T>, options: JSONObject = {}): Promise<T> {
     const { isNew, ...rest } = options;
 
-    console.log("params", params);
-
     if (isNew || !("id" in params) || !params.id) {
       return this.create(params, rest);
     }
@@ -282,8 +280,6 @@ export default abstract class Store<T extends Model> {
       const res = await client.post(`/${this.apiEndpoint}/info`, {
         id,
       });
-
-      console.log("res", res);
 
       return runInAction(() => {
         invariant(res?.data, "Data should be available");

@@ -1,6 +1,7 @@
 import invariant from "invariant";
 import { lowerFirst } from "lodash";
 import pluralize from "pluralize";
+import ApiKeysStore from "./ApikeysStore";
 import CodeExecutorsStore from "./CodeExecutorsStore";
 import CollectionsStore from "./CollectionsStore";
 import DialogsStore from "./DialogsStore";
@@ -40,6 +41,7 @@ export default class RootStore {
   tools: ToolStore;
   runs: RunsStore;
   workspaces: WorkspacesStore;
+  apiKeys: ApiKeysStore;
 
   constructor() {
     // Models
@@ -61,6 +63,7 @@ export default class RootStore {
     this.registerStore(ToolStore, "tools");
     this.registerStore(RunsStore, "runs");
     this.registerStore(WorkspacesStore, "workspaces");
+    this.registerStore(ApiKeysStore, "apiKeys");
   }
 
   /**

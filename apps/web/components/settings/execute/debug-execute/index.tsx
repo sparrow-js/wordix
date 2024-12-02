@@ -149,8 +149,6 @@ const DebugExecute = forwardRef<DebugWithSingleModelRefType, DebugWithSingleMode
     }, [execute.status]);
 
     useEffect(() => {
-      console.log("injectChatList ******", injectChatList);
-
       if (injectChatList?.length) {
         handleUpdateChatList(injectChatList);
       }

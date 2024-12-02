@@ -5,26 +5,19 @@ import { Folder, LayoutDashboard, Rocket } from "lucide-react";
 
 import Link from "next/link";
 
+import useStores from "@/hooks/useStores";
 import { cn } from "@/lib/utils";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
+import { observer } from "mobx-react";
 import { useSelectedLayoutSegments } from "next/navigation";
 import { useState } from "react";
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-];
-
-const LeftSidebar = () => {
+const LeftSidebar = observer(() => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
+  const { workspaces } = useStores();
 
+  const workspace = workspaces.get(workspaces.selectedWorkspaceId);
   const segments = useSelectedLayoutSegments();
 
   return (
@@ -37,28 +30,28 @@ const LeftSidebar = () => {
         <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <Button variant="outline" role="combobox" aria-expanded={open} className="w-full justify-between">
-              {value ? frameworks.find((framework) => framework.value === value)?.label : "Select framework..."}
+              {workspace?.name || "Select workspace"}
               <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
             <Command>
-              {/* <CommandInput placeholder="Search framework..." className="h-9" /> */}
               <CommandList>
-                <CommandEmpty>No framework found.</CommandEmpty>
+                <CommandEmpty>No workspace found.</CommandEmpty>
                 <CommandGroup>
-                  {frameworks.map((framework) => (
+                  {workspaces.orderedList.map((workspace) => (
                     <CommandItem
-                      key={framework.value}
-                      value={framework.value}
+                      key={workspace.id}
+                      value={workspace.id}
                       onSelect={(currentValue) => {
                         setValue(currentValue === value ? "" : currentValue);
+                        workspaces.setSelectedWorkspaceId(currentValue);
                         setOpen(false);
                       }}
                     >
-                      {framework.label}
+                      {workspace.name}
                       <CheckIcon
-                        className={cn("ml-auto h-4 w-4", value === framework.value ? "opacity-100" : "opacity-0")}
+                        className={cn("ml-auto h-4 w-4", value === workspace.id ? "opacity-100" : "opacity-0")}
                       />
                     </CommandItem>
                   ))}
@@ -123,6 +116,6 @@ const LeftSidebar = () => {
       </div>
     </div>
   );
-};
+});
 
 export default LeftSidebar;

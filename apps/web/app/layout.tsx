@@ -1,11 +1,8 @@
-
 import "@/styles/globals.css";
 import "@/styles/prosemirror.css";
 
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import Providers from "./providers";
-
 
 const title = "wordsmith - Notion-style WYSIWYG editor with AI-powered autocompletions";
 const description =
