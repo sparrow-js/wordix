@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { NodeViewContent, type NodeViewProps, NodeViewWrapper } from "@tiptap/react";
 import { useEffect } from "react";
-import { useDropzone } from 'react-dropzone';
+import { useDropzone } from "react-dropzone";
 
 import useStores from "@/hooks/useStores";
 import { observer } from "mobx-react";
@@ -10,10 +10,8 @@ import { v4 as uuidv4 } from "uuid";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { Play, Plus } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
+import { Play, Plus } from "lucide-react";
 
 export const InputView = observer((props: NodeViewProps) => {
   const { workbench, dialogs, inputsNode, setting, execute } = useStores();
@@ -84,12 +82,12 @@ export const InputView = observer((props: NodeViewProps) => {
               <DialogDescription>Make changes to your profile here. Click save when you're done.</DialogDescription>
             </DialogHeader>
             <div className="flex w-full">
-              <div className="ml-8 mt-4">
+              <div className="mt-4 w-full">
                 <form
                   className="space-y-6"
                   action={async (data: FormData) => {
                     const inputs = {};
-                    for (var key of data.keys()) {
+                    for (const key of data.keys()) {
                       inputs[key] = data.get(key);
                     }
                     dialogs.hideInputsModal();
@@ -101,7 +99,7 @@ export const InputView = observer((props: NodeViewProps) => {
                   {inputsNode.list.map((input) => {
                     if (input.type === "text") {
                       return (
-                          <div className="space-y-2">
+                        <div className="space-y-2 w-full">
                           <Label>{input.label}</Label>
                           <Input
                             value={input.value}
@@ -115,7 +113,7 @@ export const InputView = observer((props: NodeViewProps) => {
                       );
                     } else if (input.type === "image") {
                       return (
-                        <div className="space-y-2" key={input.id}>
+                        <div className="space-y-2 w-full" key={input.id}>
                           <Label>{input.label}</Label>
                           <ImageUpload
                             value={input.value}
@@ -129,7 +127,7 @@ export const InputView = observer((props: NodeViewProps) => {
                       );
                     } else if (input.type === "longText") {
                       return (
-                        <div className="space-y-2">
+                        <div className="space-y-2 w-full">
                           <Label>{input.label}</Label>
                           <Textarea
                             value={input.value}
@@ -163,19 +161,19 @@ export const InputView = observer((props: NodeViewProps) => {
 const ImageUpload = ({ value, onChange, name }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: {
-      'image/*': ['.jpeg', '.jpg', '.png', '.gif']
+      "image/*": [".jpeg", ".jpg", ".png", ".gif"],
     },
     maxFiles: 1,
     onDrop: (acceptedFiles) => {
       onChange(acceptedFiles[0]);
-    }
+    },
   });
 
   return (
     <div
       {...getRootProps()}
       className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer
-        ${isDragActive ? 'border-primary bg-primary/10' : 'border-gray-300 hover:border-primary'}`}
+        ${isDragActive ? "border-primary bg-primary/10" : "border-gray-300 hover:border-primary"}`}
     >
       <input {...getInputProps()} name={name} />
       {value ? (
@@ -185,7 +183,7 @@ const ImageUpload = ({ value, onChange, name }) => {
             alt="Preview"
             className="max-h-40 mx-auto"
           />
-          <p className="text-sm text-muted-foreground">{value instanceof File ? value.name : 'Uploaded image'}</p>
+          <p className="text-sm text-muted-foreground">{value instanceof File ? value.name : "Uploaded image"}</p>
         </div>
       ) : (
         <div className="space-y-2">

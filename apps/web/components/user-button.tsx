@@ -17,7 +17,7 @@ import useStores from "@/hooks/useStores";
 import { Activity, AlignJustify, CreditCard, Key, LogOut } from "lucide-react";
 import { ChevronsUpDown } from "lucide-react";
 import { observer } from "mobx-react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
 
 const UserButton = observer(() => {
@@ -98,7 +98,11 @@ const UserButton = observer(() => {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={async () => {
+            await signOut();
+          }}
+        >
           <LogOut className="mr-2 h-4 w-4" />
           <span>Sign out</span>
         </DropdownMenuItem>

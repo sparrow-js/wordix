@@ -262,3 +262,29 @@ export const defaultExtensions = [
   // GlobalDragHandle,
   Document,
 ];
+
+export const descriptionExtensions = [
+  starterKit,
+  placeholder,
+  tiptapLink,
+  tiptapImage,
+  updatedImage,
+  taskList,
+  taskItem,
+  horizontalRule,
+  aiHighlight,
+  codeBlockLowlight,
+
+  mathematics,
+  characterCount,
+  TiptapUnderline,
+  MarkdownExtension,
+  HighlightExtension,
+  TextStyle,
+  Color,
+  CustomKeymap,
+  // GlobalDragHandle,
+  Document,
+
+  Description,
+];

@@ -166,6 +166,7 @@
     "use-debounce": "^9.0.3",
     "use-resize-observer": "^9.1.0",
     "uuid": "^10.0.0",
+    "vaul": "^1.1.1",
     "y-prosemirror": "^1.2.12",
     "zod": "^3.23.8"
   },

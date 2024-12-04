@@ -1,7 +1,7 @@
 import Image from "next/image";
-// import LoginButton from "./login-button";
-import LoginGoogleButton from './login-google-button';
 import { Suspense } from "react";
+// import LoginButton from "./login-button";
+import LoginGoogleButton from "./login-google-button";
 
 export default function LoginPage() {
   return (
@@ -13,9 +13,7 @@ export default function LoginPage() {
         className="relative mx-auto h-12 w-auto dark:scale-110 dark:rounded-full dark:border dark:border-stone-400"
         src="/logo.png"
       />
-      <h1 className="mt-6 text-center font-cal text-3xl dark:text-white">
-        Platforms Starter Kit
-      </h1>
+      <h1 className="mt-6 text-center font-cal text-3xl dark:text-white">Platforms Starter Kit</h1>
       <p className="mt-2 text-center text-sm text-stone-600 dark:text-stone-400">
         Build multi-tenant applications with custom domains. <br />
         <a

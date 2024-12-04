@@ -268,11 +268,17 @@ model Run {
   error       String?
   metadata    Json?
   duration    Int?
+  inputs      Json?
+  inputValues Json?
+  
+  version     Int?
   // Foreign keys
   userId      String
   // teamId      String
   documentId  String?
   collectionId String?
+ 
+
   
   // Relations
   user        User      @relation(fields: [userId], references: [id])
