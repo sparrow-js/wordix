@@ -6,6 +6,7 @@ import { GenerationHandler } from "../handlers/GenerationHandler";
 import { HardBreakHandler } from "../handlers/HardBreak";
 import { HeadingHandler } from "../handlers/HeadingHandler";
 import { IfElseHandler } from "../handlers/IfElseHandler";
+import { ImageHandler } from "../handlers/ImageHandler";
 import { InputsHandler } from "../handlers/InputsHandler";
 import { ListItemHandler } from "../handlers/ListItemHandler";
 import { LoopHandler } from "../handlers/LoopHandler";
@@ -60,6 +61,7 @@ export class DocumentProcessor extends BaseProcessor {
       depth: initialState?.depth || 0,
       path: initialState?.path || [],
       markdown: initialState?.markdown || [],
+      messages: [],
       markdownOutput: initialState?.markdownOutput || "",
       handlers: this.handlers,
       tempParentNode: initialState?.tempParentNode || null,
@@ -99,6 +101,7 @@ export class DocumentProcessor extends BaseProcessor {
     this.handlers.set("hardBreak", new HardBreakHandler());
     this.handlers.set("orderedList", new OrderedListHandler());
     this.handlers.set("blockquote", new BlockquoteHandler());
+    this.handlers.set("image", new ImageHandler());
   }
 
   private registerDefaultTools(): void {

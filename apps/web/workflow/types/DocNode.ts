@@ -49,6 +49,7 @@ export interface ProcessingContext {
   path: string[];
   markdown: string[];
   markdownOutput: string;
+  messages: any[];
   handlers: Map<string, NodeHandler>;
   onStop?: (node: DocNode) => Promise<void>;
   inputData?: any;

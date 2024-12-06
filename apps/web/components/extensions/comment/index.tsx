@@ -1,5 +1,6 @@
 import { Node, mergeAttributes } from "@tiptap/core";
 
+import { TextSelection } from "@tiptap/pm/state";
 import { NodeViewContent, NodeViewWrapper, ReactNodeViewRenderer } from "@tiptap/react";
 import { useRef } from "react";
 
@@ -124,7 +125,6 @@ export const Comment = Node.create({
         return false; // Allow default behavior if conditions are not met
       },
       Enter: ({ editor }) => {
-        console.log("Enter");
         const { state } = editor;
         const { selection, tr } = state;
         const { $from } = selection;
@@ -136,6 +136,7 @@ export const Comment = Node.create({
 
         const content = blockNode.content;
         const childCount = content.childCount;
+        console.log("childCount ++++++++", childCount, content);
 
         if (childCount > 0) {
           const lastNode = content.child(childCount - 1);
@@ -148,12 +149,22 @@ export const Comment = Node.create({
             setTimeout(() => {
               const { state } = editor;
               const { selection, tr } = state;
-              const { $from } = selection;
+              let { $from } = selection;
               const newParagraph = state.schema.nodes.paragraph.create();
 
-              tr.insert($from.end(-1) - 1, newParagraph);
-              editor.view.dispatch(tr);
-            }, 100);
+              // Traverse upwards to find the comment node
+              while ($from.depth > 0) {
+                const node = $from.node($from.depth);
+                if (node.type.name === this.name) {
+                  const pos = $from.before($from.depth);
+                  const insertPos = pos + node.nodeSize;
+                  tr.insert(insertPos, newParagraph).setSelection(new TextSelection(tr.doc.resolve(insertPos + 1)));
+                  editor.view.dispatch(tr);
+                  break;
+                }
+                $from = state.doc.resolve($from.before());
+              }
+            }, 10);
             return true;
           }
         }

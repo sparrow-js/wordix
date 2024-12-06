@@ -10,14 +10,25 @@ export class GenerationHandler extends BaseHandler {
       return;
     }
 
-    const prompt = context.markdown.join("\n\n");
+    if (context.markdown.join("") !== "") {
+      const prompt = context.markdown.join("\n");
+      context.messages.push({
+        type: "text",
+        text: prompt,
+      });
+    }
     const provider = getProviderFromModel(node.attrs.model);
 
     // Store result in node state
     const aiService = ServiceFactory.getInstance().getAIService();
-    const text = await aiService.streamText(
+    const text = await aiService.streamChat(
       provider,
-      prompt,
+      [
+        {
+          role: "user",
+          content: context.messages,
+        },
+      ],
       async (text) => {
         await this.emitStream(context, "message", text);
       },
