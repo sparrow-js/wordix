@@ -188,7 +188,7 @@ export const modelConfigs: ModelConfigs = {
     models: {
       "gpt-4o": {
         name: "gpt-4o",
-        maxTokens: 8000,
+        maxTokens: 8192,
         temperature: 0.7,
         topP: 1,
         frequencyPenalty: 0,
@@ -196,7 +196,7 @@ export const modelConfigs: ModelConfigs = {
       },
       "gpt-4o-mini": {
         name: "gpt-4o-mini",
-        maxTokens: 8000,
+        maxTokens: 8192,
         temperature: 0.7,
         topP: 1,
         frequencyPenalty: 0,
@@ -263,19 +263,19 @@ export const modelConfigs: ModelConfigs = {
     models: {
       "command-r-08-2024": {
         name: "command-r-08-2024",
-        maxTokens: 100000,
+        maxTokens: 4096,
       },
       "command-r-plus-08-2024": {
         name: "command-r-plus-08-2024",
-        maxTokens: 100000,
+        maxTokens: 4096,
       },
       "command-r": {
         name: "command-r",
-        maxTokens: 100000,
+        maxTokens: 4096,
       },
       "command-r-plus": {
         name: "command-r-plus",
-        maxTokens: 100000,
+        maxTokens: 4096,
       },
     },
   },
