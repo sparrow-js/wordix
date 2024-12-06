@@ -11,20 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import type { DocumentVisibility } from "@prisma/client";
-import {
-  ArrowRight,
-  ChevronRight,
-  Code,
-  ExternalLink,
-  FileInput,
-  Globe,
-  Lock,
-  Play,
-  Rocket,
-  Sparkles,
-  UploadCloud,
-  X,
-} from "lucide-react";
+import { ChevronRight, Code, ExternalLink, Globe, Lock, Play, Rocket, Sparkles, UploadCloud, X } from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -32,7 +19,9 @@ import { useDropzone } from "react-dropzone";
 
 import { cn } from "@/lib/utils";
 import { ssePost } from "@/service/base";
+import Link from "next/link";
 import Markdown from "react-markdown";
+import { toast } from "sonner";
 
 const BreadcrumbComponent = observer(() => {
   const { documents } = useStores();
@@ -113,15 +102,17 @@ const ShareButton = observer(() => {
             Cancel
           </Button>
           <Button
-            onClick={() => {
+            onClick={async () => {
               const document = documents.get(id as string);
 
-              documents.update({
+              await documents.update({
                 id: id as string,
                 version: 1.0,
                 visibility: visibility as DocumentVisibility,
                 publishedContent: document?.content,
+                documentVersion: "1.0",
               });
+              toast.success("Deployed successfully");
             }}
           >
             Deploy
@@ -151,6 +142,7 @@ const UpdateButton = () => {
   const { documents } = useStores();
   const { id } = useParams();
   const [open, setOpen] = useState(false);
+  const document = documents.get(id as string);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -169,45 +161,48 @@ const UpdateButton = () => {
             <div className="flex flex-col gap-2">
               <h2 className="py-2 text-lg font-semibold">Your current deployment</h2>
               <div className="space-y-2">
-                <div className="h-[36px] items-center rounded cursor-pointer justify-between flex w-full border-border border bg-[#FAFAFA] dark:bg-muted px-2.5 gap-8">
-                  <div className="flex items-center gap-2 text-sm font-medium">
-                    <ExternalLink className="h-4 w-4" />
-                    App page
+                <Link target="_blank" href={`/app/explore/app/${document?.id}`}>
+                  <div className="h-[36px] items-center rounded cursor-pointer justify-between flex w-full border-border border bg-[#FAFAFA] dark:bg-muted px-2.5 gap-8 mb-2">
+                    <div className="flex items-center gap-2 text-sm font-medium">
+                      <ExternalLink className="h-4 w-4" />
+                      App page
+                    </div>
+                    <ChevronRight className="h-4 w-4" />
                   </div>
-                  <ChevronRight className="h-4 w-4" />
-                </div>
-                <div className="h-[36px] items-center rounded cursor-pointer justify-between flex w-full border-border border bg-[#FAFAFA] dark:bg-muted px-2.5 gap-8">
-                  <div className="flex items-center gap-2 text-sm font-medium">
-                    <Rocket className="h-4 w-4" />
-                    Deployment page
+                </Link>
+                <Link href={`/app/${id}/deployments/${document?.id}/overview`}>
+                  <div className="h-[36px] items-center rounded cursor-pointer justify-between flex w-full border-border border bg-[#FAFAFA] dark:bg-muted px-2.5 gap-8 mb-2">
+                    <div className="flex items-center gap-2 text-sm font-medium">
+                      <Rocket className="h-4 w-4" />
+                      Deployment page
+                    </div>
+                    <ChevronRight className="h-4 w-4" />
                   </div>
-                  <ChevronRight className="h-4 w-4" />
-                </div>
-                <div className="h-[36px] items-center rounded cursor-pointer justify-between flex w-full border-border border bg-[#FAFAFA] dark:bg-muted px-2.5 gap-8">
-                  <div className="flex items-center gap-2 text-sm font-medium">
-                    <Code className="h-4 w-4" />
-                    API docs
+                </Link>
+
+                <Link href={`/app/${id}/deployments/${document?.id}/api`}>
+                  <div className="h-[36px] items-center rounded cursor-pointer justify-between flex w-full border-border border bg-[#FAFAFA] dark:bg-muted px-2.5 mb-2">
+                    <div className="flex items-center gap-2 text-sm font-medium">
+                      <Code className="h-4 w-4" />
+                      API docs
+                    </div>
+                    <ChevronRight className="h-4 w-4" />
                   </div>
-                  <ChevronRight className="h-4 w-4" />
-                </div>
+                </Link>
               </div>
-              <div className="h-[36px] items-center rounded cursor-pointer justify-between flex w-full border-border border bg-[#FAFAFA] dark:bg-muted px-2.5 gap-8">
+              {/* <div className="h-[36px] items-center rounded cursor-pointer justify-between flex w-full border-border border bg-[#FAFAFA] dark:bg-muted px-2.5 gap-8">
                 <div className="flex items-center gap-2 text-sm font-medium">
                   <FileInput className="h-4 w-4" />
                   Prefilled Inputs
                 </div>
                 <ChevronRight className="h-4 w-4" />
-              </div>
+              </div> */}
             </div>
             <div className="flex flex-col gap-2">
-              <h2 className="py-2 text-lg font-semibold">Update app</h2>
+              <h2 className="py-2 text-lg font-semibold">Current app</h2>
               <div className="flex items-center gap-1">
                 <div className="inline-flex items-center rounded-full border px-2.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 py-0">
-                  1.0
-                </div>
-                <ArrowRight className="h-4 w-4" />
-                <div className="inline-flex items-center rounded-full border px-2.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 py-0">
-                  1.1
+                  {document?.documentVersion}
                 </div>
               </div>
               <div className="text-xs text-muted-foreground">
@@ -226,11 +221,11 @@ const UpdateButton = () => {
           <Button
             onClick={() => {
               const document = documents.get(id as string);
-              const version = document?.version || 1.0;
+              const version = (Number.parseFloat(document?.documentVersion || "1.0") + 0.1).toFixed(1).toString();
 
               documents.update({
                 id: id as string,
-                version: version + 0.1,
+                documentVersion: version,
                 publishedContent: document?.content,
               });
               setOpen(false);

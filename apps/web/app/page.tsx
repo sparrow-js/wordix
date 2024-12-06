@@ -8,14 +8,10 @@ export default function Home() {
         <div className="w-full max-w-7xl mx-auto flex items-center justify-between py-6 px-20">
           <div className="flex items-center space-x-3">
             <div className="flex items-center justify-center">
-              <img
-                src="//cdn-imgs.dora.run/design/J7DZccv8u0cLPf78K2tUkk.png/w/4096/h/4096/format/webp?"
-                alt="Logo"
-                className="w-10 h-10 object-cover rounded-lg"
-              />
+              <img src="/logo200.png" alt="Logo" className="w-10 h-10 object-cover rounded-lg" />
             </div>
             <div className="text-xl font-bold text-gray-900">
-              Wordi<span className="text-red-600">x</span>
+              Word<span className="text-red-600">ix</span>
             </div>
           </div>
 
@@ -423,11 +419,7 @@ export default function Home() {
       <div className="flex flex-col justify-between items-center bg-black text-white p-8">
         <div className="flex flex-col items-center">
           <div className="w-24 h-24 mb-4">
-            <img
-              src="https://cdn-imgs.dora.run/design/N5zV58mQPOCMM7RU0aYAQS.png/w/4096/h/4096/format/webp?"
-              alt="Logo"
-              className="w-full h-full object-cover"
-            />
+            <img src="/logo-white-256.png" alt="Logo" className="w-full h-full object-cover" />
           </div>
           <p className="text-gray-400 font-source-code-pro text-sm text-center">
             © 2024 Wordix, Inc.

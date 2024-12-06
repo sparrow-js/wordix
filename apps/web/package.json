@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^0.0.56",
+    "@ai-sdk/cohere": "^1.0.3",
     "@ai-sdk/openai": "^0.0.72",
     "@auth/unstorage-adapter": "^2.7.3",
     "@floating-ui/react": "^0.26.25",

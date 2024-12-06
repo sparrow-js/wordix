@@ -1,4 +1,4 @@
-import { createOpenAI, openai } from "@ai-sdk/openai";
+import { createOpenAI } from "@ai-sdk/openai";
 import { type CoreMessage, generateText, streamText } from "ai";
 import type { ModelConfig } from "../config/model-configs";
 import { BaseAIProvider, type Message } from "./base";
@@ -18,7 +18,7 @@ export class OpenAIProvider extends BaseAIProvider {
     const config = this.getModelConfig(modelName, options);
 
     const { text } = await generateText({
-      model: openai(config.name),
+      model: this.openai(config.name),
       prompt,
       ...config,
     });

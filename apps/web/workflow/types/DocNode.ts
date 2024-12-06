@@ -4,6 +4,7 @@ export interface DocNode {
   content?: DocNode[];
   text?: string;
   stop?: boolean;
+  listIndex?: number;
   _state?: NodeState;
 }
 
@@ -51,5 +52,6 @@ export interface ProcessingContext {
   handlers: Map<string, NodeHandler>;
   onStop?: (node: DocNode) => Promise<void>;
   inputData?: any;
+  tempParentNode?: DocNode;
   onStreamResponse?: ({ event, data, stream }: any) => void;
 }

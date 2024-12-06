@@ -56,7 +56,15 @@ const PlaceholderExtension = Placeholder.configure({
       return "Add a description (not part of the prompt)";
     }
 
-    return "Press '/' for commands and '@' for variables";
+    if (node.type.name === "codeExecutor") {
+      return "";
+    }
+
+    if (node.type.name === "codeBlock") {
+      return "JavaScript here will be executed at runtime";
+    }
+
+    return "";
   },
   // includeChildren: true,
 });

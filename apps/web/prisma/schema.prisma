@@ -138,6 +138,7 @@ model Document {
   fullWidth        Boolean           @default(false)
   insightsEnabled  Boolean?
   editorVersion    String?
+  documentVersion  String?
   icon             String?
   color            String?
   text             String?
@@ -270,7 +271,7 @@ model Run {
   duration    Int?
   inputs      Json?
   inputValues Json?
-  
+
   version     Int?
   // Foreign keys
   userId      String
@@ -460,7 +461,7 @@ model CollaboratorsOnCollections {
 
 model Revision {
   id            String    @id @default(uuid())
-  version       Int?      @db.SmallInt
+  version       String?   
   editorVersion String    @db.VarChar(255)
   title         String    @db.VarChar(255)
   text          String    @db.Text

@@ -1,7 +1,10 @@
 import { modelConfigs } from "../config/model-configs";
 import { aiConfig } from "../config/providers";
 import { FLUXProvider } from "../providers/FLUX";
+import { AnthropicProvider } from "../providers/anthropic";
+import { CohereProvider } from "../providers/cohere";
 import { OpenAIProvider } from "../providers/openai";
+import { PerplexityProvider } from "../providers/perplexity";
 import { AIService } from "./ai-service";
 
 export class ServiceFactory {
@@ -18,6 +21,28 @@ export class ServiceFactory {
     this.aiService.registerProvider(
       "openai",
       new OpenAIProvider(aiConfig.openai.apiKey, modelConfigs.openai.defaultModel, modelConfigs.openai.models),
+    );
+
+    this.aiService.registerProvider(
+      "anthropic",
+      new AnthropicProvider(
+        aiConfig.anthropic.apiKey,
+        modelConfigs.anthropic.defaultModel,
+        modelConfigs.anthropic.models,
+      ),
+    );
+    this.aiService.registerProvider(
+      "cohere",
+      new CohereProvider(aiConfig.cohere.apiKey, modelConfigs.cohere.defaultModel, modelConfigs.cohere.models),
+    );
+
+    this.aiService.registerProvider(
+      "perplexity",
+      new PerplexityProvider(
+        aiConfig.perplexity.apiKey,
+        modelConfigs.perplexity.defaultModel,
+        modelConfigs.perplexity.models,
+      ),
     );
 
     this.aiService.registerProvider("flux", new FLUXProvider(""));

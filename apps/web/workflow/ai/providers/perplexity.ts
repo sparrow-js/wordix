@@ -1,25 +1,25 @@
-import { createAnthropic } from "@ai-sdk/anthropic";
+import { createOpenAI } from "@ai-sdk/openai";
 import { type CoreMessage, generateText, streamText } from "ai";
-
 import type { ModelConfig } from "../config/model-configs";
 import { BaseAIProvider, type Message } from "./base";
 
-export class AnthropicProvider extends BaseAIProvider {
-  private anthropic = createAnthropic({
-    apiKey: "sk-Yuxzg619EfPAnyd6rJ6el5xfQQzwFxI1HxS9vBfMC4bnqd2p",
-    baseURL: "https://api.openai-proxy.org/anthropic/v1",
+export class PerplexityProvider extends BaseAIProvider {
+  private perplexity = createOpenAI({
+    name: "perplexity",
+    apiKey: "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",
+    baseURL: "https://api.perplexity.ai/",
   });
 
   constructor(apiKey: string, defaultModel: string, modelConfigs: Record<string, ModelConfig>) {
     super(apiKey, defaultModel, modelConfigs);
-    console.log("AnthropicProvider constructor");
+    console.log("PerplexityProvider constructor");
   }
 
   async generateText(prompt: string, modelName?: string, options?: Partial<ModelConfig>): Promise<string> {
     const config = this.getModelConfig(modelName, options);
 
     const { text } = await generateText({
-      model: this.anthropic(config.name),
+      model: this.perplexity(config.name),
       prompt,
       ...config,
     });
@@ -36,7 +36,7 @@ export class AnthropicProvider extends BaseAIProvider {
     const config = this.getModelConfig(modelName, options);
 
     const result = await streamText({
-      model: this.anthropic(config.name),
+      model: this.perplexity(config.name),
       prompt,
       ...config,
     });
@@ -53,7 +53,7 @@ export class AnthropicProvider extends BaseAIProvider {
     const coreMessages = messages as CoreMessage[];
 
     const { text } = await generateText({
-      model: this.anthropic(config.name),
+      model: this.perplexity(config.name),
       messages: coreMessages,
       ...config,
     });
@@ -71,7 +71,7 @@ export class AnthropicProvider extends BaseAIProvider {
     const coreMessages = messages as CoreMessage[];
 
     const result = await streamText({
-      model: this.anthropic(config.name),
+      model: this.perplexity(config.name),
       messages: coreMessages,
       ...config,
     });

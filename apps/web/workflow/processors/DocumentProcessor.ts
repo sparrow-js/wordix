@@ -1,13 +1,16 @@
 import { Registry } from "../core/registry";
+import { BlockquoteHandler } from "../handlers/BlockquoteHandler";
 import { BulletListHandler } from "../handlers/BulletListHandler";
 import { CodeHandler } from "../handlers/CodeHandler";
 import { GenerationHandler } from "../handlers/GenerationHandler";
+import { HardBreakHandler } from "../handlers/HardBreak";
 import { HeadingHandler } from "../handlers/HeadingHandler";
 import { IfElseHandler } from "../handlers/IfElseHandler";
 import { InputsHandler } from "../handlers/InputsHandler";
 import { ListItemHandler } from "../handlers/ListItemHandler";
 import { LoopHandler } from "../handlers/LoopHandler";
 import { MentionHandler } from "../handlers/MentionHandler";
+import { OrderedListHandler } from "../handlers/OrderedListHandler";
 import { ParagraphHandler } from "../handlers/ParagraphHandler";
 import { PromptHandler } from "../handlers/PromptHandler";
 import { TextHandler } from "../handlers/TextHandler";
@@ -43,6 +46,7 @@ export class DocumentProcessor extends BaseProcessor {
       path?: string[];
       markdown?: string[];
       markdownOutput?: string;
+      tempParentNode?: DocNode;
     },
   ) {
     super();
@@ -58,6 +62,7 @@ export class DocumentProcessor extends BaseProcessor {
       markdown: initialState?.markdown || [],
       markdownOutput: initialState?.markdownOutput || "",
       handlers: this.handlers,
+      tempParentNode: initialState?.tempParentNode || null,
       onStop,
       onStreamResponse: (response) => {
         if (response.event === "message") {
@@ -91,6 +96,9 @@ export class DocumentProcessor extends BaseProcessor {
     this.handlers.set("codeExecutor", new CodeHandler());
     this.handlers.set("prompt", new PromptHandler());
     this.handlers.set("tool", new ToolHandler(this.toolManager));
+    this.handlers.set("hardBreak", new HardBreakHandler());
+    this.handlers.set("orderedList", new OrderedListHandler());
+    this.handlers.set("blockquote", new BlockquoteHandler());
   }
 
   private registerDefaultTools(): void {

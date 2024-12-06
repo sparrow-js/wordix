@@ -222,7 +222,7 @@ export default function ExplorePage() {
                       </Button>
                     </DrawerTrigger>
                     <DrawerContent className="h-[82vh] py-8">
-                      <div className="mx-auto w-full max-w-sm relative">
+                      <div className="mx-auto w-full px-24 relative">
                         <div className="p-4 overflow-y-auto">
                           <Markdown>{markdownGen}</Markdown>
                         </div>

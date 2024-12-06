@@ -3,10 +3,21 @@ import { BaseHandler } from "./BaseHandler";
 
 export class ListItemHandler extends BaseHandler {
   async before(node: DocNode, context: ProcessingContext): Promise<void> {
-    // 添加列表项标记
-    const bulletPoint = "- ";
+    if (context.tempParentNode && context.tempParentNode.type === "orderedList") {
+      context.tempParentNode.listIndex = context.tempParentNode.listIndex || 0;
+    }
+
+    // 根据父节点类型决定列表标记
+    const bulletPoint =
+      context.tempParentNode?.type === "orderedList" ? `${(context.tempParentNode.listIndex || 0) + 1}. ` : "- ";
+
     await this.emitStream(context, "message", bulletPoint);
     context.markdown.push(bulletPoint);
+
+    // 更新父节点的列表索引
+    if (context.tempParentNode?.type === "orderedList") {
+      context.tempParentNode.listIndex = (context.tempParentNode.listIndex || 0) + 1;
+    }
   }
 
   async after(node: DocNode, context: ProcessingContext): Promise<void> {
@@ -32,6 +43,7 @@ export class ListItemHandler extends BaseHandler {
       }) || [];
 
     const contents = await Promise.all(contentPromises);
-    return `- ${contents.join("")}`;
+    const prefix = context.tempParentNode?.type === "OrderedList" ? `${context.tempParentNode.listIndex || 0}. ` : "- ";
+    return `${prefix}${contents.join("")}`;
   }
 }

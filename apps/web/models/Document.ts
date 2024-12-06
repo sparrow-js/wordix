@@ -59,6 +59,9 @@ export default class Document extends ParanoidModel {
   @observable
   bannerImage?: string;
 
+  @observable
+  documentVersion?: string;
+
   declare store: DocumentsStore;
 
   constructor(fields: Record<string, any>, store: DocumentsStore) {

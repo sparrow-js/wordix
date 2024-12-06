@@ -1,9 +1,12 @@
 import type { DocNode, ProcessingContext } from "../types/DocNode";
 import { BaseHandler } from "./BaseHandler";
 
-export class BulletListHandler extends BaseHandler {
+export class OrderedListHandler extends BaseHandler {
   async before(node: DocNode, context: ProcessingContext): Promise<void> {
-    context.tempParentNode = node;
+    context.tempParentNode = {
+      ...node,
+      listIndex: 0,
+    };
   }
 
   async handle(node: DocNode, context: ProcessingContext): Promise<void> {
@@ -13,8 +16,6 @@ export class BulletListHandler extends BaseHandler {
         timestamp: Date.now(),
       };
     }
-
-    context.tempParentNode = node;
 
     // 添加列表开始的换行
     const startMessage = "\n";
@@ -32,9 +33,10 @@ export class BulletListHandler extends BaseHandler {
 
   async toMarkdown(node: DocNode, context: ProcessingContext): Promise<string> {
     const contentPromises =
-      node.content?.map(async (child) => {
+      node.content?.map(async (child, index) => {
         const handler = context.handlers.get(child.type);
-        return handler ? await handler.toMarkdown(child, context) : "";
+        const content = handler ? await handler.toMarkdown(child, context) : "";
+        return `${index + 1}. ${content}`;
       }) || [];
 
     const contents = await Promise.all(contentPromises);

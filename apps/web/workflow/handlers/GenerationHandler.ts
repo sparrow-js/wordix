@@ -1,4 +1,5 @@
 import { ServiceFactory } from "@/workflow/ai/services/service-factory";
+import { getProviderFromModel } from "../ai/config/model-configs";
 import type { DocNode, ProcessingContext } from "../types/DocNode";
 import { BaseHandler } from "./BaseHandler";
 
@@ -10,16 +11,17 @@ export class GenerationHandler extends BaseHandler {
     }
 
     const prompt = context.markdown.join("\n\n");
+    const provider = getProviderFromModel(node.attrs.model);
 
     // Store result in node state
     const aiService = ServiceFactory.getInstance().getAIService();
     const text = await aiService.streamText(
-      "openai",
+      provider,
       prompt,
       async (text) => {
         await this.emitStream(context, "message", text);
       },
-      "gpt-4o",
+      node.attrs.model,
     );
 
     node._state = {

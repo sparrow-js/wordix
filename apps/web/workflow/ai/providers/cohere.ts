@@ -1,30 +1,27 @@
-import { createAnthropic } from "@ai-sdk/anthropic";
+import { createCohere } from "@ai-sdk/cohere";
 import { type CoreMessage, generateText, streamText } from "ai";
-
 import type { ModelConfig } from "../config/model-configs";
 import { BaseAIProvider, type Message } from "./base";
 
-export class AnthropicProvider extends BaseAIProvider {
-  private anthropic = createAnthropic({
-    apiKey: "sk-Yuxzg619EfPAnyd6rJ6el5xfQQzwFxI1HxS9vBfMC4bnqd2p",
-    baseURL: "https://api.openai-proxy.org/anthropic/v1",
+export class CohereProvider extends BaseAIProvider {
+  private cohere = createCohere({
+    apiKey: "0KukabJnFvW553faOLP4etnGF1qiJu8gOWEuGJZz",
   });
 
   constructor(apiKey: string, defaultModel: string, modelConfigs: Record<string, ModelConfig>) {
     super(apiKey, defaultModel, modelConfigs);
-    console.log("AnthropicProvider constructor");
+    console.log("CohereProvider constructor");
   }
 
   async generateText(prompt: string, modelName?: string, options?: Partial<ModelConfig>): Promise<string> {
     const config = this.getModelConfig(modelName, options);
-
-    const { text } = await generateText({
-      model: this.anthropic(config.name),
+    const response = await generateText({
+      model: this.cohere(config.name),
       prompt,
       ...config,
     });
 
-    return text;
+    return response.text;
   }
 
   async streamText(
@@ -36,7 +33,7 @@ export class AnthropicProvider extends BaseAIProvider {
     const config = this.getModelConfig(modelName, options);
 
     const result = await streamText({
-      model: this.anthropic(config.name),
+      model: this.cohere(config.name),
       prompt,
       ...config,
     });
@@ -53,7 +50,7 @@ export class AnthropicProvider extends BaseAIProvider {
     const coreMessages = messages as CoreMessage[];
 
     const { text } = await generateText({
-      model: this.anthropic(config.name),
+      model: this.cohere(config.name),
       messages: coreMessages,
       ...config,
     });
@@ -71,7 +68,7 @@ export class AnthropicProvider extends BaseAIProvider {
     const coreMessages = messages as CoreMessage[];
 
     const result = await streamText({
-      model: this.anthropic(config.name),
+      model: this.cohere(config.name),
       messages: coreMessages,
       ...config,
     });
