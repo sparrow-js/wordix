@@ -18,6 +18,7 @@ import { Activity, AlignJustify, CreditCard, Key, LogOut } from "lucide-react";
 import { ChevronsUpDown } from "lucide-react";
 import { observer } from "mobx-react";
 import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 const UserButton = observer(() => {
@@ -31,6 +32,8 @@ const UserButton = observer(() => {
       workspaces.setSelectedWorkspaceId(workspaces.orderedList[0].id);
     }
   };
+
+  const router = useRouter();
 
   useEffect(() => {
     fetchWorkspaces();
@@ -84,15 +87,15 @@ const UserButton = observer(() => {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => router.push("/app/settings/api-keys")}>
             <Key className="mr-2 h-4 w-4" />
             <span>API Keys</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => router.push("/app/settings/billing")}>
             <CreditCard className="mr-2 h-4 w-4" />
             <span>Billing</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onSelect={() => router.push("/app/settings/usage")}>
             <Activity className="mr-2 h-4 w-4" />
             <span>Usage</span>
           </DropdownMenuItem>

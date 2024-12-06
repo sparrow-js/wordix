@@ -34,6 +34,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 <Tabs
                   value={currentTab}
                   onValueChange={(value) => {
+                    console.log("********* value ******", value);
                     router.push(`/app/settings/${value}`);
                   }}
                 >
