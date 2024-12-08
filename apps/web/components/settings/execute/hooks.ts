@@ -20,7 +20,7 @@ import type { ChatConfig, ChatItem, InputForm, Inputs } from "./type";
 import { RemoteRunnable } from "@langchain/core/runnables/remote";
 import { TransferMethod } from "./type";
 const chain = new RemoteRunnable({
-  url: "http://localhost:3000/api/",
+  url: "https://wordix-web-jm9f.vercel.app/api/",
   options: {
     timeout: 5 * 60 * 1000,
   },
