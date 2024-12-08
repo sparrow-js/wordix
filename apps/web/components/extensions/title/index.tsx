@@ -1,4 +1,5 @@
 import { Node, mergeAttributes, textblockTypeInputRule } from "@tiptap/core";
+import { Plugin } from "@tiptap/pm/state";
 
 /**
  * The title level options.
@@ -105,6 +106,44 @@ export const Title = Node.create<TitleOptions>({
           return commands.toggleNode(this.name, "paragraph", attributes);
         },
     };
+  },
+
+  addProseMirrorPlugins() {
+    return [
+      new Plugin({
+        props: {
+          handleKeyDown(view, event) {
+            if (event.key === "Backspace" || event.key === "Delete") {
+              const { state } = view;
+              const { selection } = state;
+              const { $from, $to } = selection;
+
+              // 检查是否是标题节点且为空
+              if (
+                $from.sameParent($to) &&
+                $from.parent.type.name === "title" &&
+                $from.parent.textContent.length === 0
+              ) {
+                event.preventDefault();
+                return true;
+              }
+
+              // 检查是否是第四个节点
+              const pos = $from.pos;
+              const resolvedPos = state.doc.resolve(pos);
+              const index = resolvedPos.index(0); // 获取节点在顶层的索引
+
+              if (index === 3) {
+                // 第四个节点的索引是 3
+                event.preventDefault();
+                return true;
+              }
+            }
+            return false;
+          },
+        },
+      }),
+    ];
   },
 
   // addKeyboardShortcuts() {

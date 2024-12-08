@@ -33,11 +33,11 @@ import { TextButtons } from "./selectors/text-buttons";
 import { slashCommand, suggestionItems } from "./slash-command";
 
 import { ContentItemMenu } from "@/components/menus";
-import Settings from "@/components/settings";
 import useStores from "@/hooks/useStores";
 import { observer } from "mobx-react";
-
 const hljs = require("highlight.js");
+
+// 自定义插件确保第四个节点是段落
 
 const extensions = [...defaultExtensions, slashCommand, atCommand];
 
@@ -155,6 +155,25 @@ const TailwindAdvancedEditor = ({ response }: any) => {
                     workbench.setHideSidebar();
                   }
                 }}
+                onTransaction={({ transaction, editor }) => {
+                  const doc = transaction.doc;
+
+                  // Check if fifthNode exists before accessing it
+                  if (doc.content.content.length > 4) {
+                    const fifthNode = doc.content.content[4];
+                    if (fifthNode && fifthNode.type.name !== "paragraph") {
+                      const tr = editor.state.tr;
+                      const start = doc.content.content
+                        .slice(0, 4)
+                        .map((node) => node.nodeSize)
+                        .reduce((a, b) => a + b, 0);
+                      const end = start + fifthNode.nodeSize;
+
+                      tr.replaceWith(start, end, editor.schema.nodes.paragraph.create());
+                      editor.view.dispatch(tr);
+                    }
+                  }
+                }}
                 slotAfter={<ImageResizer />}
               >
                 <EditorCommand className="z-50 h-auto max-h-[330px] overflow-y-auto rounded-md border border-muted bg-background px-2 py-2 shadow-md transition-all">
@@ -226,7 +245,6 @@ const TailwindAdvancedEditor = ({ response }: any) => {
         </div>
       </ResizablePanel>
       <ResizableHandle />
-
       {workbench.showSidebar && editor && (
         <ResizablePanel defaultSize={40}>
           <div className="w-full h-full">
@@ -234,6 +252,7 @@ const TailwindAdvancedEditor = ({ response }: any) => {
           </div>
         </ResizablePanel>
       )}
+      ;
     </ResizablePanelGroup>
   );
 };
