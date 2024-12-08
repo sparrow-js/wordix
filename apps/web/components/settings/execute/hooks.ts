@@ -18,14 +18,14 @@ import { useParams, usePathname } from "next/navigation";
 
 import type { ChatConfig, ChatItem, InputForm, Inputs } from "./type";
 
-import { RemoteRunnable } from "@langchain/core/runnables/remote";
+// import { RemoteRunnable } from "@langchain/core/runnables/remote";
 import { TransferMethod } from "./type";
-const chain = new RemoteRunnable({
-  url: "http://localhost:3000/api/",
-  options: {
-    timeout: 5 * 60 * 1000,
-  },
-});
+// const chain = new RemoteRunnable({
+//   url: "http://localhost:3000/api/",
+//   options: {
+//     timeout: 5 * 60 * 1000,
+//   },
+// });
 export const useExecute = (
   config?: ChatConfig,
   formSettings?: {
