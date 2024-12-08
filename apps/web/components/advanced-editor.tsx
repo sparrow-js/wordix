@@ -30,6 +30,7 @@ import { atCommand } from "./at-command";
 import GenerativeMenuSwitch from "./generative/generative-menu-switch";
 import { uploadFn } from "./image-upload";
 import { TextButtons } from "./selectors/text-buttons";
+import Settings from "./settings";
 import { slashCommand, suggestionItems } from "./slash-command";
 
 import { ContentItemMenu } from "@/components/menus";

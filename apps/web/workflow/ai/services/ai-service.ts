@@ -54,8 +54,6 @@ export class AIService {
     modelName?: string,
     options?: Partial<ModelConfig>,
   ): Promise<string> {
-    console.log("********* streamChat ******", messages, modelName, options);
-
     const provider = this.getProvider(providerName);
     return await provider.streamChat(messages, onText, modelName, options);
   }

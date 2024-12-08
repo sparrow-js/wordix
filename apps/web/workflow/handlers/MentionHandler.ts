@@ -17,14 +17,34 @@ export class MentionHandler extends BaseHandler {
       path: node.attrs.path,
     };
 
-    const markdown = await this.toMarkdown(node, context);
-    context.markdown.push(markdown);
-    await this.emitStream(context, "message", markdown);
-  }
+    let markdown: string;
+    if (node.attrs.type === "image") {
+      const alt = node.attrs.referenceId;
+      const title = node.attrs.title ? ` "${node.attrs.title}"` : "";
+      markdown = `![${alt}](${value}${title})`;
 
-  async toMarkdown(node: DocNode, context: ProcessingContext): Promise<string> {
-    const value = this.resolveValue(node, context);
-    return `${value || node.attrs.referenceId}`;
+      // Handle image messages separately
+      if (context.markdown.join("") !== "") {
+        const prompt = context.markdown.join("\n");
+        context.messages.push({
+          type: "text",
+          text: prompt,
+        });
+      }
+      context.messages.push({
+        type: "image",
+        image: value,
+        experimental_providerMetadata: {
+          openai: { imageDetail: "high" },
+        },
+      });
+      context.markdown = [];
+    } else {
+      markdown = `${value || node.attrs.referenceId}`;
+      context.markdown.push(markdown);
+    }
+
+    await this.emitStream(context, "message", markdown);
   }
 
   private resolveValue(node: DocNode, context: ProcessingContext): any {
@@ -61,5 +81,9 @@ export class MentionHandler extends BaseHandler {
     }
 
     return result;
+  }
+
+  async toMarkdown(node: DocNode, context: ProcessingContext): Promise<string> {
+    return "";
   }
 }

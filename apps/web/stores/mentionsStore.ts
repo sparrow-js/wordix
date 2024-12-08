@@ -24,6 +24,7 @@ export default class AtsStore {
         id: id,
         value: id,
         type: "input",
+        inputType: input.type,
         searchTerms: [input.label],
         command: ({ editor, range }) => {
           editor
@@ -32,7 +33,7 @@ export default class AtsStore {
             .deleteRange(range)
             .setMention({
               referenceId: id,
-              type: "input",
+              type: input.type,
             })
             .run();
         },

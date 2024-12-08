@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Play, Plus } from "lucide-react";
+import { toast } from "sonner";
 
 export const InputView = observer((props: NodeViewProps) => {
   const { workbench, dialogs, inputsNode, setting, execute } = useStores();
@@ -111,13 +112,17 @@ export const InputView = observer((props: NodeViewProps) => {
                           {input.description && <p className="text-sm text-muted-foreground">{input.description}</p>}
                         </div>
                       );
-                    } else if (input.type === "image") {
+                    }
+
+                    if (input.type === "image") {
                       return (
                         <div className="space-y-2 w-full" key={input.id}>
                           <Label>{input.label}</Label>
+                          <input type="hidden" name={input.id} value={input.value || ""} />
                           <ImageUpload
                             value={input.value}
                             onChange={(file) => {
+                              console.log("image changed", file);
                               input.value = file;
                             }}
                             name={input.id}
@@ -125,7 +130,9 @@ export const InputView = observer((props: NodeViewProps) => {
                           {input.description && <p className="text-sm text-muted-foreground">{input.description}</p>}
                         </div>
                       );
-                    } else if (input.type === "longText") {
+                    }
+
+                    if (input.type === "longText") {
                       return (
                         <div className="space-y-2 w-full">
                           <Label>{input.label}</Label>
@@ -139,6 +146,8 @@ export const InputView = observer((props: NodeViewProps) => {
                         </div>
                       );
                     }
+
+                    return null;
                   })}
                   <div className="bottom-5 right-5 z-50 flex justify-end">
                     <div className="relative overflow-hidden bg-cover bg-center p-2">
@@ -158,14 +167,61 @@ export const InputView = observer((props: NodeViewProps) => {
   );
 });
 
+const onUpload = async (file: File) => {
+  const promise = fetch("/api/upload", {
+    method: "POST",
+    headers: {
+      "content-type": file?.type || "application/octet-stream",
+      "x-vercel-filename": encodeURIComponent(file?.name || "image.png"),
+    },
+    body: file,
+  });
+
+  return new Promise((resolve, reject) => {
+    toast.promise(
+      promise.then(async (res) => {
+        if (res.status === 200) {
+          const { url } = (await res.json()) as { url: string };
+          const image = new Image();
+          image.src = url;
+          image.onload = () => {
+            resolve(url);
+          };
+        } else if (res.status === 401) {
+          resolve(file);
+          throw new Error("`BLOB_READ_WRITE_TOKEN` environment variable not found, reading image locally instead.");
+        } else {
+          throw new Error("Error uploading image. Please try again.");
+        }
+      }),
+      {
+        loading: "Uploading image...",
+        success: "Image uploaded successfully.",
+        error: (e) => {
+          reject(e);
+          return e.message;
+        },
+      },
+    );
+  });
+};
+
 const ImageUpload = ({ value, onChange, name }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: {
       "image/*": [".jpeg", ".jpg", ".png", ".gif"],
     },
     maxFiles: 1,
-    onDrop: (acceptedFiles) => {
-      onChange(acceptedFiles[0]);
+    onDrop: async (acceptedFiles) => {
+      if (acceptedFiles.length > 0) {
+        try {
+          const url = await onUpload(acceptedFiles[0]);
+          console.log("image url", url);
+          onChange(url);
+        } catch (error) {
+          console.error("Error uploading image:", error);
+        }
+      }
     },
   });
 

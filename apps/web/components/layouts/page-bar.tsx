@@ -363,6 +363,8 @@ const AIButton = () => {
                         // @ts-ignore
                         window.editor?.commands.insertContentAt(docSize, contentRef.current);
                         setOpen(false);
+                        setShowMarkdownGen(false);
+                        contentRef.current = "";
                       },
                       onWorkflowStarted: () => {
                         setMarkdownGen("");

@@ -188,7 +188,7 @@ function Directory() {
           </div>
         </div>
         <div className="flex flex-col gap-4 p-2.5 h-full overflow-y-auto">
-          {collection?.documents.length > 0 && (
+          {collection?.documents?.length > 0 && (
             <div className="h-full w-full flex-auto" ref={handleSidebarRef}>
               {dndArea && (
                 <FillFlexParent>
