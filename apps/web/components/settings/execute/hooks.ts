@@ -1,8 +1,9 @@
 import type { FileEntity } from "@/components/base/file-uploader/types";
-import { getProcessedFiles } from "@/components/base/file-uploader/utils";
-import { ssePost } from "@/service/base";
+import { getProcessedFiles, getProcessedFilesFromResponse } from "@/components/base/file-uploader/utils";
 import { useCallback, useRef, useState } from "react";
 import { getProcessedInputs } from "./utils";
+
+import { uniqBy } from "lodash-es";
 
 type GetAbortController = (abortController: AbortController) => void;
 type SendCallback = {
@@ -13,19 +14,15 @@ type SendCallback = {
 };
 
 import useTimestamp from "@/hooks/use-timestamp";
-import { produce } from "immer";
 import { useParams, usePathname } from "next/navigation";
+
+import { ssePost } from "@/service/base";
+import { produce } from "immer";
 
 import type { ChatConfig, ChatItem, InputForm, Inputs } from "./type";
 
-// import { RemoteRunnable } from "@langchain/core/runnables/remote";
-import { TransferMethod } from "./type";
-// const chain = new RemoteRunnable({
-//   url: "http://localhost:3000/api/",
-//   options: {
-//     timeout: 5 * 60 * 1000,
-//   },
-// });
+import { TransferMethod, WorkflowRunningStatus } from "./type";
+
 export const useExecute = (
   config?: ChatConfig,
   formSettings?: {
@@ -182,8 +179,8 @@ export const useExecute = (
         });
       }
 
-      const isAgentMode = false;
-      const hasSetResponseId = false;
+      let isAgentMode = false;
+      let hasSetResponseId = false;
 
       let ttsUrl = "";
       let ttsIsPublic = false;
@@ -195,22 +192,7 @@ export const useExecute = (
         else ttsUrl = `/apps/${params.appId}/text-to-audio`;
       }
 
-      // const stream = await chain.streamEvents(bodyParams, {
-      //   version: "v2",
-      //   // encoding: "text/event-stream",
-      // });
-
-      // for await (const event of stream) {
-      //   console.log("***************", event);
-      // }
-      // const player = AudioPlayerManager.getInstance().getAudioPlayer(
-      //   ttsUrl,
-      //   ttsIsPublic,
-      //   uuidV4(),
-      //   "none",
-      //   "none",
-      //   (_: any): any => {},
-      // );
+      // const player = AudioPlayerManager.getInstance().getAudioPlayer(ttsUrl, ttsIsPublic, uuidV4(), 'none', 'none', (_: any): any => {})
       ssePost(
         url,
         {
