@@ -1,3 +1,4 @@
+import prisma from "@/backend/prisma";
 import { respData } from "@/lib/resp";
 
 export async function POST(request: Request) {
