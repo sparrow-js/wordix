@@ -17,7 +17,7 @@ export async function POST(request: Request, res: NextApiResponse) {
     appName,
     appId,
     chatConfig,
-  } = params;
+  } = params.input;
 
   const responseStream = new TransformStream();
   const writer = responseStream.writable.getWriter();
