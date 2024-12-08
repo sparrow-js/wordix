@@ -20,6 +20,7 @@ export const getWorkflowResponseWrite = ({
     write.write(
       `data: ${JSON.stringify({
         event: event,
+        data: data,
         answer: data,
       })} \n\n`,
     );
