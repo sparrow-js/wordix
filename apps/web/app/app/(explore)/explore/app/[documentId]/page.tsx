@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Sparkles, X } from "lucide-react";
 import { useParams } from "next/navigation";
-import { useDropzone } from "react-dropzone";
+import { type DropEvent, type FileRejection, useDropzone } from "react-dropzone";
 
 import DescriptionEditor from "@/components/description-editor";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
@@ -14,6 +14,46 @@ import { ssePost } from "@/service/base";
 import { client } from "@/utils/ApiClient";
 import { useEffect, useRef, useState } from "react";
 import Markdown from "react-markdown";
+import { toast } from "sonner";
+
+const onUpload = async (file: File) => {
+  const promise = fetch("/api/upload", {
+    method: "POST",
+    headers: {
+      "content-type": file?.type || "application/octet-stream",
+      "x-vercel-filename": encodeURIComponent(file?.name || "image.png"),
+    },
+    body: file,
+  });
+
+  return new Promise((resolve, reject) => {
+    toast.promise(
+      promise.then(async (res) => {
+        if (res.status === 200) {
+          const { url } = (await res.json()) as { url: string };
+          const image = new Image();
+          image.src = url;
+          image.onload = () => {
+            resolve(url);
+          };
+        } else if (res.status === 401) {
+          resolve(file);
+          throw new Error("`BLOB_READ_WRITE_TOKEN` environment variable not found, reading image locally instead.");
+        } else {
+          throw new Error("Error uploading image. Please try again.");
+        }
+      }),
+      {
+        loading: "Uploading image...",
+        success: "Image uploaded successfully.",
+        error: (e) => {
+          reject(e);
+          return e.message;
+        },
+      },
+    );
+  });
+};
 
 export default function ExplorePage() {
   const { documentId } = useParams<{ documentId: string }>();
@@ -25,57 +65,30 @@ export default function ExplorePage() {
   const [descriptionDoc, setDescriptionDoc] = useState<any>(null);
   const [documentDoc, setDocumentDoc] = useState<any>(null);
   const [collectionId, setCollectionId] = useState<string>("");
+  const [imageUrl, setImageUrl] = useState<string>("");
+  const scrollRef = useRef<HTMLDivElement>(null);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const dropzoneConfig = {
     accept: {
       "image/*": [],
     },
     maxFiles: 1,
-    onDrop: (acceptedFiles) => {
+    onDrop: async (acceptedFiles: File[], fileRejections: FileRejection[], event: DropEvent) => {
       if (acceptedFiles.length > 0) {
-        const currentInputId = getRootProps().id;
-        setInputValues((prev) => ({
-          ...prev,
-          [currentInputId]: acceptedFiles[0],
-        }));
+        try {
+          const url = await onUpload(acceptedFiles[0]);
+          setImageUrl(url as string);
+          const currentInputId = (event.target as HTMLElement).id;
+          console.log("currentInputId **********", currentInputId);
+          setInputValues((prev) => ({ ...prev, [currentInputId]: url }));
+        } catch (error) {
+          console.error("Error uploading image:", error);
+        }
       }
     },
-  });
-
-  const generatePrompt = async () => {
-    ssePost(
-      "/api/released-app/run",
-      {
-        body: {
-          inputs: inputValues,
-          documentFlow: documentDoc,
-          documentId,
-          collectionId,
-        },
-      },
-      {
-        isPublicAPI: true,
-        onData: (
-          message: string,
-          isFirstMessage: boolean,
-          { conversationId: newConversationId, messageId, taskId }: any,
-        ) => {
-          contentRef.current += message; // 同步更新 ref
-          setMarkdownGen(contentRef.current);
-        },
-        onCompleted: () => {
-          // @ts-ignore
-          // const docSize = window.editor?.state.doc.content.size;
-          // 使用 ref 的当前值，保证是最新的
-          // @ts-ignore
-          // window.editor?.commands.insertContentAt(docSize, contentRef.current);
-        },
-        onWorkflowStarted: () => {
-          setMarkdownGen("");
-        },
-      },
-    );
   };
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone(dropzoneConfig);
 
   const fetchDocument = async () => {
     const res = await client.get(`/released-app/getAppPublic/${documentId}`, {});
@@ -112,9 +125,50 @@ export default function ExplorePage() {
     }
   };
 
+  const generatePrompt = async () => {
+    ssePost(
+      "/api/released-app/run",
+      {
+        body: {
+          inputs: inputValues,
+          documentFlow: documentDoc,
+          documentId,
+          collectionId,
+        },
+      },
+      {
+        isPublicAPI: true,
+        onData: (
+          message: string,
+          isFirstMessage: boolean,
+          { conversationId: newConversationId, messageId, taskId }: any,
+        ) => {
+          contentRef.current += message; // 同步更新 ref
+          setMarkdownGen(contentRef.current);
+        },
+        onCompleted: () => {
+          // @ts-ignore
+          // const docSize = window.editor?.state.doc.content.size;
+          // 使用 ref 的当前值，保证是最新的
+          // @ts-ignore
+          // window.editor?.commands.insertContentAt(docSize, contentRef.current);
+        },
+        onWorkflowStarted: () => {
+          setMarkdownGen("");
+        },
+      },
+    );
+  };
+
   useEffect(() => {
     fetchDocument();
   }, [documentId]);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [markdownGen]);
 
   return (
     <main
@@ -149,12 +203,30 @@ export default function ExplorePage() {
                           className="flex flex-col items-center justify-center h-56 md:h-72 space-y-6 relative mb-6"
                         >
                           <div
-                            {...getRootProps()}
+                            {...getRootProps({
+                              onClick: (e) => getRootProps().onClick(e, input.id),
+                            })}
                             id={input.id}
-                            className="bg-gray-300 p-6 rounded-lg w-full h-full flex flex-col items-center justify-center border border-gray-400/50 cursor-pointer hover:border-gray-400 transition-colors"
+                            className="bg-gray-300 p-6 rounded-lg w-full h-full flex flex-col items-center justify-center border border-gray-400/50 cursor-pointer hover:border-gray-400 transition-colors relative"
                           >
                             <input {...getInputProps()} />
-                            {isDragActive ? (
+                            {imageUrl ? (
+                              <div className="relative w-full h-full">
+                                <img src={imageUrl} alt="Uploaded preview" className="w-full h-full object-contain" />
+                                <Button
+                                  variant="secondary"
+                                  size="sm"
+                                  className="absolute top-2 right-2"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setImageUrl("");
+                                    setInputValues((prev) => ({ ...prev, [input.id]: "" }));
+                                  }}
+                                >
+                                  <X className="w-4 h-4" />
+                                </Button>
+                              </div>
+                            ) : isDragActive ? (
                               <p className="text-lg md:text-xl text-black mb-4">Drop your image here...</p>
                             ) : (
                               <>
@@ -222,8 +294,8 @@ export default function ExplorePage() {
                       </Button>
                     </DrawerTrigger>
                     <DrawerContent className="h-[82vh] py-8">
-                      <div className="mx-auto w-full px-24 relative">
-                        <div className="p-4 overflow-y-auto">
+                      <div ref={scrollRef} className="mx-auto w-full px-24 relative h-full overflow-y-auto">
+                        <div className="p-4">
                           <Markdown>{markdownGen}</Markdown>
                         </div>
                       </div>
