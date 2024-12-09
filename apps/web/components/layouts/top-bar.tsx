@@ -20,15 +20,14 @@ const TopBar = observer(() => {
 
   const handleNameClick = async () => {
     setIsEditing(true);
-    await collections.save({
-      id: collectionId,
-      name: collection.name,
-    });
   };
 
   const handleNameBlur = () => {
     setIsEditing(false);
-    collection.save();
+    collection.save({
+      id: collectionId,
+      name: collection.name,
+    });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

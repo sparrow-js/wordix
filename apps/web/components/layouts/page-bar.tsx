@@ -104,7 +104,7 @@ const ShareButton = observer(() => {
           <Button
             onClick={async () => {
               const document = documents.get(id as string);
-
+              setOpen(false);
               await documents.update({
                 id: id as string,
                 version: 1.0,
@@ -278,9 +278,9 @@ const AIButton = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-purple-500 hover:bg-purple-600 text-white border-purple-500">
+        <Button className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white border-none">
           <Sparkles className="mr-2 h-4 w-4" />
-          AI GEN
+          AI Prompt
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
