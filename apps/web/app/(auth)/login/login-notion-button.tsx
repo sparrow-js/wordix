@@ -1,18 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { signIn } from "@/lib/auth";
-import { FaGoogle } from "react-icons/fa";
+import { RiNotionFill } from "react-icons/ri";
 
-export default function LoginGoogleButton() {
+export default function LoginNotionButton() {
   return (
     <form
       action={async () => {
         "use server";
-        await signIn("google");
+        await signIn("notion");
       }}
     >
       <Button className="w-full">
-        <FaGoogle className="mr-2" />
-        <p className="text-sm font-medium">Login with Google</p>
+        <RiNotionFill className="mr-2" />
+        <p className="text-sm font-medium">Login with Notion</p>
       </Button>
     </form>
   );

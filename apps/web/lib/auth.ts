@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import "next-auth/jwt";
 
 import GitHub from "next-auth/providers/github";
+import Google from "next-auth/providers/google";
 
 import prisma from "@/backend/prisma";
 import Notion from "next-auth/providers/notion";
@@ -33,7 +34,10 @@ export const { handlers, auth, signIn, signOut }: any = NextAuth({
       redirectUri: process.env.AUTH_NOTION_REDIRECT_URI as string,
       allowDangerousEmailAccountLinking: true,
     }),
-    // Slack
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
   ],
   basePath: "/api/auth",
   trustHost: true,
