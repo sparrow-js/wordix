@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Sparkles, X } from "lucide-react";
+import { Copy, Sparkles, X } from "lucide-react";
 import { useParams } from "next/navigation";
 import { type DropEvent, type FileRejection, useDropzone } from "react-dropzone";
 
@@ -92,9 +92,9 @@ export default function ExplorePage() {
   const fetchDocument = async () => {
     const res = await client.get(`/released-app/getAppPublic/${documentId}`, {});
     if (res.data) {
-      const content = res.data.document.content;
+      const content = res.data.content;
       setDocumentDoc(content);
-      setCollectionId(res.data.document.collectionId);
+      setCollectionId(res.data.collectionId);
       // Parse inputs from content
       const inputsNode = content.content.find((node: any) => node.type === "inputs");
       if (inputsNode?.content) {
@@ -113,7 +113,7 @@ export default function ExplorePage() {
         );
         setInputList(inputs);
       }
-      setTitle(res.data.document.title);
+      setTitle(res.data.title);
       const descriptionNode = content.content.find((node: any) => node.type === "description");
 
       const descriptionDoc = {
@@ -182,7 +182,7 @@ export default function ExplorePage() {
         <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row space-y-12 md:space-y-0 md:space-x-12 relative pt-24">
           <div className="w-full md:w-1/2 flex flex-col items-start justify-center md:-mt-12 px-6">
             <div className="text-left mb-8">
-              <p className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight md:leading-snug lg:leading-normal text-[#FFFFFF]">
+              <p className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight md:leading-snug lg:leading-normal">
                 {title}
               </p>
               {descriptionDoc && <DescriptionEditor initialContent={descriptionDoc} />}
@@ -294,7 +294,7 @@ export default function ExplorePage() {
                     </DrawerTrigger>
                     <DrawerContent className="h-[82vh] py-8">
                       <div ref={scrollRef} className="mx-auto w-full px-24 relative h-full overflow-y-auto">
-                        <div className="p-4">
+                        <div className="p-4 select-text">
                           <Markdown>{markdownGen}</Markdown>
                         </div>
                       </div>
@@ -303,6 +303,17 @@ export default function ExplorePage() {
                           <X className="w-4 h-4" />
                         </Button>
                       </DrawerClose>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="absolute right-16 top-4"
+                        onClick={() => {
+                          navigator.clipboard.writeText(markdownGen);
+                          toast.success("Content copied to clipboard");
+                        }}
+                      >
+                        <Copy className="w-4 h-4" />
+                      </Button>
                     </DrawerContent>
                   </Drawer>
                 </div>

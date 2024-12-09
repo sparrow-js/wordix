@@ -22,7 +22,7 @@ export default function OverviewPage() {
     fetchDocument();
   }, [documentId]);
 
-  const deploymentLink = `/explore/apps/${documentId}`;
+  const deploymentLink = `/app/explore/apps/${documentId}`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(window.location.origin + deploymentLink);
@@ -55,9 +55,9 @@ export default function OverviewPage() {
                 Link
               </label>
               <div className="flex items-center justify-between gap-1 rounded-md border px-2 py-2 text-xs border-blue-300 bg-blue-100 text-blue-400">
-                <Link href={`/explore/apps/${documentId}`}>
+                <Link href={`/app/explore/apps/${documentId}`}>
                   <span className="flex items-center gap-2.5 truncate">
-                    <code>/explore/apps/{documentId}</code>
+                    <code>/app/explore/apps/{documentId}</code>
                   </span>
                 </Link>
 
