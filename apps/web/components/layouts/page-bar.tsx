@@ -127,7 +127,7 @@ const RunButton = () => {
   const { workbench, setting, dialogs } = useStores();
   return (
     <Button
-      className="bg-cyan-400 text-green-foreground hover:bg-cyan-700"
+      className="bg-cyan-400 text-white hover:bg-cyan-700"
       onClick={() => {
         dialogs.showInputsModal();
       }}
@@ -278,7 +278,7 @@ const AIButton = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white border-none">
+        <Button className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 text-white border-none shadow-md hover:shadow-lg transition-all duration-200">
           <Sparkles className="mr-2 h-4 w-4" />
           AI Prompt
         </Button>
@@ -335,7 +335,7 @@ const AIButton = () => {
 
             <DialogFooter>
               <Button
-                className="w-full bg-purple-500 hover:bg-purple-600 text-white"
+                className="w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 text-white border-none shadow-md hover:shadow-lg transition-all duration-200"
                 onClick={() => {
                   // setOpen(false);
                   setShowMarkdownGen(true);
