@@ -79,7 +79,6 @@ export default function ExplorePage() {
           const url = await onUpload(acceptedFiles[0]);
           setImageUrl(url as string);
           const currentInputId = (event.target as HTMLElement).id;
-          console.log("currentInputId **********", currentInputId);
           setInputValues((prev) => ({ ...prev, [currentInputId]: url }));
         } catch (error) {
           console.error("Error uploading image:", error);
@@ -204,7 +203,7 @@ export default function ExplorePage() {
                         >
                           <div
                             {...getRootProps({
-                              onClick: (e) => getRootProps().onClick(e, input.id),
+                              onClick: (e) => getRootProps().onClick(e),
                             })}
                             id={input.id}
                             className="bg-gray-300 p-6 rounded-lg w-full h-full flex flex-col items-center justify-center border border-gray-400/50 cursor-pointer hover:border-gray-400 transition-colors relative"
