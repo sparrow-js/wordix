@@ -63,6 +63,7 @@ function Directory() {
     };
     fetchCollection();
   }, [collectionId]);
+
   useEffect(() => {
     router.prefetch("/app/56acf192-a74c-4a79-a79e-b36c0f95a096/docs/81905a34-84f6-4cff-9bfe-eec712b3b91c"); // Prefetch the dashboard page
   }, []);
