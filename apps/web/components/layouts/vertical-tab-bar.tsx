@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Book, Files, ListTree, MessageCircle, Rocket, Shapes } from "lucide-react";
+import { Files, ListTree, MessageCircle, Rocket } from "lucide-react";
 import Link from "next/link";
 import { useParams, useSelectedLayoutSegment } from "next/navigation";
 
@@ -45,15 +45,17 @@ export function VerticalTabBar() {
       </div>
       <div className="flex-grow" />
       <div className="flex flex-col gap-2">
-        <Button variant="ghost" size="icon" className="aspect-square h-fit relative">
+        {/* <Button variant="ghost" size="icon" className="aspect-square h-fit relative">
           <Shapes size={20} />
-        </Button>
-        <Button variant="ghost" size="icon" className="aspect-square h-fit relative">
-          <MessageCircle size={20} />
-        </Button>
-        <Button variant="ghost" size="icon" className="aspect-square h-fit relative">
+        </Button> */}
+        <Link href="https://github.com/sparrow-js/wordix/discussions" target="_blank">
+          <Button variant="ghost" size="icon" className="aspect-square h-fit relative">
+            <MessageCircle size={20} />
+          </Button>
+        </Link>
+        {/* <Button variant="ghost" size="icon" className="aspect-square h-fit relative">
           <Book size={20} />
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

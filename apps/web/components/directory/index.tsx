@@ -397,11 +397,11 @@ function wraperNode(
                     <span className="mr-2">rename</span>
                   </div>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                {/* <DropdownMenuItem>
                   <div className="flex justify-center items-center" onClick={() => {}}>
                     <span className="mr-2">Duplicate</span>
                   </div>
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
