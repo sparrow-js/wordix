@@ -10,16 +10,13 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { ssePost } from "@/service/base";
 import type { DocumentVisibility } from "@prisma/client";
-import { ChevronRight, Code, ExternalLink, Globe, Lock, Play, Rocket, Sparkles, UploadCloud, X } from "lucide-react";
-import Image from "next/image";
+import { ChevronRight, Code, ExternalLink, Globe, Lock, Play, Rocket, Sparkles, UploadCloud } from "lucide-react";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
-
-import { cn } from "@/lib/utils";
-import { ssePost } from "@/service/base";
-import Link from "next/link";
 import Markdown from "react-markdown";
 import { toast } from "sonner";
 
@@ -127,7 +124,7 @@ const RunButton = () => {
   const { workbench, setting, dialogs } = useStores();
   return (
     <Button
-      className="bg-cyan-400 text-white hover:bg-cyan-700"
+      className="bg-cyan-400 text-green-foreground hover:bg-cyan-700"
       onClick={() => {
         dialogs.showInputsModal();
       }}
@@ -285,57 +282,28 @@ const AIButton = () => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>AI Assistant</DialogTitle>
+          <DialogTitle>AI prompt Assistant</DialogTitle>
           <p className="text-sm text-muted-foreground">Get AI help with your current workflow</p>
         </DialogHeader>
         {showMarkdownGen ? (
           <div ref={markdownContainerRef} className="my-4 h-[400px] overflow-y-auto">
-            <Markdown>{markdownGen}</Markdown>
+            <Markdown className="prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full !px-2 !py-0">
+              {markdownGen}
+            </Markdown>
           </div>
         ) : (
-          <div className="my-4">
-            <Label>Your IMAGE</Label>
-            <div
-              {...getRootProps()}
-              className={cn(
-                "border-2 border-dashed rounded-lg p-4 text-center cursor-pointer transition-colors",
-                isDragActive
-                  ? "border-purple-500 bg-purple-50 dark:bg-purple-900/20"
-                  : "border-muted hover:bg-secondary/50",
-              )}
-            >
-              <input {...getInputProps()} />
-              {imagePreview ? (
-                <div className="relative h-40 w-full group">
-                  <Image src={imagePreview} alt="Uploaded preview" fill className="object-contain" />
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      clearImage();
-                    }}
-                    className="absolute top-0 right-0 p-1 rounded-full bg-background/80 hover:bg-background shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                </div>
-              ) : (
-                <p className="text-sm text-muted-foreground">
-                  {isDragActive ? "Drop the image here..." : "Drag & drop an image here, or click to select"}
-                </p>
-              )}
-            </div>
-            <Label htmlFor="message">Your IDEA</Label>
+          <div className="mb-4">
             <Textarea
               id="message"
               placeholder="Enter your prompt here..."
-              className="min-h-[100px] resize-none my-2"
+              className="min-h-[160px] resize-none my-2"
               value={promptText}
               onChange={(e) => setPromptText(e.target.value)}
             />
 
             <DialogFooter>
               <Button
-                className="w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 text-white border-none shadow-md hover:shadow-lg transition-all duration-200"
+                className="w-full mt-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 text-white border-none shadow-md hover:shadow-lg transition-all duration-200"
                 onClick={() => {
                   // setOpen(false);
                   setShowMarkdownGen(true);

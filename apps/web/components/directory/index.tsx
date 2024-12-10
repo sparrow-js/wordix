@@ -67,6 +67,8 @@ function Directory() {
   useEffect(() => {
     if (id) {
       setSelected(id);
+    } else {
+      setSelected("");
     }
   }, [id]);
 

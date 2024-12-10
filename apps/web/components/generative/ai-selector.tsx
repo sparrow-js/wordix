@@ -48,7 +48,9 @@ export function AISelector({ onOpenChange }: AISelectorProps) {
         <div className="flex max-h-[400px]">
           <ScrollArea>
             <div className="prose p-2 px-4 prose-sm">
-              <Markdown>{completion}</Markdown>
+              <Markdown className="prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full !px-2 !py-0">
+                {completion}
+              </Markdown>
             </div>
           </ScrollArea>
         </div>
