@@ -37,10 +37,21 @@ import { ContentItemMenu } from "@/components/menus";
 import useStores from "@/hooks/useStores";
 import { observer } from "mobx-react";
 const hljs = require("highlight.js");
-
 // 自定义插件确保第四个节点是段落
+import Ai from "./ai-generation/ai-editor";
 
-const extensions = [...defaultExtensions, slashCommand, atCommand];
+const extensions = [
+  ...defaultExtensions,
+  slashCommand,
+  atCommand,
+  Ai.configure({
+    appId: "APP_ID_HERE",
+    token: "TOKEN_HERE",
+    // ATTENTION: This is for demo purposes only
+    baseUrl: "http://localhost:3000/api/ai",
+    autocompletion: true,
+  }),
+];
 
 const TailwindAdvancedEditor = ({ response }: any) => {
   const [initialContent, setInitialContent] = useState<null | JSONContent>(null);
