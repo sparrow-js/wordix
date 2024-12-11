@@ -113,6 +113,7 @@ const TailwindAdvancedEditor = ({ response }: any) => {
                     text: "Write something about Tiptap Editor and include a list of it's core features",
                     format: "rich-text",
                     stream: true,
+                    insertAt: editor.state.doc.content.size,
                   });
                 }}
               >
