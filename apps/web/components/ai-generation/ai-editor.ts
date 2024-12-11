@@ -315,8 +315,10 @@ const handleAiOperationsStream =
           }
 
           contentHandler.append(chunk);
+          console.log("**********value", chunk, contentHandler);
 
           if (aiStorage.state === "idle") return false;
+          console.log("**********aiStorage", aiStorage.state);
 
           Object.assign(aiStorage, {
             state: "loading",
@@ -339,6 +341,7 @@ const handleAiOperationsStream =
 
           try {
             if (insertContent) {
+              console.log("**********write start", insertContent);
               const writingPosition = write({
                 partial: chunk,
                 transform: ({ defaultTransform }) =>
@@ -472,127 +475,132 @@ const updateSelectionAfterChange = ({ dispatch, tr, oldSelection }) => {
 };
 
 const handleAiOperations =
-  ({ props: e, action: t, textOptions: r, extensionOptions: n, fetchDataFn: s }) =>
+  ({ props, action, textOptions, extensionOptions, fetchDataFn }) =>
   async () => {
-    const { editor: a } = e;
+    const { editor } = props;
     const {
-      state: d,
-      state: { selection: u },
-    } = a;
-    const i = a.storage.ai || a.storage.aiAdvanced;
-    const o = {
+      state,
+      state: { selection },
+    } = editor;
+    const aiStorage = editor.storage.ai || editor.storage.aiAdvanced;
+    const options = {
       collapseToEnd: true,
       format: "plain-text",
-      ...r,
+      ...textOptions,
     };
-    const { from: c, to: l } =
-      typeof o.insertAt === "number" ? { from: o.insertAt, to: o.insertAt } : o.insertAt || d.selection;
-    const p =
-      r?.text ||
-      (!o.plainText || o.format === "plain-text" ? getContentFromSelection(a, c, l) : d.doc.textBetween(c, l, " "));
-    const f = r?.insert !== false;
-    const h = o.append && o.insertAt === undefined;
+    const { from, to } =
+      typeof options.insertAt === "number"
+        ? { from: options.insertAt, to: options.insertAt }
+        : options.insertAt || state.selection;
+    const selectedText =
+      textOptions?.text ||
+      (!options.plainText || options.format === "plain-text"
+        ? getContentFromSelection(editor, from, to)
+        : state.doc.textBetween(from, to, " "));
+    const shouldInsert = textOptions?.insert !== false;
+    const shouldAppend = options.append && options.insertAt === undefined;
 
-    if (!p) return false;
+    if (!selectedText) return false;
 
-    if (r.startsInline === undefined) {
-      r.startsInline = Q(u);
+    if (textOptions.startsInline === undefined) {
+      textOptions.startsInline = Q(selection);
     }
 
-    Object.assign(i, {
+    Object.assign(aiStorage, {
       state: "loading",
       response: "",
       error: undefined,
       generatedWith: {
-        options: r,
-        action: t,
+        options: textOptions,
+        action: action,
         range: undefined,
       },
     });
 
-    a.chain().setMeta("aiResponse", i).run();
-    n.onLoading?.({ editor: a, action: t, isStreaming: false });
+    editor.chain().setMeta("aiResponse", aiStorage).run();
+    extensionOptions.onLoading?.({ editor, action, isStreaming: false });
 
-    let m = c;
-    if (o.append) {
-      m = l;
+    let startPosition = from;
+    if (options.append) {
+      startPosition = to;
     }
 
-    return a.commands.streamContent(h ? l : { from: c, to: l }, async ({ write: b }) => {
+    return editor.commands.streamContent(shouldAppend ? to : { from, to }, async ({ write }) => {
       try {
-        const y = await s({
-          editor: a,
-          action: t,
-          text: p,
-          textOptions: r,
-          extensionOptions: n,
+        const aiResponse = await fetchDataFn({
+          editor,
+          action,
+          text: selectedText,
+          textOptions,
+          extensionOptions,
           defaultResolver: fetchAiResponse,
         });
 
-        if (!y) return false;
+        if (!aiResponse) return false;
 
-        Object.assign(i, {
+        Object.assign(aiStorage, {
           state: "idle",
-          message: y,
+          message: aiResponse,
           error: undefined,
           generatedWith: {
-            options: r,
-            action: t,
-            range: f ? { from: c, to: l } : undefined,
+            options: textOptions,
+            action: action,
+            range: shouldInsert ? { from, to } : undefined,
           },
         });
 
-        i.pastResponses.push(y);
+        aiStorage.pastResponses.push(aiResponse);
 
-        if (f) {
-          const T = b({
-            partial: y,
-            appendToChain: (k) =>
-              k.setMeta("aiResponse", i).command(({ dispatch: S, tr: M }) =>
+        if (shouldInsert) {
+          const writeResult = write({
+            partial: aiResponse,
+            appendToChain: (chain) =>
+              chain.setMeta("aiResponse", aiStorage).command(({ dispatch, tr }) =>
                 updateSelectionAfterChange({
-                  dispatch: S,
-                  tr: M,
-                  oldSelection: { from: c, to: l },
+                  dispatch,
+                  tr,
+                  oldSelection: { from, to },
                 }),
               ),
           });
 
-          if (i.generatedWith) {
-            i.generatedWith.range = { from: T.from, to: T.to };
+          if (aiStorage.generatedWith) {
+            aiStorage.generatedWith.range = { from: writeResult.from, to: writeResult.to };
           }
         } else {
-          a.chain().setMeta("aiResponse", i).run();
+          editor.chain().setMeta("aiResponse", aiStorage).run();
         }
 
-        Object.assign(i, {
+        Object.assign(aiStorage, {
           state: "idle",
-          response: y,
+          response: aiResponse,
           error: undefined,
           generatedWith: {
-            options: r,
-            action: t,
-            range: f ? { from: m, to: l } : undefined,
+            options: textOptions,
+            action: action,
+            range: shouldInsert ? { from: startPosition, to } : undefined,
           },
         });
 
-        i.pastResponses.push(y);
-        n.onSuccess?.({ editor: a, action: t, isStreaming: false, response: y });
-        a.chain().setMeta("aiResponse", i).run();
+        aiStorage.pastResponses.push(aiResponse);
+        extensionOptions.onSuccess?.({ editor, action, isStreaming: false, response: aiResponse });
+        editor.chain().setMeta("aiResponse", aiStorage).run();
         return true;
-      } catch (y) {
-        Object.assign(i, {
+      } catch (error) {
+        console.log("**********error", error);
+        Object.assign(aiStorage, {
           state: "error",
           response: undefined,
-          error: y,
+          error: error,
           generatedWith: {
-            options: r,
-            action: t,
+            options: textOptions,
+            action: action,
             range: undefined,
           },
         });
 
-        a.chain().setMeta("aiResponse", i).run();
-        n.onError?.(y, { editor: a, action: t, isStreaming: false });
+        editor.chain().setMeta("aiResponse", aiStorage).run();
+        extensionOptions.onError?.(error, { editor, action, isStreaming: false });
         return false;
       }
     });
@@ -1143,22 +1151,22 @@ const invokeAiCommand = (props, action, options) => {
   }
 
   if (stream) {
-    handleAiOperations({
+    handleAiOperationsStream({
       props,
       action,
       textOptions: options,
       extensionOptions: aiExtension.options,
       fetchDataFn: fetchData,
+      // defaultResolver: fetchData,
     })();
     return true;
   }
-  handleAiOperationsStream({
+  handleAiOperations({
     props,
     action,
     textOptions: options,
     extensionOptions: aiExtension.options,
     fetchDataFn: fetchData,
-    // defaultResolver: fetchData,
   })();
   return true;
 };
@@ -1370,7 +1378,11 @@ const streamContentPlugin = Extension.create({
           const mapping = new Mapping();
 
           function registerTransactionListener(listener) {
-            transactionListeners.push(listener);
+            // transactionListeners.push(listener);
+            listener.docChanged &&
+              (listener.getMeta(streamContentKey) === void 0 ||
+                listener.getMeta(streamContentKey).startTime !== startTime) &&
+              mapping.appendMapping(listener.mapping);
           }
 
           transactionListeners.push(registerTransactionListener);
@@ -1401,6 +1413,17 @@ const streamContentPlugin = Extension.create({
               }
             },
             write({ partial, transform = createContentFragment, appendToChain = (chain) => chain }) {
+              console.log("**********write", partial, contentHandler);
+              let chain = editor.chain();
+
+              if (contentHandler.content === "" && !isSinglePoint) {
+                chain = chain.deleteRange({
+                  from: startPos,
+                  to: endPos,
+                });
+              }
+
+              contentHandler.append(partial);
               const fragment = Fragment.from(
                 transform({
                   partial: contentHandler.lastPartial,
@@ -1411,8 +1434,7 @@ const streamContentPlugin = Extension.create({
                 }),
               );
 
-              let chain = editor
-                .chain()
+              chain
                 .setMeta(streamContentKey, {
                   startTime,
                   partial: contentHandler.lastPartial,
@@ -1444,7 +1466,11 @@ const streamContentPlugin = Extension.create({
                   ),
                 );
                 const step = tr.steps[tr.steps.length - 1];
-                positions = { from: step.from, to: step.from + step.slice.size };
+                console.log("**********step", step);
+                if (step) {
+                  positions = { from: step.from, to: step.from + step.slice.size };
+                }
+                // positions = { from: step.from, to: step.from + step.slice.size };
                 return true;
               });
 

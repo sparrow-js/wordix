@@ -39,6 +39,7 @@ import { observer } from "mobx-react";
 const hljs = require("highlight.js");
 // 自定义插件确保第四个节点是段落
 import Ai from "./ai-generation/ai-editor";
+import { Button } from "./ui/button";
 
 const extensions = [
   ...defaultExtensions,
@@ -106,6 +107,17 @@ const TailwindAdvancedEditor = ({ response }: any) => {
               <div className={charsCount ? "rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground" : "hidden"}>
                 {charsCount} Words
               </div>
+              <Button
+                onClick={() => {
+                  editor.commands.aiTextPrompt({
+                    text: "Write something about Tiptap Editor and include a list of it's core features",
+                    format: "rich-text",
+                    stream: true,
+                  });
+                }}
+              >
+                test
+              </Button>
             </div>
             <EditorRoot>
               <EditorContent

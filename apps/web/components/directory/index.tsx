@@ -286,7 +286,7 @@ function wraperNode(
           </span>
         )}
 
-        <span className="text-sm flex-grow pl-1">
+        <span className="text-sm flex-grow pl-1 max-w-[90%] overflow-hidden">
           {node.isEditing ? <Input node={node} updateFolderName={updateFolderName} /> : node.data.title}
         </span>
         <div className={`${openOperate ? "flex" : "hidden"} group-hover/node:flex`}>
