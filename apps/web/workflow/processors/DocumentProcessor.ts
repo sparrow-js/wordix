@@ -48,6 +48,7 @@ export class DocumentProcessor extends BaseProcessor {
       markdown?: string[];
       markdownOutput?: string;
       tempParentNode?: DocNode;
+      disableDocumentOutput?: boolean;
     },
   ) {
     super();
@@ -65,6 +66,7 @@ export class DocumentProcessor extends BaseProcessor {
       markdownOutput: initialState?.markdownOutput || "",
       handlers: this.handlers,
       tempParentNode: initialState?.tempParentNode || null,
+      disableDocumentOutput: initialState?.disableDocumentOutput || false,
       onStop,
       onStreamResponse: (response) => {
         if (response.event === "message") {

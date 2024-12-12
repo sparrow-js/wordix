@@ -144,7 +144,7 @@ const DebugExecute = forwardRef<DebugWithSingleModelRefType, DebugWithSingleMode
 
     useEffect(() => {
       if (execute.status === "start") {
-        doSend("测试执行");
+        doSend("");
       }
     }, [execute.status]);
 

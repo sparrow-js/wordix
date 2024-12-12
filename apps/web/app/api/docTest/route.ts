@@ -34,6 +34,9 @@ export async function POST(request: Request, res: NextApiResponse) {
     // onStop 回调
     async (node) => {},
     workflowResponseWrite,
+    {
+      disableDocumentOutput: true,
+    },
   );
 
   const startTime = new Date();

@@ -54,5 +54,6 @@ export interface ProcessingContext {
   onStop?: (node: DocNode) => Promise<void>;
   inputData?: any;
   tempParentNode?: DocNode;
+  disableDocumentOutput?: boolean;
   onStreamResponse?: ({ event, data, stream }: any) => void;
 }

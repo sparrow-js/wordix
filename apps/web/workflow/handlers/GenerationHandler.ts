@@ -31,7 +31,7 @@ export class GenerationHandler extends BaseHandler {
         },
       ],
       async (text) => {
-        await this.emitStream(context, "message", text);
+        await this.emitStream(context, "message", text, true, true);
       },
       node.attrs.model,
     );

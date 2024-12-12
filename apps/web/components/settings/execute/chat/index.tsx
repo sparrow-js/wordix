@@ -2,8 +2,11 @@ import type { FC, ReactNode } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { ChatConfig, ChatItem, Feedback, InputForm, OnRegenerate, OnSend } from "../type";
 
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { debounce } from "lodash-es";
+import { Copy } from "lucide-react";
+import { toast } from "sonner";
 import Answer from "../answer";
 import { ChatContextProvider } from "./context";
 
@@ -175,6 +178,20 @@ const Chat: FC<ChatProps> = ({
       onFeedback={onFeedback}
     >
       <div className="relative h-full w-full">
+        <div className="absolute top-2 right-2 z-10 w-10 h-10">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => {
+              const message = chatList.map((item) => item.content).join("\n");
+              console.log("message ********", message);
+              navigator.clipboard.writeText(message);
+              toast.success("Copied to clipboard!");
+            }}
+          >
+            <Copy className="h-4 w-4" />
+          </Button>
+        </div>
         <div
           ref={chatContainerRef}
           className={cn("relative h-full overflow-y-auto overflow-x-hidden", chatContainerClassName)}
