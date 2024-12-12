@@ -1450,6 +1450,7 @@ const streamContentPlugin = Extension.create({
                 })
                 .setMeta("preventClearDocument", true);
 
+              // @ts-ignore
               const isInvalidContent = !isNodeEmpty(fragment) || fragment.firstChild?.isText || false;
 
               const maxDocumentSize = editor.state.doc.nodeSize - 2;
@@ -1474,6 +1475,7 @@ const streamContentPlugin = Extension.create({
                 );
                 const step = tr.steps[tr.steps.length - 1];
                 if (step) {
+                  // @ts-ignore
                   positions = { from: step.from, to: step.from + step.slice.size };
                 }
                 // positions = { from: step.from, to: step.from + step.slice.size };
