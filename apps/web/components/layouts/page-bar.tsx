@@ -10,14 +10,11 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogT
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { ssePost } from "@/service/base";
 import type { DocumentVisibility } from "@prisma/client";
 import { ChevronRight, Code, ExternalLink, Globe, Lock, Play, Rocket, Sparkles, UploadCloud } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import { useDropzone } from "react-dropzone";
-import Markdown from "react-markdown";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 
 const BreadcrumbComponent = observer(() => {
@@ -238,39 +235,11 @@ const UpdateButton = () => {
 
 const AIButton = () => {
   const [open, setOpen] = useState(false);
-  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
   const [promptText, setPromptText] = useState<string>("");
-  const [markdownGen, setMarkdownGen] = useState<string>("");
-  const [showMarkdownGen, setShowMarkdownGen] = useState<boolean>(false);
   const contentRef = useRef<string>(""); // 使用 ref 来跟踪内容
 
-  // Add a new ref for the markdown container
-  const markdownContainerRef = useRef<HTMLDivElement>(null);
-
-  // Add useEffect to scroll to bottom when markdownGen updates
-  useEffect(() => {
-    if (markdownContainerRef.current) {
-      markdownContainerRef.current.scrollTop = markdownContainerRef.current.scrollHeight;
-    }
-  }, [markdownGen]);
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: {
-      "image/*": [".png", ".jpg", ".jpeg", ".gif"],
-    },
-    maxFiles: 1,
-    onDrop: (acceptedFiles) => {
-      const file = acceptedFiles[0];
-      setUploadedImage(file);
-      setImagePreview(URL.createObjectURL(file));
-    },
-  });
-
-  const clearImage = () => {
-    setUploadedImage(null);
-    setImagePreview(null);
-  };
+  const clearImage = () => {};
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -285,68 +254,35 @@ const AIButton = () => {
           <DialogTitle>AI prompt Assistant</DialogTitle>
           <p className="text-sm text-muted-foreground">Get AI help with your current workflow</p>
         </DialogHeader>
-        {showMarkdownGen ? (
-          <div ref={markdownContainerRef} className="my-4 h-[400px] overflow-y-auto">
-            <Markdown className="prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full !px-2 !py-0">
-              {markdownGen}
-            </Markdown>
-          </div>
-        ) : (
-          <div className="mb-4">
-            <Textarea
-              id="message"
-              placeholder="Enter your prompt here..."
-              className="min-h-[160px] resize-none my-2"
-              value={promptText}
-              onChange={(e) => setPromptText(e.target.value)}
-            />
+        <div className="mb-4">
+          <Textarea
+            id="message"
+            placeholder="Enter your prompt here..."
+            className="min-h-[160px] resize-none my-2"
+            value={promptText}
+            onChange={(e) => setPromptText(e.target.value)}
+          />
 
-            <DialogFooter>
-              <Button
-                className="w-full mt-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 text-white border-none shadow-md hover:shadow-lg transition-all duration-200"
-                onClick={() => {
-                  // setOpen(false);
-                  setShowMarkdownGen(true);
-                  ssePost(
-                    "/api/prompt/generator",
-                    {
-                      body: {
-                        prompt: promptText,
-                      },
-                    },
-                    {
-                      isPublicAPI: true,
-                      onData: (
-                        message: string,
-                        isFirstMessage: boolean,
-                        { conversationId: newConversationId, messageId, taskId }: any,
-                      ) => {
-                        contentRef.current += message; // 同步更新 ref
-                        setMarkdownGen(contentRef.current);
-                      },
-                      onCompleted: () => {
-                        // @ts-ignore
-                        const docSize = window.editor?.state.doc.content.size;
-                        // 使用 ref 的当前值，保证是最新的
-                        // @ts-ignore
-                        window.editor?.commands.insertContentAt(docSize, contentRef.current);
-                        setOpen(false);
-                        setShowMarkdownGen(false);
-                        contentRef.current = "";
-                      },
-                      onWorkflowStarted: () => {
-                        setMarkdownGen("");
-                      },
-                    },
-                  );
-                }}
-              >
-                <Sparkles className="mr-2 h-4 w-4" />
-                Generate
-              </Button>
-            </DialogFooter>
-          </div>
-        )}
+          <DialogFooter>
+            <Button
+              className="w-full mt-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 text-white border-none shadow-md hover:shadow-lg transition-all duration-200"
+              onClick={() => {
+                // @ts-ignore
+                const editor = window.editor;
+                editor?.commands.aiTextPrompt({
+                  text: promptText,
+                  format: "rich-text",
+                  stream: true,
+                  insertAt: editor.state.doc.content.size,
+                });
+                setOpen(false);
+              }}
+            >
+              <Sparkles className="mr-2 h-4 w-4" />
+              Generate
+            </Button>
+          </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   );

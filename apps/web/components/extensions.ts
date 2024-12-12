@@ -136,7 +136,7 @@ const starterKit = StarterKit.configure({
   gapcursor: false,
 });
 
-const codeBlockLowlight = CodeBlockLowlight.configure({
+const codeBlock = CodeBlockLowlight.configure({
   // configure lowlight: common /  all / use highlightJS in case there is a need to specify certain language grammars only
   // common: covers 37 language grammars which should be good enough in most cases
   lowlight: createLowlight(common),
@@ -206,7 +206,7 @@ export const defaultExtensions = [
   taskItem,
   horizontalRule,
   aiHighlight,
-  codeBlockLowlight,
+  codeBlock,
   youtube,
 
   custom,
@@ -273,7 +273,7 @@ export const descriptionExtensions = [
   taskItem,
   horizontalRule,
   aiHighlight,
-  codeBlockLowlight,
+  codeBlock,
 
   mathematics,
   characterCount,

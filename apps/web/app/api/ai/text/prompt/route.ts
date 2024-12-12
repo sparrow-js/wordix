@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import { respErr } from "@/lib/resp";
 import type { Message } from "@/workflow/ai/providers/base";
 import { ServiceFactory } from "@/workflow/ai/services/service-factory";
+import { META_PROMPT } from "./const";
 
 export async function POST(request: Request) {
   const session = await auth();
@@ -11,7 +12,7 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json();
-  const { text, modelName } = body;
+  const { text } = body;
 
   if (!text) {
     return respErr("Text is required");
@@ -23,14 +24,14 @@ export async function POST(request: Request) {
     const messages: Message[] = [
       {
         role: "system",
-        content:
-          "You are a document auto-completion assistant, Content is limited to 10 words, Output html format, Don't return ```html, just output it for internal use.",
+        content: META_PROMPT,
       },
       {
         role: "user",
         content: text,
       },
     ];
+
     const encoder = new TextEncoder();
 
     function noticeHost(socket: any, text: string) {

@@ -16,6 +16,7 @@ import { NodeSelection, Plugin, PluginKey, TextSelection } from "@tiptap/pm/stat
 import { Mapping, ReplaceAroundStep, ReplaceStep } from "@tiptap/pm/transform";
 import { Decoration, DecorationSet } from "@tiptap/pm/view";
 
+import { marked } from "marked";
 const aiinjectcss = `
 .tiptap-ai-suggestion {
   cursor: pointer;
@@ -56,24 +57,28 @@ class StreamContentHandler {
   content: string;
   lastPartial: string;
   endedWithLessThan: boolean;
+  originalContent: string;
 
   constructor() {
     this.content = "";
     this.lastPartial = "";
     this.endedWithLessThan = false;
+    this.originalContent = "";
   }
 
   static create() {
     return new StreamContentHandler();
   }
 
-  append(text: string) {
+  async append(text: string) {
     if (this.endedWithLessThan) {
       this.content += "<";
     }
     this.endedWithLessThan = text.endsWith("<");
     this.lastPartial = this.endedWithLessThan ? text.slice(0, -1) : text;
-    this.content += this.lastPartial;
+    this.originalContent += this.lastPartial;
+    // this.content += this.lastPartial;
+    this.content = await marked.parse(this.originalContent);
   }
 
   finalize() {
@@ -1423,6 +1428,8 @@ const streamContentPlugin = Extension.create({
                 });
               }
 
+              console.log("**********write", partial, contentHandler);
+
               contentHandler.append(partial);
               const fragment = Fragment.from(
                 transform({
@@ -1466,7 +1473,6 @@ const streamContentPlugin = Extension.create({
                   ),
                 );
                 const step = tr.steps[tr.steps.length - 1];
-                console.log("**********step", step);
                 if (step) {
                   positions = { from: step.from, to: step.from + step.slice.size };
                 }

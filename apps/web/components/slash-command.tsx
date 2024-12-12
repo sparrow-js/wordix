@@ -60,7 +60,7 @@ export const suggestionItems = createSuggestionItems([
         },
       },
       {
-        title: "Code",
+        title: "CodeExecutor",
         description: "CodeExecutor.",
         searchTerms: ["Code", "embed"],
         icon: <Code size={18} />,
@@ -273,6 +273,15 @@ export const suggestionItems = createSuggestionItems([
         aliases: ["hr"],
         command: ({ editor, range }) => {
           editor.chain().focus().deleteRange(range).setHorizontalRule().run();
+        },
+      },
+      {
+        title: "codeBlock",
+        description: "codeBlock.",
+        searchTerms: ["codeBlock", "embed"],
+        icon: <Code size={18} />,
+        command: ({ editor, range }) => {
+          editor.chain().focus().deleteRange(range).setCodeBlock({ language: "javascript" }).run();
         },
       },
       {
