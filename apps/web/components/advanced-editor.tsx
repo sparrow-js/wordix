@@ -37,9 +37,11 @@ import { ContentItemMenu } from "@/components/menus";
 import useStores from "@/hooks/useStores";
 import { observer } from "mobx-react";
 const hljs = require("highlight.js");
+import { Button } from "@/components/ui/button";
+import { Sparkles } from "lucide-react";
 // 自定义插件确保第四个节点是段落
 import Ai from "./ai-generation/ai-editor";
-import { Button } from "./ui/button";
+import PrompChat from "./promp-chat";
 
 const extensions = [
   ...defaultExtensions,
@@ -49,7 +51,7 @@ const extensions = [
     appId: "APP_ID_HERE",
     token: "TOKEN_HERE",
     // ATTENTION: This is for demo purposes only
-    baseUrl: "http://localhost:3000/api/ai",
+    baseUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/api/ai`,
     autocompletion: true,
   }),
 ];
@@ -66,6 +68,7 @@ const TailwindAdvancedEditor = ({ response }: any) => {
   const [editor, setEditor] = useState<any | null>(null);
 
   const { workbench, generations, mentions, inputsNode, dialogs, documents } = useStores();
+  const [openPromptChat, setOpenPromptChat] = useState(false);
 
   //Apply Codeblock Highlighting on the HTML from editor.getHTML()
   const highlightCodeblocks = (content: string) => {
@@ -82,7 +85,7 @@ const TailwindAdvancedEditor = ({ response }: any) => {
     const json = editor.getJSON();
 
     const { document } = response;
-    document && document.updateData({ content: json });
+    document?.updateData({ content: json });
 
     setCharsCount(editor.storage.characterCount.words());
     window.localStorage.setItem("html-content", highlightCodeblocks(editor.getHTML()));
@@ -107,18 +110,6 @@ const TailwindAdvancedEditor = ({ response }: any) => {
               <div className={charsCount ? "rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground" : "hidden"}>
                 {charsCount} Words
               </div>
-              <Button
-                onClick={() => {
-                  editor.commands.aiTextPrompt({
-                    text: "Write something about Tiptap Editor and include a list of it's core features",
-                    format: "rich-text",
-                    stream: true,
-                    insertAt: editor.state.doc.content.size,
-                  });
-                }}
-              >
-                test
-              </Button>
             </div>
             <EditorRoot>
               <EditorContent
@@ -267,6 +258,22 @@ const TailwindAdvancedEditor = ({ response }: any) => {
               </EditorContent>
             </EditorRoot>
           </div>
+          <div className="fixed bottom-5 right-5 group">
+            <Button
+              className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 text-white border-none shadow-md hover:shadow-lg transition-all duration-200 min-w-[40px] group-hover:w-auto overflow-hidden"
+              onClick={() => setOpenPromptChat(!openPromptChat)}
+            >
+              <Sparkles className="mr-0 group-hover:mr-2 h-4 w-4" />
+              <span className="max-w-0 group-hover:max-w-[100px] transition-all duration-300 overflow-hidden whitespace-nowrap">
+                AI Prompt
+              </span>
+            </Button>
+          </div>
+          {editor && openPromptChat && (
+            <div className="absolute bottom-5 left-1/2 -translate-x-1/2 w-full max-w-[600px]">
+              <PrompChat editor={editor} />
+            </div>
+          )}
         </div>
       </ResizablePanel>
       <ResizableHandle />
@@ -277,7 +284,6 @@ const TailwindAdvancedEditor = ({ response }: any) => {
           </div>
         </ResizablePanel>
       )}
-      ;
     </ResizablePanelGroup>
   );
 };

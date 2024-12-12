@@ -17,6 +17,9 @@ import { Mapping, ReplaceAroundStep, ReplaceStep } from "@tiptap/pm/transform";
 import { Decoration, DecorationSet } from "@tiptap/pm/view";
 
 import { marked } from "marked";
+
+const base_url = process.env.NEXT_PUBLIC_BASE_URL;
+
 const aiinjectcss = `
 .tiptap-ai-suggestion {
   cursor: pointer;
@@ -154,7 +157,7 @@ const fetchAiResponse = async ({
   extensionOptions,
 }: AiRequestOptions): Promise<string | undefined> => {
   const { baseUrl } = extensionOptions;
-  const apiUrl = baseUrl ?? "http://localhost:3000/api/ai"; // Assuming N is the default URL
+  const apiUrl = baseUrl ?? `${base_url}/api/ai`; // Assuming N is the default URL
 
   const response = await fetch(`${apiUrl}/text/${action}`, {
     method: "POST",
@@ -191,7 +194,7 @@ const fetchData = async ({
   aborter,
 }): Promise<ReadableStream<Uint8Array> | null> => {
   const { baseUrl } = extensionOptions;
-  const apiUrl = baseUrl ?? "http://localhost:3000/api/ai";
+  const apiUrl = baseUrl ?? `${base_url}/api/ai`;
 
   let fetchOptions: RequestInit = {
     method: "POST",
@@ -320,10 +323,8 @@ const handleAiOperationsStream =
           }
 
           contentHandler.append(chunk);
-          console.log("**********value", chunk, contentHandler);
 
           if (aiStorage.state === "idle") return false;
-          console.log("**********aiStorage", aiStorage.state);
 
           Object.assign(aiStorage, {
             state: "loading",
@@ -346,7 +347,6 @@ const handleAiOperationsStream =
 
           try {
             if (insertContent) {
-              console.log("**********write start", insertContent);
               const writingPosition = write({
                 partial: chunk,
                 transform: ({ defaultTransform }) =>
@@ -592,7 +592,6 @@ const handleAiOperations =
         editor.chain().setMeta("aiResponse", aiStorage).run();
         return true;
       } catch (error) {
-        console.log("**********error", error);
         Object.assign(aiStorage, {
           state: "error",
           response: undefined,
@@ -937,7 +936,7 @@ const aiExtension = Extension.create({
     return {
       appId: "YOUR_APP_ID",
       token: "YOUR_TOKEN_HERE",
-      baseUrl: "https://api.tiptap.dev/v1/ai",
+      baseUrl: `${base_url}/api/ai`,
       autocompletion: false,
       autocompletionOptions: {
         inputLength: 4000,
@@ -967,7 +966,7 @@ const aiExtension = Extension.create({
           options: {
             appId: this.options.appId,
             token: this.options.token,
-            baseUrl: this.options.baseUrl || "https://api.tiptap.dev/v1/ai",
+            baseUrl: this.options.baseUrl || `${base_url}/api/ai`,
             inputLength: this.options.autocompletionOptions.inputLength || 4000,
             modelName: this.options.autocompletionOptions.modelName,
             trigger: this.options.autocompletionOptions.trigger || "Tab",
@@ -1178,10 +1177,8 @@ const invokeAiCommand = (props, action, options) => {
 
 // Function to conditionally warn the user based on the base URL
 function shouldWarnUser({ baseUrl, action }) {
-  const isProductionEnvironment = !["localhost", "tiptap.dev", "embed-pro.tiptap.dev", "ai-demo.tiptap.dev"].includes(
-    window.location.hostname,
-  );
-  return isProductionEnvironment && baseUrl === "https://api-demo.tiptap.dev/v1/ai";
+  const isProductionEnvironment = !["localhost", "wordix-web-jm9f.vercel.app"].includes(window.location.hostname);
+  return isProductionEnvironment && baseUrl === "https://wordix-web-jm9f.vercel.app/api/ai";
 }
 
 // Helper function for AI image processing and generation
@@ -1418,7 +1415,6 @@ const streamContentPlugin = Extension.create({
               }
             },
             write({ partial, transform = createContentFragment, appendToChain = (chain) => chain }) {
-              console.log("**********write", partial, contentHandler);
               let chain = editor.chain();
 
               if (contentHandler.content === "" && !isSinglePoint) {
@@ -1427,8 +1423,6 @@ const streamContentPlugin = Extension.create({
                   to: endPos,
                 });
               }
-
-              console.log("**********write", partial, contentHandler);
 
               contentHandler.append(partial);
               const fragment = Fragment.from(

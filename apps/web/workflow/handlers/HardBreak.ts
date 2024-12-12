@@ -17,7 +17,6 @@ export class HardBreakHandler extends BaseHandler {
         timestamp: Date.now(),
       };
     }
-    console.log("hard break ***********");
     context.markdown.push("\n");
     await this.emitStream(context, "message", "\n");
   }

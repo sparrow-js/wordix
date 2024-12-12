@@ -302,7 +302,7 @@ const PageBar = () => {
       </div>
       <div className="flex items-center gap-2">
         {visibility === null ? <ShareButton /> : <UpdateButton />}
-        <AIButton />
+        {/* <AIButton /> */}
         <RunButton />
       </div>
     </div>

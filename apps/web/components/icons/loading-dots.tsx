@@ -4,12 +4,12 @@ interface LoadingDotsProps {
   color?: string;
 }
 
-const LoadingDots = ({ color = "#000" }: LoadingDotsProps) => {
+const LoadingDots = () => {
   return (
     <span className={styles.loading}>
-      <span style={{ backgroundColor: color }} />
-      <span style={{ backgroundColor: color }} />
-      <span style={{ backgroundColor: color }} />
+      <span />
+      <span />
+      <span />
     </span>
   );
 };
