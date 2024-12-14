@@ -105,7 +105,7 @@
     "install": "^0.13.0",
     "invariant": "^2.2.4",
     "isolated-vm": "^4.7.2",
-    "jotai": "^2.6.4",
+    "jotai": "2.9.2",
     "js-yaml": "^4.1.0",
     "jschardet": "^3.1.4",
     "json5": "^2.2.3",

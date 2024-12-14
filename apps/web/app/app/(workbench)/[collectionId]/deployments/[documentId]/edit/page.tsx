@@ -135,8 +135,7 @@ export default function EditPage() {
                               <div className="flex items-center gap-2">
                                 {document?.visibility ? (
                                   <>
-                                    {visibilityOptions.find((option) => option.value === document.visibility)?.icon ??
-                                      Globe}
+                                    {visibilityOptions.find((option) => option.value === document.visibility)?.icon}
                                     {visibilityOptions.find((option) => option.value === document.visibility)?.label}
                                   </>
                                 ) : (
