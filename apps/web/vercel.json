@@ -2,11 +2,11 @@
     "rewrites": [
         {
             "source": "/docs",
-            "destination": "https://novel.mintlify.dev/docs"
+            "destination": "https://wordix-web-jm9f.vercel.app/docs"
         },
         {
             "source": "/docs/:match*",
-            "destination": "https://novel.mintlify.dev/docs/:match*"
+            "destination": "https://wordix-web-jm9f.vercel.app/docs/:match*"
         }
     ]
 }
