@@ -23,7 +23,7 @@ export default auth((req) => {
 
 // Read more: https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\.png).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\.png|FascinateInline-Regular\\.ttf).*)"],
 };
 
 // export default middleware;
