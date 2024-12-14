@@ -1,100 +1,86 @@
+"use client";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import useStores from "@/hooks/useStores";
+import { PAGINATION_SYMBOL } from "@/stores/base/const";
+import { formatDistanceToNow } from "date-fns";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
+
 export default function VersionsPage() {
-    return (
-        <div
-            className="border bg-card text-card-foreground shadow-sm h-full rounded-md"
-            data-sentry-element="Card"
-            data-sentry-source-file="VersionsView.tsx"
-        >
-            <div
-            className="flex flex-col gap-1.5 p-6"
-            data-sentry-element="CardHeader"
-            data-sentry-source-file="VersionsView.tsx"
-            >
-            <h3
-                className="text-2xl font-semibold leading-none tracking-tight"
-                data-sentry-element="CardTitle"
-                data-sentry-source-file="VersionsView.tsx"
-            >
-                Versions
-            </h3>
-            </div>
-            <div
-            className="p-6 pt-0 h-full"
-            data-sentry-element="CardContent"
-            data-sentry-source-file="VersionsView.tsx"
-            >
-            <div className="relative w-full overflow-auto">
-                <table
-                className="w-full caption-bottom text-sm"
-                data-sentry-element="Table"
-                data-sentry-source-file="VersionsView.tsx"
-                >
-                <thead
-                    className="[&_tr]:border-b"
-                    data-sentry-element="TableHeader"
-                    data-sentry-source-file="VersionsView.tsx"
-                >
-                    <tr
-                    className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
-                    data-sentry-element="TableRow"
-                    data-sentry-source-file="VersionsView.tsx"
-                    >
-                    <th
-                        className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&_:has([role=checkbox])]:pr-0"
-                        data-sentry-element="TableHead"
-                        data-sentry-source-file="VersionsView.tsx"
-                    >
-                        Version
-                    </th>
-                    <th
-                        className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&_:has([role=checkbox])]:pr-0"
-                        data-sentry-element="TableHead"
-                        data-sentry-source-file="VersionsView.tsx"
-                    >
-                        Title
-                    </th>
-                    <th
-                        className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&_:has([role=checkbox])]:pr-0"
-                        data-sentry-element="TableHead"
-                        data-sentry-source-file="VersionsView.tsx"
-                    >
-                        Release Date
-                    </th>
-                    </tr>
-                </thead>
-                <tbody
-                    className="[&_tr:last-child]:border-0 overflow-y-scroll"
-                    data-sentry-element="TableBody"
-                    data-sentry-source-file="VersionsView.tsx"
-                >
-                    <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                    <td
-                        className="p-4 align-middle [&_:has([role=checkbox])]:pr-0"
-                    >
-                        <div
-                        className="inline-flex items-center rounded-full border px-2.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 w-fit py-0 bg-blue-400 text-primary-foreground"
-                        data-sentry-element="Badge"
-                        data-sentry-component="Badge"
-                        data-sentry-source-file="badge.tsx"
-                        >
-                        1.0
-                        </div>
-                    </td>
-                    <td
-                        className="p-4 align-middle [&_:has([role=checkbox])]:pr-0"
-                    >
-                        Hello world 👋🌍 - EXTENSION
-                    </td>
-                    <td
-                        className="p-4 align-middle [&_:has([role=checkbox])]:pr-0"
-                    >
-                        27/10/2024
-                    </td>
-                    </tr>
-                </tbody>
-                </table>
-            </div>
-            </div>
+  const { collectionId, documentId } = useParams<{ collectionId: string; documentId: string }>();
+  const [ref, inView] = useInView();
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(0);
+  const { revisions } = useStores();
+  const publishedRevisions = revisions.publishedInDocument(documentId);
+
+  const fetchRuns = async (page: number) => {
+    setIsLoading(true);
+    const res = await revisions.fetchPage({
+      limit: 25,
+      page: page,
+      collectionId: collectionId as string,
+      documentId: documentId as string,
+      visibility: "published",
+      sort: "updatedAt",
+    });
+    if (res[PAGINATION_SYMBOL].total <= revisions.publishedList.length) {
+      setHasMore(false);
+    } else {
+      setPage(page + 1);
+    }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    if (inView && !isLoading && hasMore) {
+      fetchRuns(page);
+    }
+  }, [inView]);
+
+  return (
+    <div className="border bg-card text-card-foreground shadow-sm h-full rounded-md">
+      <div className="flex flex-col gap-1.5 p-6">
+        <h3 className="text-2xl font-semibold leading-none tracking-tight">Versions</h3>
+      </div>
+      <div className="p-6 pt-0 h-full" data-sentry-element="CardContent" data-sentry-source-file="VersionsView.tsx">
+        <div className="relative w-full overflow-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Version</TableHead>
+                <TableHead>Title</TableHead>
+                <TableHead>Release Date</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {publishedRevisions.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={3} className="h-24 text-center">
+                    <div className="flex flex-col items-center justify-center gap-2 text-sm text-muted-foreground">
+                      <p>No Versions found</p>
+                      <p>When you execute flows, they will appear here</p>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ) : (
+                publishedRevisions.map((revision) => (
+                  <TableRow key={revision.id}>
+                    <TableCell>
+                      <div>{revision.version}</div>
+                    </TableCell>
+                    <TableCell>{revision.title}</TableCell>
+                    <TableCell>{formatDistanceToNow(revision.updatedAt)}</TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
         </div>
-    )
+        <div ref={ref} style={{ height: "1px" }} />
+      </div>
+    </div>
+  );
 }

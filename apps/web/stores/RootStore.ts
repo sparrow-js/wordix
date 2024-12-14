@@ -12,6 +12,7 @@ import InputsNodeStore from "./InputsNodeStore";
 import LoopsStore from "./LoopsStore";
 import PoliciesStore from "./PoliciesStore";
 import PromptsStore from "./PromptsStore";
+import RevisionStore from "./RevisionStore";
 import RunsStore from "./RunsStore";
 import SettingStore from "./SettingStore";
 import ToolStore from "./ToolStore";
@@ -42,6 +43,7 @@ export default class RootStore {
   runs: RunsStore;
   workspaces: WorkspacesStore;
   apiKeys: ApiKeysStore;
+  revisions: RevisionStore;
 
   constructor() {
     // Models
@@ -64,6 +66,7 @@ export default class RootStore {
     this.registerStore(RunsStore, "runs");
     this.registerStore(WorkspacesStore, "workspaces");
     this.registerStore(ApiKeysStore, "apiKeys");
+    this.registerStore(RevisionStore, "revisions");
   }
 
   /**
