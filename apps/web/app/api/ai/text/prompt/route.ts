@@ -2,7 +2,14 @@ import { auth } from "@/lib/auth";
 import { respErr } from "@/lib/resp";
 import type { Message } from "@/workflow/ai/providers/base";
 import { ServiceFactory } from "@/workflow/ai/services/service-factory";
+import type {
+  // HarmCategory,
+  // HarmBlockThreshold,
+  Part,
+} from "@google/generative-ai";
 import { META_PROMPT } from "./const";
+
+import { getProviderFromModel } from "@/workflow/ai/config/model-configs";
 
 export async function POST(request: Request) {
   const session = await auth();
@@ -12,7 +19,7 @@ export async function POST(request: Request) {
   }
 
   const body = await request.json();
-  const { text } = body;
+  const { text, model } = body;
 
   if (!text) {
     return respErr("Text is required");
@@ -20,17 +27,23 @@ export async function POST(request: Request) {
 
   try {
     const aiService = ServiceFactory.getInstance().getAIService();
+    let messages: string | Message[] | Array<string | Part> = "";
+    if (model === "gpt-4o") {
+      messages = [
+        {
+          role: "system",
+          content: META_PROMPT,
+        },
+        {
+          role: "user",
+          content: text,
+        },
+      ];
+    }
 
-    const messages: Message[] = [
-      {
-        role: "system",
-        content: META_PROMPT,
-      },
-      {
-        role: "user",
-        content: text,
-      },
-    ];
+    if (model === "gemini-2.0-flash-exp") {
+      messages = text;
+    }
 
     const encoder = new TextEncoder();
 
@@ -44,12 +57,12 @@ export async function POST(request: Request) {
       start(controller) {
         aiService
           .streamChat(
-            "openai",
+            getProviderFromModel(model),
             messages,
             async (text) => {
               noticeHost(controller, text);
             },
-            "gpt-4o",
+            model,
           )
           .finally(() => {
             controller.close();

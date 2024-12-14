@@ -1,13 +1,46 @@
+import { AiOutlineOpenAI } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
+
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import type { Editor } from "@tiptap/core";
 import { Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import LoadingDots from "./icons/loading-dots";
 
+const models = [
+  {
+    name: "openAI 4o",
+    value: "gpt-4o",
+    icon: <AiOutlineOpenAI className="w-4 h-4 mr-2" />,
+    bigIcon: <AiOutlineOpenAI className="w-[36px] h-[36px]" />,
+  },
+  {
+    name: "gemini 2.0",
+    value: "gemini-2.0-flash-exp",
+    icon: <FcGoogle className="w-4 h-4 mr-2" />,
+    bigIcon: <FcGoogle className="w-[36px] h-[36px]" />,
+  },
+];
+
 const PrompChat = ({ editor }: { editor: Editor }) => {
   const [chatValue, setChatValue] = useState("");
   const inputRef = useRef<any>(null);
+  const [model, setModel] = useState("");
+  useEffect(() => {
+    const storedModel = localStorage.getItem("selectedModel");
+    if (storedModel) {
+      setModel(storedModel);
+    } else {
+      setModel(models[0].value);
+    }
+  }, []);
 
   const aiStorage = editor.storage.ai;
 
@@ -24,17 +57,19 @@ const PrompChat = ({ editor }: { editor: Editor }) => {
 
   return (
     <footer className="text-white p-4 rounded-xl flex items-center justify-between space-x-4">
-      <div className="flex flex-1 items-end space-x-4 p-2 rounded-[31px] focus-within:bg-gray-800 bg-black">
+      <div className="flex flex-1 items-end space-x-2 p-2 rounded-[31px] focus-within:bg-gray-800 bg-black hover:bg-gray-700">
         <div className="flex flex-1 w-full min-h-[36px] items-center justify-center mx-4">
           <textarea
             ref={inputRef}
-            className="flex-1 w-full border-none outline-none focus-within:bg-gray-800 bg-black leading-[20px] max-h-[80px]"
+            className="flex-1 w-full border-none outline-none  leading-[20px] max-h-[80px] bg-transparent"
             spellCheck="false"
             rows={1}
             placeholder="Tell the AI what to change"
             style={{
               resize: "none",
-              overflowY: "auto",
+              overflowY: "scroll", // Allow scrolling
+              scrollbarWidth: "none", // For Firefox
+              msOverflowStyle: "none", //
             }}
             value={chatValue}
             onChange={(e) => {
@@ -54,7 +89,8 @@ const PrompChat = ({ editor }: { editor: Editor }) => {
               text: chatValue,
               format: "rich-text",
               stream: true,
-              insertAt: editor.state.doc.content.size,
+              insertAt: editor.state.selection.from || editor.state.doc.content.size,
+              model: model,
             });
             setChatValue("");
           }}
@@ -68,6 +104,25 @@ const PrompChat = ({ editor }: { editor: Editor }) => {
             </>
           )}
         </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <span className="flex items-center">{models.find((item) => item.value === model)?.bigIcon}</span>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            {models.map((model) => (
+              <DropdownMenuItem
+                key={model.name}
+                onClick={() => {
+                  setModel(model.value);
+                  localStorage.setItem("selectedModel", model.value);
+                }}
+              >
+                {model.icon}
+                {model.name}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       {/* <Button className="rounded-full">
         <X className="h-6 w-6" />

@@ -1,3 +1,8 @@
+import type {
+  // HarmCategory,
+  // HarmBlockThreshold,
+  Part,
+} from "@google/generative-ai";
 import type { ModelConfig } from "../config/model-configs";
 import type { AIProvider, Message } from "../providers/base";
 
@@ -49,7 +54,7 @@ export class AIService {
 
   async streamChat(
     providerName: string,
-    messages: Message[],
+    messages: Message[] | string | Array<string | Part>,
     onText: (text: string) => void,
     modelName?: string,
     options?: Partial<ModelConfig>,

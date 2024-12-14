@@ -1,4 +1,4 @@
-import { AnthropicIcon, CohereIcon, OpenaiIcon, PerplexityIcon } from "@/components/settings/icons";
+import { AnthropicIcon, CohereIcon, GeminiIcon, OpenaiIcon, PerplexityIcon } from "@/components/settings/icons";
 
 export interface ModelConfig {
   name: string;
@@ -21,10 +21,11 @@ export interface ModelConfigs {
   anthropic: ProviderModelConfig;
   cohere: ProviderModelConfig;
   perplexity: ProviderModelConfig;
+  gemini: ProviderModelConfig;
 }
 
 export interface ModelConfigWithProvider extends ModelConfig {
-  provider: "openai" | "anthropic" | "cohere" | "perplexity";
+  provider: "openai" | "anthropic" | "cohere" | "perplexity" | "gemini";
   avatar?: React.ReactNode;
   model: string;
 }
@@ -111,12 +112,12 @@ export const allModels: ModelConfigWithProvider[] = [
     avatar: <AnthropicIcon />,
   },
   {
-    provider: "anthropic",
-    model: "claude-3-opus-20240229",
-    name: "claude-3-opus-20240229",
+    provider: "gemini",
+    model: "gemini-2.0-flash-exp",
+    name: "gemini-2.0-flash-exp",
     maxTokens: 4096,
     temperature: 0.7,
-    avatar: <AnthropicIcon />,
+    avatar: <GeminiIcon />,
   },
   {
     provider: "cohere",
@@ -286,6 +287,15 @@ export const modelConfigs: ModelConfigs = {
       },
       "llama-3.1-sonar-huge-128k-online	": {
         name: "llama-3.1-sonar-huge-128k-online	",
+        maxTokens: 4096,
+      },
+    },
+  },
+  gemini: {
+    defaultModel: "gemini-2.0-flash-exp",
+    models: {
+      "gemini-2.0-flash-exp": {
+        name: "gemini-2.0-flash-exp",
         maxTokens: 4096,
       },
     },

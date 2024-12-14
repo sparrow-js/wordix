@@ -7,6 +7,7 @@ export interface AIConfig {
   anthropic: ProviderConfig;
   cohere: ProviderConfig;
   perplexity: ProviderConfig;
+  gemini: ProviderConfig;
 }
 
 export const aiConfig: AIConfig = {
@@ -21,5 +22,8 @@ export const aiConfig: AIConfig = {
   },
   perplexity: {
     apiKey: "your-perplexity-api-key",
+  },
+  gemini: {
+    apiKey: "your-gemini-api-key",
   },
 };

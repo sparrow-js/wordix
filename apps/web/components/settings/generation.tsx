@@ -2,6 +2,7 @@ import { Slider } from "@/components/ui/slider";
 import useStores from "@/hooks/useStores";
 import { cn } from "@/lib/utils";
 import { Image } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { observer } from "mobx-react";
 import { models } from "./const";
 
@@ -56,7 +57,8 @@ const Generation = ({ editor }: SettingProps) => {
                     </p>
                     <Slider
                       min={0}
-                      max={100}
+                      max={1}
+                      step={0.01}
                       value={[currentGeneration.temperature]}
                       onValueChange={(value) => {
                         generations.updateDataSyncToNode("temperature", value[0], editor);
@@ -151,38 +153,16 @@ const Generation = ({ editor }: SettingProps) => {
                       ))}
                     </div>
                   </div>
-                  <div>
-                    <a
-                      target="_blank"
-                      className="text-sm text-sky-600 hover:underline"
-                      href="https://www.notion.so/hey-daily/Models-615b76d7498f4e06ae522a329695da74"
-                      rel="noreferrer"
-                    >
-                      Model documentation
-                    </a>
-                  </div>
                 </div>
               </div>
               <div className="mt-12 flex w-full justify-center">
-                <button className="mt-6 flex items-center rounded border px-4 py-2 text-sm font-semibold uppercase tracking-tight text-stone-600 hover:bg-red-500 hover:text-white active:bg-red-600">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="lucide lucide-trash2 mr-2 h-4 w-4"
-                  >
-                    <path d="M3 6h18"></path>
-                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
-                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
-                    <line x1="10" x2="10" y1="11" y2="17"></line>
-                    <line x1="14" x2="14" y1="11" y2="17"></line>
-                  </svg>
+                <button
+                  className="mt-6 flex items-center rounded border px-4 py-2 text-sm font-semibold uppercase tracking-tight text-stone-600 hover:bg-red-500 hover:text-white active:bg-red-600"
+                  onClick={() => {
+                    generations.removeGeneration(currentGeneration.id);
+                  }}
+                >
+                  <Trash2 className="mr-2 h-4 w-4" />
                   <span className="mr-1">Delete</span>
                 </button>
               </div>

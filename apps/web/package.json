@@ -12,10 +12,12 @@
   "dependencies": {
     "@ai-sdk/anthropic": "^0.0.56",
     "@ai-sdk/cohere": "^1.0.3",
+    "@ai-sdk/google": "^1.0.10",
     "@ai-sdk/openai": "^0.0.72",
     "@auth/unstorage-adapter": "^2.7.3",
     "@floating-ui/react": "^0.26.25",
     "@fortaine/fetch-event-source": "^3.0.6",
+    "@google/generative-ai": "^0.21.0",
     "@heroicons/react": "^2.1.5",
     "@hookform/resolvers": "^3.9.0",
     "@langchain/core": "^0.3.22",

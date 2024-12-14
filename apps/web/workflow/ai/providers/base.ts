@@ -1,3 +1,4 @@
+import type { Part } from "@google/generative-ai";
 import type { ModelConfig } from "../config/model-configs";
 
 export interface AIProvider {
@@ -10,7 +11,7 @@ export interface AIProvider {
     options?: Partial<ModelConfig>,
   ): Promise<string>;
   streamChat?(
-    messages: Message[],
+    messages: Message[] | string | Array<string | Part>,
     onText: (text: string) => void,
     modelName?: string,
     options?: Partial<ModelConfig>,
@@ -57,8 +58,9 @@ export abstract class BaseAIProvider implements AIProvider {
     modelName?: string,
     options?: Partial<ModelConfig>,
   ): Promise<string>;
+
   abstract streamChat(
-    messages: Message[],
+    messages: Message[] | string | Array<string | Part>,
     onText: (text: string) => void,
     modelName?: string,
     options?: Partial<ModelConfig>,

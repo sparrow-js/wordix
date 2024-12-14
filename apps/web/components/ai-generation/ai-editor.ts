@@ -368,6 +368,7 @@ const handleAiOperationsStream =
         }
 
         contentHandler.finalize();
+
         Object.assign(aiStorage, {
           state: "idle",
           response: contentHandler.content,
@@ -378,6 +379,18 @@ const handleAiOperationsStream =
             range: undefined,
           },
         });
+
+        const writingPosition = write({
+          partial: ".",
+          transform: ({ defaultTransform }) =>
+            extensionOptions.showDecorations === false
+              ? defaultTransform()
+              : createNodeFromContent(applyAiMarkToNodes(defaultTransform().toJSON()), editor.schema),
+          appendToChain: (chain) => chain.setMeta("aiResponse", aiStorage),
+        });
+
+        startPosition = writingPosition.from;
+        endPosition = writingPosition.to;
 
         aiStorage.pastResponses.push(contentHandler.content);
 

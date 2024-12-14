@@ -3,6 +3,7 @@ import { aiConfig } from "../config/providers";
 import { FLUXProvider } from "../providers/FLUX";
 import { AnthropicProvider } from "../providers/anthropic";
 import { CohereProvider } from "../providers/cohere";
+import { GeminiProvider } from "../providers/gemini";
 import { OpenAIProvider } from "../providers/openai";
 import { PerplexityProvider } from "../providers/perplexity";
 import { AIService } from "./ai-service";
@@ -45,17 +46,12 @@ export class ServiceFactory {
       ),
     );
 
-    this.aiService.registerProvider("flux", new FLUXProvider(""));
+    this.aiService.registerProvider(
+      "gemini",
+      new GeminiProvider(aiConfig.gemini.apiKey, modelConfigs.gemini.defaultModel, modelConfigs.gemini.models),
+    );
 
-    // Register Anthropic provider with model configs
-    // this.aiService.registerProvider(
-    //   "anthropic",
-    //   new AnthropicProvider(
-    //     aiConfig.anthropic.apiKey,
-    //     modelConfigs.anthropic.defaultModel,
-    //     modelConfigs.anthropic.models,
-    //   ),
-    // );
+    this.aiService.registerProvider("flux", new FLUXProvider(""));
   }
 
   static getInstance(): ServiceFactory {
