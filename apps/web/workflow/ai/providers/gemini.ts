@@ -82,8 +82,6 @@ export class GeminiProvider extends BaseAIProvider {
     modelName?: string,
     options?: Partial<ModelConfig>,
   ): Promise<string> {
-    console.log("**************11", messages);
-
     const model = this.gemini.getGenerativeModel({
       model: "gemini-2.0-flash-exp",
     });

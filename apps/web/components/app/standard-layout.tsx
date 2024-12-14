@@ -331,8 +331,8 @@ const StandardLayout = observer(() => {
                             <Link href={`/app/${deployment.collectionId}/deployments/${deployment.id}/overview`}>
                               <div className="flex flex-row gap-3">
                                 <div className="flex h-10 w-10 items-center justify-center rounded-sm text-2xl font-bold text-background bg-muted-foreground">
-                                  <div className="flex h-10 w-10 items-center justify-center rounded-md">
-                                    <div style={{ position: "relative", width: "100%", paddingBottom: "100%" }} />
+                                  <div className="flex h-10 w-10 items-center justify-center rounded-sm text-2xl font-bold text-background bg-muted-foreground">
+                                    {deployment.title.slice(0, 2).toUpperCase()}
                                   </div>
                                 </div>
                                 <div className="flex flex-col">

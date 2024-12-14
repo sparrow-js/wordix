@@ -81,7 +81,6 @@ export default function ExplorePage() {
           const url = await onUpload(acceptedFiles[0]);
           setImageUrl(url as string);
           const currentInputId = (event.target as HTMLElement).id;
-          console.log("currentInputId **********", currentInputId);
           setInputValues((prev) => ({ ...prev, [currentInputId]: url }));
         } catch (error) {
           console.error("Error uploading image:", error);

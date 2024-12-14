@@ -6,7 +6,7 @@ export default auth((req) => {
   const { pathname } = req.nextUrl;
 
   // 定义无需认证的路径列表，包括根路径
-  const publicPaths = ["/", "/login", "/register", "/forgot-password", "/docs"];
+  const publicPaths = ["/", "/login", "/register", "/forgot-password"];
 
   // 如果已登录且访问登录页，重定向到应用首页
   if (req.auth && pathname === "/login") {
