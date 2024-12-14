@@ -215,7 +215,7 @@ export default function ExplorePage() {
         </div>
       </div>
 
-      <div className="w-full relative overflow-hidden">
+      <div className="w-full relative overflow-hidden pt-12">
         <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row space-y-12 md:space-y-0 md:space-x-12 relative pt-24">
           <div className="w-full md:w-1/2 flex flex-col items-start justify-center md:-mt-12 px-6">
             <div className="text-left mb-8">
