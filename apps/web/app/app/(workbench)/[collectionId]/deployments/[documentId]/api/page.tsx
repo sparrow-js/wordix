@@ -169,12 +169,12 @@ export default function OverviewPage() {
                 <div className="flex items-center justify-between px-2 text-primary text-xs py-2">
                   <span className="flex items-center gap-2.5 text-xs">
                     <DollarSign className="h-4 w-4" />
-                    <code>export WORDSMITH_API_KEY=&lt;your_api_key&gt;</code>
+                    <code>export WORDIX_API_KEY=&lt;your_api_key&gt;</code>
                   </span>
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => navigator.clipboard.writeText("export WORDSMITH_API_KEY=&lt;your_api_key&gt;")}
+                    onClick={() => navigator.clipboard.writeText("export WORDIX_API_KEY=&lt;your_api_key&gt;")}
                   >
                     <Copy className="h-4 w-4" />
                   </Button>

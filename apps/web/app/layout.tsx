@@ -4,9 +4,9 @@ import "@/styles/prosemirror.css";
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 
-const title = "wordsmith - Notion-style WYSIWYG editor with AI-powered autocompletions";
+const title = "wordix - Notion-style WYSIWYG editor with AI-powered autocompletions";
 const description =
-  "wordsmith is a Notion-style WYSIWYG editor with AI-powered autocompletions. Built with Tiptap, OpenAI, and Vercel AI SDK.";
+  "wordix is a Notion-style WYSIWYG editor with AI-powered autocompletions. Built with Tiptap, OpenAI, and Vercel AI SDK.";
 
 export const metadata: Metadata = {
   title,

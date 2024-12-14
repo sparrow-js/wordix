@@ -28,7 +28,7 @@ export async function processDocument() {
             content: [
               {
                 type: "text",
-                text: "A warm welcome to Wordsmith 🎉🕺",
+                text: "A warm welcome to Wordix 🎉🕺",
               },
             ],
           },
@@ -81,7 +81,7 @@ export async function processDocument() {
                 content: [
                   {
                     type: "text",
-                    text: "You've made an excellent decision choosing Wordsmith. ",
+                    text: "You've made an excellent decision choosing Wordix. ",
                   },
                 ],
               },
@@ -95,7 +95,7 @@ export async function processDocument() {
                 content: [
                   {
                     type: "text",
-                    text: "I am Filip, and I am the CEO of Wordsmith. ",
+                    text: "I am Filip, and I am the CEO of Wordix. ",
                   },
                 ],
               },
