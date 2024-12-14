@@ -11,11 +11,24 @@ export default function OverviewPage() {
   const { documentId, collectionId } = useParams<{ documentId: string; collectionId: string }>();
   const { documents } = useStores();
   const [document, setDocument] = useState<Document | null>(null);
+  const [inputList, setInputList] = useState<any[]>([]);
+  const [bodyString, setBodyString] = useState<string>("");
 
   useEffect(() => {
     async function fetchDocument() {
       const doc = await documents.fetchWithSharedTree(documentId);
       setDocument(doc.document);
+
+      const inputsNode = doc.document.content?.content.find((c) => c.type === "inputs");
+      if (inputsNode) {
+        const inputsNodeContent = inputsNode.content;
+        setInputList(inputsNodeContent);
+        setBodyString(
+          `{"inputs": { ${inputsNodeContent
+            .map((input) => `"${input.attrs.label}":"<${input.attrs.type}_value>"`)
+            .join(",")}}, "version":"${doc.document?.documentVersion}"}`,
+        );
+      }
     }
     fetchDocument();
   }, [documentId]);
@@ -59,12 +72,13 @@ export default function OverviewPage() {
                 <h3 className="text-md font-bold">Inputs</h3>
                 <p>These are the inputs for this WordApp:</p>
                 <ul className="list-inside list-disc">
-                  <li>
-                    name <span className="text-gray-400">(text)</span>
-                  </li>
-                  <li>
-                    style <span className="text-gray-400">(text)</span>
-                  </li>
+                  {inputList.map((input) => {
+                    return (
+                      <li key={input.id}>
+                        {input.attrs.label} <span className="text-gray-400">({input.attrs.type})</span>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
 
@@ -84,12 +98,12 @@ export default function OverviewPage() {
                 <div className="flex flex-col rounded-md border border-border">
                   <div className="flex items-center justify-between px-2 text-primary text-xs py-2">
                     <span className="flex items-center gap-2.5 text-xs">
-                      <code>{'{"version": "^1.0"}'}</code>
+                      <code>{`{"version": "${document?.documentVersion}"}`}</code>
                     </span>
                     <Button
                       variant="ghost"
                       size="icon"
-                      onClick={() => navigator.clipboard.writeText('{"version": "^1.0"}')}
+                      onClick={() => navigator.clipboard.writeText(`{"version": "${document?.documentVersion}"}`)}
                     >
                       <Copy className="h-4 w-4" />
                     </Button>
@@ -105,20 +119,12 @@ export default function OverviewPage() {
                   <div className="flex flex-col rounded-md border border-border">
                     <div className="flex items-center justify-between px-2 text-primary text-xs py-2">
                       <span className="flex items-center gap-2.5 text-xs">
-                        <code>
-                          {"{"}
-                          <br />
-                          &nbsp;&nbsp;&nbsp;&nbsp;"inputs": {"{"}
-                          <br />
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name": "&lt;text_value&gt;",
-                          <br />
-                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"style": "&lt;text_value&gt;"
-                          <br />
-                          &nbsp;&nbsp;&nbsp;&nbsp;{"}"},<br />
-                          &nbsp;&nbsp;&nbsp;&nbsp;"version": "^1.0"
-                          <br />
-                          {"}"}
-                        </code>
+                        <code>{`{
+  "inputs": {
+  ${inputList.map((input) => `  "${input.attrs.label}": "<${input.attrs.type}_value>"`).join(",\n  ")}
+  },
+  "version": "${document?.documentVersion}"
+}`}</code>
                       </span>
                       <Button
                         variant="ghost"
@@ -143,8 +149,6 @@ export default function OverviewPage() {
           </div>
         </div>
       </div>
-
-      {/* Testing Section */}
       <div className="rounded-lg border bg-card text-card-foreground shadow-sm flex-1">
         <div className="flex flex-col gap-1.5 p-6">
           <h3 className="text-2xl font-semibold leading-none tracking-tight">Testing</h3>
@@ -191,22 +195,30 @@ export default function OverviewPage() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => navigator.clipboard.writeText(`curl -X POST /api/released-app/${document?.id}/run`)}
+                    onClick={() =>
+                      navigator.clipboard.writeText(
+                        `
+curl -X POST /api/released-app/${document?.id}/run 
+-H "Authorization: Bearer $WORDIX_API_KEY" 
+-d '${bodyString}'`,
+                      )
+                    }
                   >
                     <Copy className="h-4 w-4" />
                   </Button>
                 </div>
                 <div className="flex items-center justify-between px-2 text-primary text-xs py-2 ml-11">
-                  <code>-H "Authorization: Bearer $WORDSMITH_API_KEY"</code>
+                  <code>-H "Authorization: Bearer $WORDIX_API_KEY"</code>
                 </div>
                 <div className="flex items-center justify-between px-2 text-primary text-xs py-2 ml-11">
-                  <code>{'-d \'{"inputs":{"name":"<text_value>","style":"<text_value>"},"version":"^1.0"}\''}</code>
+                  <code>{`-d \'${bodyString}\'`}</code>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      ;
     </div>
   );
 }

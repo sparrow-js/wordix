@@ -1,5 +1,9 @@
 import prisma from "@/backend/prisma";
-import { respData, respErr } from "@/lib/resp";
+import { respErr } from "@/lib/resp";
+import { createRun } from "@/service/action/run";
+import { DocumentProcessor } from "@/workflow/processors/DocumentProcessor";
+import { getWorkflowResponseWrite } from "@/workflow/utils/utils";
+import type { NextApiResponse } from "next";
 import { headers } from "next/headers";
 
 async function authenticateByToken(apiToken: string) {
@@ -15,7 +19,7 @@ function extractBearerToken(headers: Headers) {
   return headers.get("authorization")?.slice(7);
 }
 
-export async function POST(req: Request, { params }: { params: { documentId: string } }) {
+export async function POST(req: Request, { params }: { params: { documentId: string } }, res: NextApiResponse) {
   try {
     const headersList = headers();
     const bearerToken = extractBearerToken(headersList);
@@ -29,31 +33,55 @@ export async function POST(req: Request, { params }: { params: { documentId: str
     const body = await req.json();
     const { inputs, version } = body;
 
-    const document = await prisma.document.findFirst({
-      where: { id: documentId },
-      select: {
-        workspace: {
-          select: {
-            id: true,
-            members: {
-              select: { userId: true },
-            },
-          },
-        },
-      },
+    const document = await prisma.revision.findFirst({
+      where: { documentId: documentId, version: version },
     });
 
-    if (!document?.workspace) {
-      return respErr("Document not found");
+    const documentFlow = document?.content;
+    const inputList = documentFlow?.content?.find((node) => node.type === "inputs");
+
+    if (inputList) {
+      const updatedInputs = {};
+      inputList.content.forEach((input) => {
+        updatedInputs[input.attrs.id] = inputs[input.attrs.label];
+      });
     }
 
-    const isWorkspaceMember = document.workspace.members.some((member) => member.userId === user.id);
-    if (!isWorkspaceMember) {
-      return respErr("Not authorized");
-    }
+    const responseStream = new TransformStream();
+    const writer = responseStream.writable.getWriter();
 
-    // ... handle run creation logic ...
-    return respData({});
+    const workflowResponseWrite = getWorkflowResponseWrite({
+      res,
+      detail: true,
+      write: writer,
+      streamResponse: true,
+    });
+    const processor = new DocumentProcessor(
+      // onStop 回调
+      async (node) => {},
+      workflowResponseWrite,
+      {
+        disableDocumentOutput: true,
+      },
+    );
+
+    const startTime = new Date();
+
+    processor.processNode(documentFlow, inputs).then(async () => {
+      const context = processor.getContext();
+      const endTime = new Date();
+      const duration = endTime.getTime() - startTime.getTime();
+      await createRun(documentId, undefined, {
+        metadata: {
+          markdownOutput: context.markdownOutput,
+        },
+        duration,
+      });
+      await writer.close();
+      writer.releaseLock();
+    });
+
+    return new Response(responseStream.readable);
   } catch (error) {
     console.error("Error creating run:", error);
     return respErr("Failed to create run");
