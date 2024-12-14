@@ -418,7 +418,7 @@ export default function Home() {
 
       <div className="flex flex-col justify-between items-center bg-black text-white p-8">
         <div className="flex flex-col items-center">
-          <div className="w-24 h-24 mb-4">
+          <div className="w-16 h-16 mb-4">
             <img src="/logo-white-256.png" alt="Logo" className="w-full h-full object-cover" />
           </div>
           <p className="text-gray-400 font-source-code-pro text-sm text-center">

@@ -405,8 +405,8 @@ export default function Home() {
       </div>
 
       <div className="flex flex-col justify-between items-center bg-black text-white p-8">
-        <div className="flex flex-col items-center">
-          <div className="w-24 h-24 mb-4">
+        <div className="flex flex-col">
+          <div className="w-18 h-18 mb-4">
             <img
               src="https://cdn-imgs.dora.run/design/N5zV58mQPOCMM7RU0aYAQS.png/w/4096/h/4096/format/webp?"
               alt="Logo"

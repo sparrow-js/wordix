@@ -5,6 +5,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import useStores from "@/hooks/useStores";
 import { observer } from "mobx-react";
 
+import LoadingDots from "@/components/icons/loading-dots";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList } from "@/components/ui/breadcrumb";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
@@ -21,6 +22,7 @@ const BreadcrumbComponent = observer(() => {
   const { documents } = useStores();
   const { id } = useParams();
   const document = documents.get(id as string);
+  const [loading, setLoading] = useState(false);
 
   return (
     <Breadcrumb>
@@ -137,12 +139,13 @@ const UpdateButton = () => {
   const { id } = useParams();
   const [open, setOpen] = useState(false);
   const document = documents.get(id as string);
+  const [loading, setLoading] = useState(false);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" className="aspect-square w-fit px-2 flex items-center justify-center">
-          <UploadCloud className="h-4 w-4" />
+          {loading ? <LoadingDots /> : <UploadCloud className="h-4 w-4" />}
         </Button>
       </PopoverTrigger>
       <PopoverContent side="bottom" align="end" className="w-[400px]">
@@ -213,16 +216,19 @@ const UpdateButton = () => {
             Cancel
           </Button>
           <Button
-            onClick={() => {
+            onClick={async () => {
               const document = documents.get(id as string);
               const version = (Number.parseFloat(document?.documentVersion || "1.0") + 0.1).toFixed(1).toString();
-
-              documents.update({
+              setOpen(false);
+              setLoading(true);
+              await documents.update({
                 id: id as string,
                 documentVersion: version,
+                content: document?.content,
                 publishedContent: document?.content,
               });
-              setOpen(false);
+              setLoading(false);
+              toast.success("Updated successfully");
             }}
           >
             Update

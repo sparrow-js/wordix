@@ -6,12 +6,14 @@ import { useParams } from "next/navigation";
 import { type DropEvent, type FileRejection, useDropzone } from "react-dropzone";
 
 import DescriptionEditor from "@/components/description-editor";
+import InputUploadImage from "@/components/input-upload-image";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { ssePost } from "@/service/base";
 import { client } from "@/utils/ApiClient";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import Markdown from "react-markdown";
 import { toast } from "sonner";
@@ -79,6 +81,7 @@ export default function ExplorePage() {
           const url = await onUpload(acceptedFiles[0]);
           setImageUrl(url as string);
           const currentInputId = (event.target as HTMLElement).id;
+          console.log("currentInputId **********", currentInputId);
           setInputValues((prev) => ({ ...prev, [currentInputId]: url }));
         } catch (error) {
           console.error("Error uploading image:", error);
@@ -178,6 +181,40 @@ export default function ExplorePage() {
         backgroundPosition: "center",
       }}
     >
+      <div className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50">
+        <div className="w-full max-w-7xl mx-auto flex items-center justify-between py-6 px-20">
+          <div className="flex items-center space-x-3">
+            <div className="flex items-center justify-center">
+              <img src="/logo200.png" alt="Logo" className="w-10 h-10 object-cover rounded-lg" />
+            </div>
+            <div className="text-xl font-bold text-gray-900">
+              Word<span className="text-red-600">ix</span>
+            </div>
+          </div>
+
+          <nav className="hidden md:flex items-center space-x-8">
+            <div className="flex items-center space-x-4">
+              <Link href="/login">
+                <Button
+                  variant="outline"
+                  className="text-gray-900 hover:text-gray-700 transition-all duration-300 hover:scale-105"
+                >
+                  Sign in
+                </Button>
+              </Link>
+              <Link href="/app">
+                <Button
+                  variant="default"
+                  className="bg-gray-900 hover:bg-gray-800 transition-all duration-300 hover:scale-105"
+                >
+                  Try for free
+                </Button>
+              </Link>
+            </div>
+          </nav>
+        </div>
+      </div>
+
       <div className="w-full relative overflow-hidden">
         <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row space-y-12 md:space-y-0 md:space-x-12 relative pt-24">
           <div className="w-full md:w-1/2 flex flex-col items-start justify-center md:-mt-12 px-6">
@@ -197,52 +234,12 @@ export default function ExplorePage() {
                   {inputList.map((input) => {
                     if (input.type === "image") {
                       return (
-                        <div
+                        <InputUploadImage
                           key={input.id}
-                          className="flex flex-col items-center justify-center h-56 md:h-72 space-y-6 relative mb-6"
-                        >
-                          <div
-                            {...getRootProps({
-                              onClick: (e) => getRootProps().onClick(e),
-                            })}
-                            id={input.id}
-                            className="bg-gray-300 p-6 rounded-lg w-full h-full flex flex-col items-center justify-center border border-gray-400/50 cursor-pointer hover:border-gray-400 transition-colors relative"
-                          >
-                            <input {...getInputProps()} />
-                            {imageUrl ? (
-                              <div className="relative w-full h-full">
-                                <img src={imageUrl} alt="Uploaded preview" className="w-full h-full object-contain" />
-                                <Button
-                                  variant="secondary"
-                                  size="sm"
-                                  className="absolute top-2 right-2"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setImageUrl("");
-                                    setInputValues((prev) => ({ ...prev, [input.id]: "" }));
-                                  }}
-                                >
-                                  <X className="w-4 h-4" />
-                                </Button>
-                              </div>
-                            ) : isDragActive ? (
-                              <p className="text-lg md:text-xl text-black mb-4">Drop your image here...</p>
-                            ) : (
-                              <>
-                                <p className="text-lg md:text-xl text-black mb-4">
-                                  Drag & drop images of websites, Figma designs, or UI mockups here
-                                </p>
-                                <p className="text-base md:text-lg text-black/70 mb-4">or</p>
-                                <Button variant="default" size="lg" className="mt-2 text-lg">
-                                  Choose files
-                                </Button>
-                                <p className="text-sm text-black/50 mt-4">
-                                  Note: Only one image can be uploaded at a time.
-                                </p>
-                              </>
-                            )}
-                          </div>
-                        </div>
+                          onChange={(value) => {
+                            setInputValues({ ...inputValues, [input.id]: value });
+                          }}
+                        />
                       );
                     }
 
@@ -295,7 +292,7 @@ export default function ExplorePage() {
                     <DrawerContent className="h-[82vh] py-8">
                       <div ref={scrollRef} className="mx-auto w-full px-24 relative h-full overflow-y-auto">
                         <div className="p-4 select-text">
-                          <Markdown>{markdownGen}</Markdown>
+                          <Markdown className="prose lg:prose-xl">{markdownGen}</Markdown>
                         </div>
                       </div>
                       <DrawerClose asChild className="absolute right-4 top-4">

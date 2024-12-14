@@ -2,11 +2,11 @@
     "rewrites": [
         {
             "source": "/docs",
-            "destination": "https://wordix-web-jm9f.vercel.app/docs"
+            "destination": "http://localhost:3000/docs"
         },
         {
             "source": "/docs/:match*",
-            "destination": "https://wordix-web-jm9f.vercel.app/docs/:match*"
+            "destination": "http://localhost:3000/docs/:match*"
         }
     ]
 }
