@@ -70,7 +70,10 @@ export default async function middleware(req: NextRequest) {
 
   console.log("*******req.url11", req.headers.get("host"));
 
-  const hostname = req.headers.get("host").replace(".localhost:3000", `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`);
+  const hostname = req.headers
+    .get("host")
+    .replace("www.", "")
+    .replace(".localhost:3000", `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`);
   const searchParams = req.nextUrl.searchParams.toString();
   // Get the pathname of the request (e.g. /, /about, /blog/first-post)
   const path = `${url.pathname}${searchParams.length > 0 ? `?${searchParams}` : ""}`;
