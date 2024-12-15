@@ -92,7 +92,7 @@ export default async function middleware(req: NextRequest) {
     }
 
     if (session && path === "/login") {
-      return NextResponse.rewrite(new URL("/", req.url));
+      return NextResponse.redirect(new URL("/", req.url));
     }
 
     if (!session && path === "/login") {
