@@ -1,10 +1,9 @@
 import NextAuth from "next-auth";
 import "next-auth/jwt";
-
-import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 
 import prisma from "@/backend/prisma";
+import GitHubProvider from "next-auth/providers/github";
 import Notion from "next-auth/providers/notion";
 // import { createStorage } from "unstorage"
 // import memoryDriver from "unstorage/drivers/memory"
@@ -27,7 +26,11 @@ export const { handlers, auth, signIn, signOut }: any = NextAuth({
   theme: { logo: "https://authjs.dev/img/logo-sm.png" },
   adapter: PrismaAdapter(prisma),
   providers: [
-    GitHub,
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
+      allowDangerousEmailAccountLinking: true,
+    }),
     Notion({
       clientId: process.env.AUTH_NOTION_ID,
       clientSecret: process.env.AUTH_NOTION_SECRET,
@@ -37,6 +40,7 @@ export const { handlers, auth, signIn, signOut }: any = NextAuth({
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
   ],
   basePath: "/api/auth",

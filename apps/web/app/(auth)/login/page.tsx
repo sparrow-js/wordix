@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Suspense } from "react";
+import LoginGithubButton from "./login-git-button";
 import LoginGoogleButton from "./login-google-button";
 // import LoginButton from "./login-button";
 import LoginNotionButton from "./login-notion-button";
@@ -17,6 +18,16 @@ export default function LoginPage() {
       <p className="mt-2 text-center text-sm text-stone-600 dark:text-stone-400">
         Sign in to create, share, and explore groundbreaking AI applications.
       </p>
+
+      <div className="mx-auto mt-4 w-full">
+        <Suspense
+          fallback={
+            <div className="my-2 h-10 w-full rounded-md border border-stone-200 bg-stone-100 dark:border-stone-700 dark:bg-stone-800" />
+          }
+        >
+          <LoginGithubButton />
+        </Suspense>
+      </div>
       <div className="mx-auto mt-4 w-full">
         <Suspense
           fallback={

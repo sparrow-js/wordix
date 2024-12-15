@@ -1,6 +1,11 @@
 const path = require('path');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    serverActions: {
+      allowedOrigins: ["app.localhost:3000"],
+    },
+  },
   async headers() {
     return [
       {
