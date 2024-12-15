@@ -15,7 +15,7 @@ export default auth((req) => {
   // Get the pathname of the request (e.g. /, /about, /blog/first-post)
   const path = `${url.pathname}${searchParams.length > 0 ? `?${searchParams}` : ""}`;
 
-  console.log("*******1hostname", hostname, path, url?.host, url?.hostname);
+  console.log("*******1hostname", hostname, path, url?.host, url?.hostname, url);
 
   // 定义无需认证的路径列表，包括根路径
   const publicPaths = ["/", "/login", "/register", "/forgot-password"];
