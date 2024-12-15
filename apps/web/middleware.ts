@@ -1,8 +1,8 @@
 import { auth } from "@/lib/auth";
-import { type NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 // Or like this if you need to do something here.
-export default auth((req: NextRequest) => {
+export default auth((req) => {
   // 获取当前路径
   const { pathname } = req.nextUrl;
 
