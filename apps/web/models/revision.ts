@@ -1,6 +1,6 @@
 import ParanoidModel from "@/models/base/ParanoidModel";
 import type { JSONObject } from "@/shared/types";
-import type RunsStore from "@/stores/RunsStore";
+import type RevisionStore from "@/stores/RevisionStore";
 import type { Properties } from "@/types/types";
 import { action, makeObservable, observable, set } from "mobx";
 
@@ -57,9 +57,9 @@ export default class Revision extends ParanoidModel {
   @observable
   user: any;
 
-  declare store: RunsStore;
+  declare store: RevisionStore;
 
-  constructor(fields: Record<string, any>, store: RunsStore) {
+  constructor(fields: Record<string, any>, store: RevisionStore) {
     super(fields, store);
     makeObservable(this);
     this.updateData(fields);

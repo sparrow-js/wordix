@@ -38,7 +38,9 @@ export async function POST(req: Request, { params }: { params: { documentId: str
     });
 
     const documentFlow = document?.content;
-    const inputList = documentFlow?.content?.find((node) => node.type === "inputs");
+    const documentContent = typeof documentFlow === "string" ? JSON.parse(documentFlow) : documentFlow;
+
+    const inputList = documentContent?.content?.find((node) => node.type === "inputs");
 
     if (inputList) {
       const updatedInputs = {};
@@ -67,7 +69,7 @@ export async function POST(req: Request, { params }: { params: { documentId: str
 
     const startTime = new Date();
 
-    processor.processNode(documentFlow, inputs).then(async () => {
+    processor.processNode(documentFlow as any, inputs).then(async () => {
       const context = processor.getContext();
       const endTime = new Date();
       const duration = endTime.getTime() - startTime.getTime();
