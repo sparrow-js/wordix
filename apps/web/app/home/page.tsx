@@ -35,7 +35,7 @@ export default function Home() {
               FAQs
             </Link>
             <div className="flex items-center space-x-4">
-              <Link href="/login">
+              <Link href={`${process.env.NEXT_PUBLIC_APP_DOMAIN}/login`}>
                 <Button
                   variant="outline"
                   className="text-gray-900 hover:text-gray-700 transition-all duration-300 hover:scale-105"
