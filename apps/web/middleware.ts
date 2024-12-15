@@ -6,9 +6,9 @@ export default auth((req) => {
   // 获取当前路径
   const { pathname } = req.nextUrl;
 
-  const url = req.nextUrl;
+  const url = req.url;
 
-  console.log("*******l11", url.host, url.hostname);
+  console.log("*******l113", url.host, url.hostname);
 
   const hostname = url.host.replace(".localhost:3000", `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`);
   const searchParams = req.nextUrl.searchParams.toString();
@@ -16,12 +16,13 @@ export default auth((req) => {
   const path = `${url.pathname}${searchParams.length > 0 ? `?${searchParams}` : ""}`;
 
   console.log("*******1hostname", hostname, path, url?.host, url?.hostname, url);
+  console.log("*******1req.url", req);
 
   // 定义无需认证的路径列表，包括根路径
   const publicPaths = ["/", "/login", "/register", "/forgot-password"];
 
   if (hostname === `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) {
-    console.log("*******1req.url", new URL(`/app${path === "/" ? "" : path}`, req.url), req.url);
+    console.log("*******1req.url", req);
 
     if (!req.auth && path !== "/login") {
       return NextResponse.redirect(new URL("/login", req.url));
