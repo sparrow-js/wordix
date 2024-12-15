@@ -69,17 +69,20 @@ export class AnthropicProvider extends BaseAIProvider {
   ): Promise<string> {
     const config = this.getModelConfig(modelName, options);
     const coreMessages = messages as CoreMessage[];
+    try {
+      const result = await streamText({
+        model: this.anthropic(config.name),
+        messages: coreMessages,
+        ...config,
+      });
 
-    const result = await streamText({
-      model: this.anthropic(config.name),
-      messages: coreMessages,
-      ...config,
-    });
-
-    for await (const textPart of result.textStream) {
-      onText(textPart);
+      for await (const textPart of result.textStream) {
+        onText(textPart);
+      }
+      return result.text;
+    } catch (error) {
+      console.log("error", error);
+      return "";
     }
-
-    return result.text;
   }
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CreditCard, Key, LineChart, Users } from "lucide-react";
+import { CreditCard, Key, Users } from "lucide-react";
 import { useRouter, useSelectedLayoutSegments } from "next/navigation";
 import type { ReactNode } from "react";
 
@@ -50,10 +50,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                       <Users className="h-4 w-4 mr-2" />
                       Team
                     </TabsTrigger>
-                    <TabsTrigger value="usage">
+                    {/* <TabsTrigger value="usage">
                       <LineChart className="h-4 w-4 mr-2" />
                       Usage
-                    </TabsTrigger>
+                    </TabsTrigger> */}
                   </TabsList>
                 </Tabs>
                 {children}

@@ -1,5 +1,5 @@
 import { ServiceFactory } from "@/workflow/ai/services/service-factory";
-import { getProviderFromModel } from "../ai/config/model-configs";
+import { getFormatMessage, getProviderFromModel } from "../ai/config/model-configs";
 import type { DocNode, ProcessingContext } from "../types/DocNode";
 import { BaseHandler } from "./BaseHandler";
 
@@ -20,6 +20,7 @@ export class GenerationHandler extends BaseHandler {
 
     const provider = getProviderFromModel(node.attrs.model);
 
+    const messages = await getFormatMessage(context.messages, node.attrs.model);
     // Store result in node state
     const aiService = ServiceFactory.getInstance().getAIService();
     const text = await aiService.streamChat(
@@ -27,7 +28,7 @@ export class GenerationHandler extends BaseHandler {
       [
         {
           role: "user",
-          content: context.messages,
+          content: messages,
         },
       ],
       async (text) => {

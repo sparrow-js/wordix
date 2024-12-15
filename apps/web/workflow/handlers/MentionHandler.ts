@@ -1,3 +1,4 @@
+import { getMimeTypeFromSrc } from "@/lib/format-ai-data";
 import type { DocNode, ProcessingContext } from "../types/DocNode";
 import { BaseHandler } from "./BaseHandler";
 
@@ -24,15 +25,17 @@ export class MentionHandler extends BaseHandler {
       markdown = `![${alt}](${value}${title})`;
 
       // Handle image messages separately
-      if (context.markdown.join("") !== "") {
+      if (context.markdown.join("").trim() !== "") {
         const prompt = context.markdown.join("\n");
         context.messages.push({
           type: "text",
           text: prompt,
         });
       }
+
       context.messages.push({
         type: "image",
+        mimeType: getMimeTypeFromSrc(value),
         image: value,
         experimental_providerMetadata: {
           openai: { imageDetail: "high" },

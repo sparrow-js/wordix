@@ -7,6 +7,10 @@ import {
 
 import type { ModelConfig } from "../config/model-configs";
 import { BaseAIProvider, type Message } from "./base";
+// const { setGlobalDispatcher, ProxyAgent } = require("undici");
+// const dispatcher = new ProxyAgent({ uri: new URL("http://127.0.0.1:7890").toString() });
+// //全局fetch调用启用代理
+// setGlobalDispatcher(dispatcher);
 
 const apiKey = process.env.GEMINI_API_KEY;
 
@@ -77,7 +81,7 @@ export class GeminiProvider extends BaseAIProvider {
   }
 
   async streamChat(
-    messages: string | Array<string | Part>,
+    messages: string | Array<string | Part> | Message[],
     onText: (text: string) => void,
     modelName?: string,
     options?: Partial<ModelConfig>,
@@ -99,7 +103,15 @@ export class GeminiProvider extends BaseAIProvider {
       history: [],
     });
 
-    const result = await chatSession.sendMessageStream(messages);
+    let messageParts: string | Array<string | Part> = [];
+
+    if (Array.isArray(messages) && messages.length > 0 && typeof messages[0] === "object" && "role" in messages[0]) {
+      messageParts = messages[0].content as Array<string | Part>;
+    } else {
+      messageParts = messages as Array<string | Part>;
+    }
+
+    const result = await chatSession.sendMessageStream(messageParts);
 
     let text = "";
     for await (const chunk of result.stream) {

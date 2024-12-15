@@ -1,3 +1,4 @@
+import { getMimeTypeFromSrc } from "@/lib/format-ai-data";
 import type { DocNode, ProcessingContext } from "../types/DocNode";
 import { BaseHandler } from "./BaseHandler";
 
@@ -33,7 +34,7 @@ export class ImageHandler extends BaseHandler {
     const dimensionsStr = dimensions.length > 0 ? ` ${dimensions.join(" ")}` : "";
     const markdown = `![${alt}](${attrs.src}${title})${dimensionsStr}`;
 
-    if (context.markdown.join("") !== "") {
+    if (context.markdown.join("").trim() !== "") {
       const prompt = context.markdown.join("\n");
       context.messages.push({
         type: "text",
@@ -42,6 +43,7 @@ export class ImageHandler extends BaseHandler {
     }
     context.messages.push({
       type: "image",
+      mimeType: getMimeTypeFromSrc(attrs.src),
       image: attrs.src,
       experimental_providerMetadata: {
         openai: { imageDetail: "high" },

@@ -309,3 +309,82 @@ export function getProviderFromModel(modelName: string): string {
   }
   return model.provider;
 }
+
+interface ImageMessage {
+  type?: "image";
+  data?: string;
+  image?: string;
+  mimeType?: string;
+  inlineData?: {
+    data: string;
+    mimeType: string;
+  };
+  [key: string]: any;
+}
+
+export async function getFormatImageMessage(
+  message: ImageMessage,
+  model: ModelConfigWithProvider,
+): Promise<ImageMessage> {
+  if (model.provider === "openai") {
+    return {
+      type: "image",
+      image: message.image,
+      experimental_providerMetadata: {
+        openai: { imageDetail: "high" },
+      },
+    };
+  }
+  if (model.provider === "anthropic") {
+    const response = await fetch(message.image);
+    const arrayBuffer = await response.arrayBuffer();
+    const base64 = Buffer.from(arrayBuffer).toString("base64");
+    return {
+      type: "image",
+      image: base64,
+      mimeType: message.mimeType,
+    };
+  }
+
+  if (model.provider === "gemini") {
+    const response = await fetch(message.image);
+    const arrayBuffer = await response.arrayBuffer();
+    const base64 = Buffer.from(arrayBuffer).toString("base64");
+    return {
+      inlineData: {
+        data: base64,
+        mimeType: message.mimeType,
+      },
+    };
+  }
+
+  return message;
+}
+
+export async function getFormatTextMessage(message: { text: string; type: string }, modelName: string) {
+  const model = allModels.find((m) => m.name === modelName);
+  if (model?.provider === "gemini") {
+    return {
+      text: message.text,
+    };
+  }
+  return message;
+}
+
+export async function getFormatMessage(message: any[], modelName: string) {
+  const model = allModels.find((m) => m.name === modelName);
+
+  return Promise.all(
+    message.map(async (m) => {
+      if (m.type === "image") {
+        return await getFormatImageMessage(m, model);
+      }
+
+      if (m.type === "text") {
+        return getFormatTextMessage(m, modelName);
+      }
+
+      return m;
+    }),
+  );
+}
