@@ -75,7 +75,7 @@ export default async function middleware(req: NextRequest) {
   // Get the pathname of the request (e.g. /, /about, /blog/first-post)
   const path = `${url.pathname}${searchParams.length > 0 ? `?${searchParams}` : ""}`;
 
-  console.log("*******hostname", hostname, path, req.headers.get("host"));
+  console.log("*******hostname", hostname, path, url);
 
   // 定义无需认证的路径列表，包括根路径
   const publicPaths = ["/", "/login", "/register", "/forgot-password"];
