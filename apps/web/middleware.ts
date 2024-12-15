@@ -7,9 +7,10 @@ export default auth((req) => {
   const { pathname } = req.nextUrl;
 
   const url = req.nextUrl;
-  console.log("*******req.url11", JSON.stringify(url));
 
-  const hostname = req.headers.get("host").replace(".localhost:3000", `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`);
+  console.log("*******l11", url.hostname);
+
+  const hostname = url.hostname.replace(".localhost:3000", `.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`);
   const searchParams = req.nextUrl.searchParams.toString();
   // Get the pathname of the request (e.g. /, /about, /blog/first-post)
   const path = `${url.pathname}${searchParams.length > 0 ? `?${searchParams}` : ""}`;
