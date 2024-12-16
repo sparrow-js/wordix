@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { type DropEvent, type FileRejection, useDropzone } from "react-dropzone";
 
 import DescriptionEditor from "@/components/description-editor";
+import LoadingDots from "@/components/icons/loading-dots";
 import InputUploadImage from "@/components/input-upload-image";
 import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
@@ -69,6 +70,7 @@ export default function ExplorePage() {
   const [collectionId, setCollectionId] = useState<string>("");
   const [imageUrl, setImageUrl] = useState<string>("");
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const dropzoneConfig = {
     accept: {
@@ -127,6 +129,9 @@ export default function ExplorePage() {
   };
 
   const generatePrompt = async () => {
+    setMarkdownGen("");
+    setIsLoading(true);
+
     ssePost(
       "/api/released-app/run",
       {
@@ -148,6 +153,7 @@ export default function ExplorePage() {
           setMarkdownGen(contentRef.current);
         },
         onCompleted: () => {
+          setIsLoading(false);
           // @ts-ignore
           // const docSize = window.editor?.state.doc.content.size;
           // 使用 ref 的当前值，保证是最新的
@@ -289,9 +295,15 @@ export default function ExplorePage() {
                       </Button>
                     </DrawerTrigger>
                     <DrawerContent className="h-[82vh] py-8">
+                      {isLoading && (
+                        <div className="flex absolute top-[24px] right-[50%]">
+                          <LoadingDots />
+                        </div>
+                      )}
+
                       <div ref={scrollRef} className="mx-auto w-full px-24 relative h-full overflow-y-auto">
-                        <div className="p-4 select-text">
-                          <Markdown className="prose lg:prose-xl">{markdownGen}</Markdown>
+                        <div className="p-4 select-text flex flex-col items-center">
+                          <Markdown className="prose lg:prose-xl w-full">{markdownGen}</Markdown>
                         </div>
                       </div>
                       <DrawerClose asChild className="absolute right-4 top-4">

@@ -234,58 +234,36 @@ export default function Home() {
           {/* Media and Content */}
           <div className="flex justify-center space-x-4 mt-12 w-full max-w-7xl">
             {/* Left Image */}
-            <div className="flex-1">
-              <img
-                src="//cdn-imgs.dora.run/design/JbNUP6lpj4rHeMQwbb6eoV.webp/w/4096/h/4096/format/webp?"
-                alt="Left"
-                className="object-cover w-full h-full"
-              />
+            <div className="flex-1 bg-gray-50 rounded-lg shadow flex flex-col items-center justify-center p-4">
+              <div className="w-full h-auto">
+                <img src="/introduce/1.png" alt="Left" className="object-cover w-full h-full" />
+              </div>
             </div>
             {/* Middle Content */}
             <div className="flex-1 bg-gray-50 rounded-lg shadow flex flex-col items-center justify-center p-4">
-              <div className="w-4/5 h-auto">
-                <img
-                  src="//cdn-imgs.dora.run/design/K3lhBua7TvBJPFkvEgIAPI.webp/w/4096/h/4096/format/webp?"
-                  alt="Middle"
-                  className="object-contain w-full h-full"
-                />
-              </div>
-              <div className="w-full bg-gray-50 rounded-lg border border-gray-400 mt-4 p-2 flex justify-between">
-                <span className="text-sm text-gray-600">Innovative</span>
-                <span className="text-sm text-gray-400">Tailored</span>
+              <div className="w-full h-auto">
+                <img src="/introduce/2.png" alt="Middle" className="object-contain w-full h-full" />
               </div>
             </div>
             {/* Right Image */}
-            <div className="flex-1">
-              <img
-                src="//cdn-imgs.dora.run/design/2Xo9E7Ssa8I40Zifje0mk.webp/w/4096/h/4096/format/webp?"
-                alt="Right"
-                className="object-cover w-full h-full"
-              />
+            <div className="flex-1 bg-gray-50 rounded-lg shadow flex flex-col items-center justify-center p-4">
+              <div className="w-full h-auto">
+                <img src="/introduce/3.png" alt="Right" className="object-cover w-full h-full" />
+              </div>
             </div>
           </div>
           {/* Media and Content */}
           <div className="flex justify-center space-x-4 mt-12 w-full max-w-7xl">
             {/* Left Image */}
-            <div className="flex-1">
-              <img
-                src="//cdn-imgs.dora.run/design/JEXBNZTTB3iGR4np72B9Yp.webp/w/4096/h/4096/format/webp?"
-                alt="Left"
-                className="object-cover w-full h-full"
-              />
+            <div className="flex-1 bg-gray-50 rounded-lg shadow flex flex-col items-center justify-center p-4">
+              <div className="w-full h-auto">
+                <img src="/introduce/4.png" alt="Left" className="object-cover w-full h-full" />
+              </div>
             </div>
             {/* Middle Content */}
             <div className="flex-1 bg-gray-50 rounded-lg shadow flex flex-col items-center justify-center p-4">
-              <div className="w-4/5 h-auto">
-                <img
-                  src="//cdn-imgs.dora.run/design/Br9U8O9BllgFlmbE7lxHRn.webp/w/4096/h/4096/format/webp?"
-                  alt="Middle"
-                  className="object-contain w-full h-full"
-                />
-              </div>
-              <div className="w-full bg-gray-50 rounded-lg border border-gray-400 mt-4 p-2 flex justify-between">
-                <span className="text-sm text-gray-600">Innovative</span>
-                <span className="text-sm text-gray-400">Tailored</span>
+              <div className="w-full h-auto">
+                <img src="/introduce/5.png" alt="Middle" className="object-contain w-full h-full" />
               </div>
             </div>
             {/* Right Image */}

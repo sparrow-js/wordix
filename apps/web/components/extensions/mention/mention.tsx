@@ -16,7 +16,6 @@ export const MentionComp = observer((props: NodeViewProps) => {
     if (metion) {
       setLabel(metion.title);
       setType(metion.type);
-      console.log("******** metion", metion.inputType, metion.type);
       if (metion.inputType) {
         setInputType(metion.inputType);
         props.updateAttributes({ type: metion.inputType });
