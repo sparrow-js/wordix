@@ -63,7 +63,7 @@ const LeftSidebar = observer(() => {
       </div>
 
       <div className="flex flex-col gap-4 p-2.5 h-full">
-        <Link href="/app">
+        <Link href="/">
           <div
             className={cn(
               "flex h-10 cursor-pointer items-center gap-2.5 rounded-md p-2.5 text-sm font-medium text-foreground",

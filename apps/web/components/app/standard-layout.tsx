@@ -35,7 +35,7 @@ const ProjectList = observer(() => {
   return (
     <div className="flex flex-col border border-border rounded-md overflow-hidden">
       {collections.orderedList.map((project, index) => (
-        <Link key={project.id} href={`/app/${project.id}/docs`}>
+        <Link key={project.id} href={`/${project.id}/docs`}>
           <div
             className={`flex flex-row gap-3 items-center bg-background p-3 justify-between cursor-pointer hover:bg-muted/30 ${
               index > 0 ? "border-t border-border" : ""
@@ -285,7 +285,7 @@ const StandardLayout = observer(() => {
                       <h3 className="text-2xl font-semibold leading-none tracking-tight">Latest Projects</h3>
                     </div>
                     <div className="flex gap-2">
-                      <Link href="/app/projects">
+                      <Link href="/projects">
                         <Button variant="outline" size="sm">
                           Go to Projects
                           <ChevronRightIcon className="h-4 w-4 ml-2" />
@@ -305,7 +305,7 @@ const StandardLayout = observer(() => {
                       <h3 className="text-2xl font-semibold leading-none tracking-tight">Recent Deployments</h3>
                     </div>
                     <div className="flex gap-2">
-                      <Link href="/app/deployments">
+                      <Link href="/deployments">
                         <Button variant="outline" size="sm">
                           Go to Deployments
                           <ChevronRightIcon className="h-4 w-4" />
@@ -328,7 +328,7 @@ const StandardLayout = observer(() => {
                               index > 0 ? "border-t border-border" : ""
                             }`}
                           >
-                            <Link href={`/app/${deployment.collectionId}/deployments/${deployment.id}/overview`}>
+                            <Link href={`/${deployment.collectionId}/deployments/${deployment.id}/overview`}>
                               <div className="flex flex-row gap-3">
                                 <div className="flex h-10 w-10 items-center justify-center rounded-sm text-2xl font-bold text-background bg-muted-foreground">
                                   <div className="flex h-10 w-10 items-center justify-center rounded-sm text-2xl font-bold text-background bg-muted-foreground">
