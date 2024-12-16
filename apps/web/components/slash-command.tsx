@@ -15,7 +15,6 @@ import {
   Parentheses,
   RectangleHorizontal,
   Repeat,
-  Siren,
   Spline,
   Split,
   Text,
@@ -108,9 +107,9 @@ export const suggestionItems = createSuggestionItems([
     label: "Tools",
     list: [
       {
-        title: "tool",
-        description: "tool.",
-        searchTerms: ["tool", "embed"],
+        title: "Image Generation",
+        description: "Image Generation.",
+        searchTerms: ["Image", "embed"],
         icon: <Wrench size={18} />,
         command: ({ editor, range }) => {
           /**
@@ -143,26 +142,6 @@ export const suggestionItems = createSuggestionItems([
                   value: "",
                 },
               },
-            })
-            .run();
-        },
-      },
-      {
-        title: "promptGeneration",
-        description: "promptGeneration.",
-        searchTerms: ["promptGeneration", "embed"],
-        icon: <Siren size={18} />,
-        command: ({ editor, range }) => {
-          editor
-            .chain()
-            .focus()
-            .deleteRange(range)
-            .setTool({
-              id: uuidv4(),
-              label: "prompt generation",
-              toolId: "promptGeneration",
-              output: [],
-              parameters: {},
             })
             .run();
         },
