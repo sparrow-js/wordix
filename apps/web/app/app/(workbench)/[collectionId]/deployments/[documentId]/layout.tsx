@@ -34,7 +34,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                 <Tabs
                   value={currentTab}
                   onValueChange={(value) => {
-                    router.push(`/app/${collectionId}/deployments/${documentId}/${value}`);
+                    router.push(`/${collectionId}/deployments/${documentId}/${value}`);
                   }}
                 >
                   <TabsList>

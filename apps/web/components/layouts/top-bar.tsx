@@ -39,7 +39,7 @@ const TopBar = observer(() => {
   return (
     <div className="grid h-[60px] w-full grid-cols-3 items-center border-b border-border bg-background px-2 md:px-4">
       <div className="flex justify-start">
-        <a href="/app">
+        <a href="/">
           <img
             alt="Logo"
             className="block dark:hidden w-[64px] h-[48px]"

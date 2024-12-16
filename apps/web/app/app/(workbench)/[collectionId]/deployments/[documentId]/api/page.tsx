@@ -159,7 +159,7 @@ export default function OverviewPage() {
               <h2 className="text-lg font-bold">Setup</h2>
               <p>
                 To get started, export your API key in your terminal. You can generate a key{" "}
-                <Link className="text-sky-400" target="_blank" rel="noopener noreferrer" href="/app/settings/api-keys">
+                <Link className="text-sky-400" target="_blank" rel="noopener noreferrer" href="/settings/api-keys">
                   here
                 </Link>
                 .

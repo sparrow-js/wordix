@@ -107,7 +107,7 @@ export default function Page() {
                                     className="cursor-pointer"
                                     key={document.id}
                                     onClick={() => {
-                                      router.push(`/app/${document.collectionId}/deployments/${document.id}/overview`);
+                                      router.push(`/${document.collectionId}/deployments/${document.id}/overview`);
                                     }}
                                   >
                                     <TableCell>

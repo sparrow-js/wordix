@@ -77,7 +77,7 @@ const LeftSidebar = observer(() => {
 
         <div className="flex flex-col gap-1 h-fit">
           <h2 className="text-xl font-semibold text-primary px-2.5 pt-2.5 pb-1 truncate">Workspace</h2>
-          <Link href="/app/projects">
+          <Link href="/projects">
             <div
               className={cn(
                 "flex h-10 cursor-pointer items-center gap-2.5 rounded-md p-2.5 text-sm font-medium text-foreground hover:bg-muted/30",
@@ -88,7 +88,7 @@ const LeftSidebar = observer(() => {
               Projects
             </div>
           </Link>
-          <Link href="/app/deployments">
+          <Link href="/deployments">
             <div
               className={cn(
                 "flex h-10 cursor-pointer items-center gap-2.5 rounded-md p-2.5 text-sm font-medium text-foreground hover:bg-muted/30",

@@ -201,7 +201,7 @@ export default function ExplorePage() {
                   Sign in
                 </Button>
               </Link>
-              <Link href="/app">
+              <Link href="/">
                 <Button
                   variant="default"
                   className="bg-gray-900 hover:bg-gray-800 transition-all duration-300 hover:scale-105"

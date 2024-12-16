@@ -105,7 +105,7 @@ export default function EditPage() {
       bannerImage: document?.bannerImage,
       visibility: document?.visibility,
     });
-    router.push(`/app/${collectionId}/deployments/${documentId}`);
+    router.push(`/${collectionId}/deployments/${documentId}`);
   };
 
   return (

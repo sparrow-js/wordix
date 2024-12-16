@@ -89,7 +89,7 @@ const Projects = observer(() => {
                         <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                           {collections.orderedList.slice(0, 5).map((collection) => {
                             return (
-                              <Link href={`/app/${collection.id}/docs`} key={collection.id}>
+                              <Link href={`/${collection.id}/docs`} key={collection.id}>
                                 <div
                                   key={collection.id}
                                   className="rounded-lg border bg-card text-card-foreground shadow-sm relative cursor-pointer hover:border-foreground/20 hover:bg-muted/10 pr-[40px]"

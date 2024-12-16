@@ -366,7 +366,7 @@ export default function Home() {
                 workflows...
               </p>
             </div>
-            <Link href="/app">
+            <Link href="/">
               <Button className="mt-6 w-full py-2 bg-white text-black font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 hover:scale-105">
                 Get Started
               </Button>
@@ -407,7 +407,7 @@ export default function Home() {
             </div>
 
             {/* Button */}
-            <Link href="/app">
+            <Link href="/">
               <Button className="px-8 py-3 bg-gray-800 text-white font-semibold text-sm rounded-full shadow-lg hover:bg-gray-700 transition-all duration-300 hover:scale-105">
                 Get Started
               </Button>

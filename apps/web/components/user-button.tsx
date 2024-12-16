@@ -87,15 +87,15 @@ const UserButton = observer(() => {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem onSelect={() => router.push("/app/settings/api-keys")}>
+          <DropdownMenuItem onSelect={() => router.push("/settings/api-keys")}>
             <Key className="mr-2 h-4 w-4" />
             <span>API Keys</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => router.push("/app/settings/billing")}>
+          <DropdownMenuItem onSelect={() => router.push("/settings/billing")}>
             <CreditCard className="mr-2 h-4 w-4" />
             <span>Billing</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => router.push("/app/settings/usage")}>
+          <DropdownMenuItem onSelect={() => router.push("/settings/usage")}>
             <Activity className="mr-2 h-4 w-4" />
             <span>Usage</span>
           </DropdownMenuItem>

@@ -11,19 +11,19 @@ export function VerticalTabBar() {
   const navItems = [
     {
       name: "docs",
-      href: `/app/${collectionId}/docs`,
+      href: `/${collectionId}/docs`,
       segment: "docs",
       icon: Files,
     },
     {
       name: "runs",
-      href: `/app/${collectionId}/runs`,
+      href: `/${collectionId}/runs`,
       segment: "runs",
       icon: ListTree,
     },
     {
       name: "deployments",
-      href: `/app/${collectionId}/deployments`,
+      href: `/${collectionId}/deployments`,
       segment: "deployments",
       icon: Rocket,
     },

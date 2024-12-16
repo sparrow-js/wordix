@@ -51,7 +51,7 @@ const TeamPage = observer(() => {
                 <div className="py-1.5 pt-3">
                   Your current plan has only one seat. To add more team members, please upgrade your plan
                 </div>
-                <Link href="/app/settings/billing">
+                <Link href="/settings/billing">
                   <Button>Upgrade now</Button>
                 </Link>
               </div>

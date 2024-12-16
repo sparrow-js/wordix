@@ -51,7 +51,7 @@ export default function Home() {
                     className="transition-all duration-200 hover:scale-105 hover:shadow-lg active:scale-95"
                     asChild
                   >
-                    <Link href="/app">
+                    <Link href="/">
                       Start Free Trial
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>

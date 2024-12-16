@@ -76,7 +76,7 @@ export default function DeploymentsPage() {
                             key={document.id}
                             className="cursor-pointer"
                             onClick={() => {
-                              router.push(`/app/${collectionId}/deployments/${document.id}/overview`);
+                              router.push(`/${collectionId}/deployments/${document.id}/overview`);
                             }}
                           >
                             <TableCell className="w-12">

@@ -32,7 +32,7 @@ export default observer(function DocsPage() {
       { parentId },
     );
     await collection?.fetchDocuments({ force: true });
-    router.push(`/app/${collectionId}/docs/${document.id}`);
+    router.push(`/${collectionId}/docs/${document.id}`);
   };
 
   return (

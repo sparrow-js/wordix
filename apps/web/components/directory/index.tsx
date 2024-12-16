@@ -65,7 +65,7 @@ function Directory() {
   }, [collectionId]);
 
   useEffect(() => {
-    router.prefetch("/app/56acf192-a74c-4a79-a79e-b36c0f95a096/docs/81905a34-84f6-4cff-9bfe-eec712b3b91c"); // Prefetch the dashboard page
+    router.prefetch("/56acf192-a74c-4a79-a79e-b36c0f95a096/docs/81905a34-84f6-4cff-9bfe-eec712b3b91c"); // Prefetch the dashboard page
   }, []);
 
   useEffect(() => {
@@ -99,7 +99,7 @@ function Directory() {
     );
     setSelected(document.id);
     await collection?.fetchDocuments({ force: true });
-    router.push(`/app/${collectionId}/docs/${document.id}`);
+    router.push(`/${collectionId}/docs/${document.id}`);
   };
 
   const createFolder = async (parentId?: string) => {
@@ -159,7 +159,7 @@ function Directory() {
   const deleteFolder = async (documentId: string | undefined, folderId: string | undefined) => {
     await collection?.deleteFolderDocument(documentId, folderId);
     setSelected(undefined);
-    router.push(`/app/${collectionId}/docs`);
+    router.push(`/${collectionId}/docs`);
   };
 
   return (
@@ -185,7 +185,7 @@ function Directory() {
                 variant="outline"
                 size="icon"
                 onClick={() => {
-                  router.push(`/app/${collectionId}/docs`);
+                  router.push(`/${collectionId}/docs`);
                 }}
               >
                 <LayoutGrid className="h-5 w-5" />
@@ -219,7 +219,7 @@ function Directory() {
                       onSelect={(selected) => {
                         const node = selected[0];
                         if (!node || Array.isArray(node.children)) return;
-                        router.push(`/app/${collectionId}/docs/${node.id}`);
+                        router.push(`/${collectionId}/docs/${node.id}`);
                       }}
                       onActivate={(node) => setActive(node.data)}
                       onFocus={(node) => setFocused(node.data)}

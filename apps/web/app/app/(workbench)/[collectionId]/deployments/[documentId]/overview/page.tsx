@@ -22,7 +22,7 @@ export default function OverviewPage() {
     fetchDocument();
   }, [documentId]);
 
-  const deploymentLink = `/app/explore/apps/${documentId}`;
+  const deploymentLink = `/explore/apps/${documentId}`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(window.location.origin + deploymentLink);
@@ -39,7 +39,7 @@ export default function OverviewPage() {
             <h3 className="text-2xl font-semibold leading-none tracking-tight">Info</h3>
           </div>
           <div className="flex gap-2">
-            <Link href={`/app/${collectionId}/deployments/${documentId}/edit`}>
+            <Link href={`/${collectionId}/deployments/${documentId}/edit`}>
               <Button variant="outline" size="icon">
                 <Pencil className="h-4 w-4" />
               </Button>
@@ -55,9 +55,9 @@ export default function OverviewPage() {
                 Link
               </label>
               <div className="flex items-center justify-between gap-1 rounded-md border px-2 py-2 text-xs border-blue-300 bg-blue-100 text-blue-400">
-                <Link href={`/app/explore/apps/${documentId}`}>
+                <Link href={`/explore/apps/${documentId}`}>
                   <span className="flex items-center gap-2.5 truncate">
-                    <code>/app/explore/apps/{documentId}</code>
+                    <code>/explore/apps/{documentId}</code>
                   </span>
                 </Link>
 
@@ -155,7 +155,7 @@ export default function OverviewPage() {
               <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                 Entrypoint
               </label>
-              <Link href={`/app/${collectionId}/docs/${documentId}`}>
+              <Link href={`/${collectionId}/docs/${documentId}`}>
                 <div className="h-[36px] items-center rounded cursor-pointer justify-between flex w-full border-border border bg-[#FAFAFA] dark:bg-muted px-2.5 gap-8">
                   <div className="flex items-center gap-2 text-sm font-medium">{document?.title}</div>
                   <ChevronRight className="h-4 w-4" />
