@@ -416,9 +416,9 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="flex flex-col justify-between items-center bg-black text-white p-8">
-        <div className="flex flex-col items-center">
-          <div className="w-16 h-16 mb-4">
+      <div className="flex justify-between items-center bg-black text-white p-8">
+        <div className="flex items-center space-x-8">
+          <div className="w-16 h-16">
             <img src="/logo-white-256.png" alt="Logo" className="w-full h-full object-cover" />
           </div>
           <p className="text-gray-400 font-source-code-pro text-sm text-center">
@@ -426,6 +426,14 @@ export default function Home() {
             <br />
             All rights reserved.
           </p>
+        </div>
+        <div className="flex space-x-4">
+          <Link href="/privacy-policy" className="text-gray-400 hover:text-white transition-colors duration-200">
+            Privacy Policy
+          </Link>
+          <Link href="/terms" className="text-gray-400 hover:text-white transition-colors duration-200">
+            Terms
+          </Link>
         </div>
       </div>
     </div>
