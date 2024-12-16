@@ -29,7 +29,6 @@ export async function POST(request: Request) {
   });
 
   if (params.documentVersion) {
-    console.log("documentVersion *************", params.documentVersion);
     await prisma.revision.create({
       data: {
         version: params.documentVersion,

@@ -52,9 +52,6 @@ export default function DeploymentsPage() {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableCell className="w-12">
-                          <div className="flex items-center justify-center overflow-hidden rounded-md h-6 w-6" />
-                        </TableCell>
                         <TableHead className="pl-2">Name</TableHead>
                         <TableHead>Version</TableHead>
                         <TableHead>Access</TableHead>
@@ -79,32 +76,10 @@ export default function DeploymentsPage() {
                               router.push(`/${collectionId}/deployments/${document.id}/overview`);
                             }}
                           >
-                            <TableCell className="w-12">
-                              <div className="flex items-center justify-center overflow-hidden rounded-md h-6 w-6">
-                                <div className="flex h-10 w-10 items-center justify-center rounded-md bg-gray-200">
-                                  <div
-                                    style={{
-                                      position: "relative",
-                                      width: "100%",
-                                      paddingBottom: "100%",
-                                    }}
-                                  >
-                                    <div
-                                      style={{
-                                        position: "absolute",
-                                        inset: "0px",
-                                      }}
-                                    >
-                                      <img alt="Banner image" />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </TableCell>
                             <TableCell className="pl-2">{document.title}</TableCell>
                             <TableCell>
                               <div className="inline-flex items-center rounded-full border px-2.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80 w-fit py-0">
-                                {document.version}
+                                {document.documentVersion}
                               </div>
                             </TableCell>
                             <TableCell>
