@@ -39,9 +39,9 @@ export default function Home() {
             >
               Products
             </Link>
-            <Link href="#faqs" className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200">
+            {/* <Link href="#faqs" className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200">
               FAQs
-            </Link>
+            </Link> */}
             <div className="flex items-center space-x-4">
               <Link href={`${process.env.NEXT_PUBLIC_APP_DOMAIN}/login`}>
                 <Button
