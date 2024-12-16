@@ -61,7 +61,7 @@ export default function Page() {
               <h4>9. Contact Us</h4>
               <p>
                 If you have questions or comments about this Privacy Policy or our practices, please contact us at{" "}
-                <a href="mailto:support@wordware.ai">support@wordware.ai</a>.
+                <a href="mailto:sparrowwht7@gmail.com">wordix</a>.
               </p>
             </div>
           </div>
