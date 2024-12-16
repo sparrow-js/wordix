@@ -158,7 +158,7 @@ const UpdateButton = () => {
             <div className="flex flex-col gap-2">
               <h2 className="py-2 text-lg font-semibold">Your current deployment</h2>
               <div className="space-y-2">
-                <Link target="_blank" href={`/explore/app/${collectionId}/${document?.id}`}>
+                <Link target="_blank" href={`/explore/app/${document?.id}`}>
                   <div className="h-[36px] items-center rounded cursor-pointer justify-between flex w-full border-border border bg-[#FAFAFA] dark:bg-muted px-2.5 gap-8 mb-2">
                     <div className="flex items-center gap-2 text-sm font-medium">
                       <ExternalLink className="h-4 w-4" />

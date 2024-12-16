@@ -1,5 +1,13 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { AiFillApi } from "react-icons/ai";
+import { FaRunning } from "react-icons/fa";
+import { IoDocument } from "react-icons/io5";
+import { IoLanguageSharp } from "react-icons/io5";
+import { RiAiGenerate2 } from "react-icons/ri";
+import { RiAiGenerateText } from "react-icons/ri";
+import { RiApps2AiFill } from "react-icons/ri";
+import { SiNotion } from "react-icons/si";
 
 export default function Home() {
   return (
@@ -75,7 +83,10 @@ export default function Home() {
                 </Button>
               </Link>
               <Link href={process.env.NEXT_PUBLIC_APP_DOMAIN}>
-                <Button variant="ghost" className="font-mono text-base text-gray-800 transition-all duration-300 hover:scale-105">
+                <Button
+                  variant="ghost"
+                  className="font-mono text-base text-gray-800 transition-all duration-300 hover:scale-105"
+                >
                   Learn More
                 </Button>
               </Link>
@@ -123,116 +134,91 @@ export default function Home() {
             </div>
           </div>
         </main>
-        <div id="about" className="relative w-full h-screen flex flex-col items-center justify-center py-28">
+        <div id="about" className="relative w-full h-screen flex flex-col items-center justify-center py-28 mt-12">
           <div className="text-center mb-12">
             <h1 className="text-5xl font-bold text-gray-900 font-['Fascinate_Inline']">About Wordix</h1>
             <p className="text-lg text-gray-500 mt-2">
-              Wordix is a cutting-edge platform that combines natural language processing and AI to revolutionize
-              document-centric workflows
+              Wordix is ​​a platform that combines natural language processing and artificial intelligence to run document
+              streams to obtain results
             </p>
           </div>
           <div className=" grid grid-cols-3 gap-x-8 gap-y-16 w-full">
             <div className="bg-white rounded-sm border p-6 border-[#717172]">
               <div className="flex items-start mb-8">
-                <img
-                  src="//cdn-imgs.dora.run/design/I087XuOFszDIBFWduTsT93.webp/w/4096/h/4096/format/webp?"
-                  alt=""
-                  className="w-16 h-16 mr-4"
-                />
+                <div className="w-16 h-16 mr-4 flex items-center justify-center rounded-full bg-gray-100">
+                  <IoDocument className="w-8 h-8" style={{ width: "32px", height: "32px" }} />
+                </div>
+
                 <div>
-                  <h3 className="text-2xl font-semibold text-gray-800">Trusted Partners</h3>
-                  <p className="text-sm text-gray-500">Delivering Excellence</p>
+                  <h3 className="text-lg font-medium text-gray-800">Document workflow</h3>
+                  <p className="text-sm text-gray-500">Run in document form</p>
                 </div>
               </div>
               <div className="flex items-start mb-8">
-                <img
-                  src="//cdn-imgs.dora.run/design/BrmXRePlonhH5ApAsP3w2l.webp/w/4096/h/4096/format/webp?"
-                  alt=""
-                  className="w-16 h-16 mr-4"
-                />
+                <div className="w-16 h-16 mr-4 flex items-center justify-center rounded-full bg-gray-100">
+                  <SiNotion className="w-8 h-8" />
+                </div>
                 <div>
-                  <h3 className="text-lg font-medium text-gray-800">Our Solutions</h3>
-                  <p className="text-sm text-gray-500">Innovative Approach</p>
+                  <h3 className="text-lg font-medium text-gray-800">Notion-like interface</h3>
+                  <p className="text-sm text-gray-500">The interaction is simple, similar to notion </p>
                 </div>
               </div>
               <div className="flex items-start">
-                <img
-                  src="//cdn-imgs.dora.run/design/BrmXRePlonhH5ApAsP3w2l.webp/w/4096/h/4096/format/webp?"
-                  alt=""
-                  className="w-16 h-16 mr-4"
-                />
+                <div className="w-16 h-16 mr-4 flex items-center justify-center rounded-full bg-gray-100">
+                  <IoLanguageSharp className="w-8 h-8" />
+                </div>
                 <div>
-                  <h3 className="text-lg font-medium text-gray-800">Featured</h3>
-                  <p className="text-sm text-gray-500">Tailored for</p>
+                  <h3 className="text-lg font-medium text-gray-800">natural language program</h3>
+                  <p className="text-sm text-gray-500">No additional study required</p>
                 </div>
               </div>
             </div>
             <div className="bg-white rounded-sm border p-6 border-[#717172]">
               <div className="flex items-start mb-8">
-                <img
-                  src="//cdn-imgs.dora.run/design/KzvIqxdg2PZFsnEECpT5Q4.webp/w/4096/h/4096/format/webp?"
-                  alt=""
-                  className="w-16 h-16 mr-4"
-                />
+                <div className="w-16 h-16 mr-4 flex items-center justify-center rounded-full bg-gray-100">
+                  <FaRunning className="w-8 h-8" />
+                </div>
                 <div>
-                  <h3 className="text-lg font-medium text-gray-800">Wordix Solutions</h3>
-                  <p className="text-sm text-gray-500">Streamlined Workflows</p>
+                  <h3 className="text-lg font-medium text-gray-800">AI Run</h3>
+                  <p className="text-sm text-gray-500">Run AI document flow</p>
                 </div>
               </div>
               <div className="flex items-start mb-8">
-                <img
-                  src="//cdn-imgs.dora.run/design/BrmXRePlonhH5ApAsP3w2l.webp/w/4096/h/4096/format/webp?"
-                  alt=""
-                  className="w-16 h-16 mr-4"
-                />
+                <div className="w-16 h-16 mr-4 flex items-center justify-center rounded-full bg-gray-100">
+                  <RiAiGenerate2 className="w-8 h-8" />
+                </div>
                 <div>
-                  <h3 className="text-lg font-medium text-gray-800">Exclusive Features</h3>
-                  <p className="text-sm text-gray-500">Unlock Your Potential</p>
+                  <h3 className="text-lg font-medium text-gray-800">AI generated prompt</h3>
+                  <p className="text-sm text-gray-500">AI generated document prompt</p>
                 </div>
               </div>
               <div className="flex items-start">
-                <img
-                  src="//cdn-imgs.dora.run/design/BrmXRePlonhH5ApAsP3w2l.webp/w/4096/h/4096/format/webp?"
-                  alt=""
-                  className="w-16 h-16 mr-4"
-                />
-                <div>
-                  <h3 className="text-lg font-medium text-gray-800">Empower Your Business</h3>
-                  <p className="text-sm text-gray-500">Accelerate Growth</p>
+                <div className="w-16 h-16 mr-4 flex items-center justify-center rounded-full bg-gray-100">
+                  <RiAiGenerateText className="w-8 h-8" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-medium text-gray-800">AI editing documents</h3>
+                  <p className="text-sm text-gray-500">AI edits documents to improve document writing efficiency</p>
                 </div>
               </div>
             </div>
             <div className="bg-white rounded-sm border p-6 border-[#717172]">
               <div className="flex items-start mb-8">
-                <img
-                  src="//cdn-imgs.dora.run/design/I087XuOFszDIBFWduTsT93.webp/w/4096/h/4096/format/webp?"
-                  alt=""
-                  className="w-16 h-16 mr-4"
-                />
-                <div>
-                  <h3 className="text-lg font-medium text-gray-800">Discover More</h3>
-                  <p className="text-sm text-gray-500">Explore Solutions</p>
+                <div className="w-16 h-16 mr-4 flex items-center justify-center rounded-full bg-gray-100">
+                  <RiApps2AiFill className="w-8 h-8" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-medium text-gray-800">AI app</h3>
+                  <p className="text-sm text-gray-500">Support the deployment of your own AI app</p>
                 </div>
               </div>
               <div className="flex items-start mb-8">
-                <img
-                  src="//cdn-imgs.dora.run/design/KzvIqxdg2PZFsnEECpT5Q4.webp/w/4096/h/4096/format/webp?"
-                  alt=""
-                  className="w-16 h-16 mr-4"
-                />
-                <div>
-                  <h3 className="text-lg font-medium text-gray-800">Flexible</h3>
-                  <p className="text-sm text-gray-500">Optimize Your</p>
+                <div className="w-16 h-16 mr-4 flex items-center justify-center rounded-full bg-gray-100">
+                  <AiFillApi className="w-8 h-8" />
                 </div>
-              </div>
-              <div className="flex items-start">
-                <img
-                  src="//cdn-imgs.dora.run/design/KzvIqxdg2PZFsnEECpT5Q4.webp/w/4096/h/4096/format/webp?"
-                  alt=""
-                  className="w-16 h-16 mr-4"
-                />
-                <div>
-                  <h3 className="text-lg font-medium text-gray-800">Experience the Future of</h3>
+                <div className="flex-1">
+                  <h3 className="text-lg font-medium text-gray-800">api support</h3>
+                  <p className="text-sm text-gray-500">Call the API and integrate it into your app</p>
                 </div>
               </div>
             </div>
@@ -243,9 +229,7 @@ export default function Home() {
           {/* Section Header */}
           <div className="text-center mt-16">
             <h1 className="font-fascinate text-5xl text-gray-900 font-['Fascinate_Inline']">Why Choose Wordix?</h1>
-            <p className="mt-4 text-lg text-gray-500">
-              Wordix is the premier platform for businesses seeking to streamline their document-centric workflows
-            </p>
+            <p className="mt-4 text-lg text-gray-500">Quickly build your own AI App</p>
           </div>
           {/* Media and Content */}
           <div className="flex justify-center space-x-4 mt-12 w-full max-w-7xl">
@@ -309,7 +293,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="relative w-full h-screen flex flex-col items-center justify-center bg-white mt-48">
+        <div className="relative w-full h-screen flex flex-col items-center justify-center bg-white mt-12">
           <div className="relative text-center mb-8">
             <h1 className="text-5xl font-semibold font-fascinate text-black font-['Fascinate_Inline']">
               Transforming Businesses
@@ -367,7 +351,7 @@ export default function Home() {
                 workflows...
               </p>
             </div>
-            <Link href={process.env.}>
+            <Link href={process.env.NEXT_PUBLIC_APP_DOMAIN}>
               <Button className="mt-6 w-full py-2 bg-white text-black font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 hover:scale-105">
                 Get Started
               </Button>
@@ -402,8 +386,8 @@ export default function Home() {
             {/* Text Content */}
             <div className="flex justify-center items-start mb-8">
               <p className="text-center text-gray-700 font-source-code-pro text-base leading-relaxed max-w-xl">
-                Wordix is the future of document management. Our cutting-edge platform combines natural language
-                processing and AI to revolutionize the way businesses execute document-centric workflows.
+                Wordix is ​​an AI app that uses natural language workflow and the power of generation to create your own
+                AI technology website.
               </p>
             </div>
 
