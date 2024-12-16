@@ -97,12 +97,12 @@ export default function Home() {
             <div className="flex gap-4 w-full flex-row mb-[30px]">
               <div className="flex space-x-4 flex-col">
                 <img
-                  src="//cdn-imgs.dora.run/design/HHAv8bH2OnQHtLK1MEtrtg.webp/w/4096/h/4096/format/webp?"
+                  src="/HHAv8bH2OnQHtLK1MEtrtg-4096x4096.webp"
                   alt=""
                   className="w-[169px] h-[78px] object-contain mb-[30px]"
                 />
                 <img
-                  src="//cdn-imgs.dora.run/design/DVLtHyRXvZQJOX2Ti2z6Jz.webp/w/4096/h/4096/format/webp?"
+                  src="/DVLtHyRXvZQJOX2Ti2z6Jz-4096x4096.webp"
                   alt=""
                   className="w-[107px] h-[350px] object-contain"
                 />
@@ -110,27 +110,24 @@ export default function Home() {
               <div className="flex space-x-4 flex-col">
                 <div className="flex flex-col space-y-4 mb-[40px] relative">
                   <img
-                    src="//cdn-imgs.dora.run/design/HDWF23xxEFuF0zlbiIvNqB.webp/w/4096/h/4096/format/webp?"
+                    src="/HDWF23xxEFuF0zlbiIvNqB-4096x4096.webp"
                     alt=""
                     className="w-[112px] h-[185px] object-contain "
                   />
                   <div className="absolute right-[-82px] bottom-[-20px] w-[62px] h-[74px] bg-black" />
                 </div>
 
-                <img
-                  src="//cdn-imgs.dora.run/design/J1h7YNbnPPRIWS16dcWx3s.webp/w/4096/h/4096/format/webp?"
-                  alt=""
-                  className="w-[155px] h-[204px] object-cover"
-                />
+                <img src="/J1h7YNbnPPRIWS16dcWx3s-4096x4096.webp" alt="" className="w-[155px] h-[204px] object-cover" />
+                <div
+                  className="translate-x-[155px] -translate-y-[60px] relative flex justify-center items-center w-[133px] h-[60px]"
+                  style={{
+                    backgroundImage: "url('/KNqiSDvNVwdILaz3ymrdPC-4096x4096.webp')",
+                    backgroundSize: "cover",
+                  }}
+                >
+                  <span className="text-2xl text-red-600 font-bold top-[-10px] left-[-10px] ml-[36px]">AI</span>
+                </div>
               </div>
-            </div>
-
-            <div className="ml-[100px]">
-              <img
-                src="//cdn-imgs.dora.run/design/KNqiSDvNVwdILaz3ymrdPC.webp/w/4096/h/4096/format/webp?"
-                alt="Icon"
-                className="w-[133px] h-[60px] object-contain"
-              />
             </div>
           </div>
         </main>

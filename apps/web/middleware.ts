@@ -3,7 +3,9 @@ import { type NextRequest, NextResponse } from "next/server";
 
 // Read more: https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\.png|.*\\.svg|FascinateInline-Regular\\.ttf).*)"],
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.png|.*\\.svg|.*\\.webp|FascinateInline-Regular\\.ttf).*)",
+  ],
 };
 
 // 定义无需认证的路径列表，包括根路径
