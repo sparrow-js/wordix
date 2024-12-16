@@ -106,6 +106,7 @@ const ShareButton = observer(() => {
                 version: 1.0,
                 visibility: visibility as DocumentVisibility,
                 publishedContent: document?.content,
+                content: document?.content,
                 documentVersion: "1.0",
               });
               toast.success("Deployed successfully");
