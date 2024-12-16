@@ -288,7 +288,7 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center w-full h-full pt-28">
+        {/* <div className="flex flex-col items-center justify-center w-full h-full pt-28">
           <div className="text-center">
             <h1 className="text-6xl font-bold mb-6 font-['Fascinate_Inline']">Ligula ma.</h1>
             <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
@@ -296,8 +296,8 @@ export default function Home() {
               vitae laoreet, sociosqu semper mus al.
             </p>
           </div>
-        </div>
-
+        </div> */}
+        {/* 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8 mx-4">
           <div className="relative bg-white border border-gray-900 rounded-md shadow-lg p-6">
             <div className="flex items-center mb-4">
@@ -356,9 +356,9 @@ export default function Home() {
               Learn More
             </Button>
           </div>
-        </div>
+        </div> */}
 
-        <div className="flex flex-col items-center justify-center w-full h-full">
+        <div className="flex flex-col items-center justify-center w-full h-full mt-24">
           {/* Main Container */}
           <div className="flex flex-col items-center mt-10 w-full max-w-screen-lg">
             {/* Text Content */}
