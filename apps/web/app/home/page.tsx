@@ -268,7 +268,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="relative w-full h-screen flex flex-col items-center justify-center bg-white mt-12">
+        {/* <div className="relative w-full h-screen flex flex-col items-center justify-center bg-white mt-12">
           <div className="relative text-center mb-8">
             <h1 className="text-5xl font-semibold font-fascinate text-black font-['Fascinate_Inline']">
               Transforming Businesses
@@ -284,7 +284,7 @@ export default function Home() {
               alt="Display"
             />
           </div>
-        </div>
+        </div> */}
         {/* <div className="flex flex-col items-center justify-center w-full h-full pt-28">
           <div className="text-center">
             <h1 className="text-6xl font-bold mb-6 font-['Fascinate_Inline']">Ligula ma.</h1>
