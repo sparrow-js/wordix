@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { AiFillApi } from "react-icons/ai";
@@ -20,6 +21,7 @@ export default function Home() {
             </div>
             <div className="text-xl font-bold text-gray-900">
               Word<span className="text-red-600">ix</span>
+              <Badge className="bg-[#adfa1d] text-black ml-2">beta</Badge>
             </div>
           </div>
 

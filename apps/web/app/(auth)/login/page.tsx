@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Suspense } from "react";
 import LoginGithubButton from "./login-git-button";
 import LoginGoogleButton from "./login-google-button";
+
 export default function LoginPage() {
   return (
     <div className="mx-5 border border-stone-200 py-10 dark:border-stone-700 sm:mx-auto sm:w-full sm:max-w-md sm:rounded-lg sm:shadow-md p-4">
