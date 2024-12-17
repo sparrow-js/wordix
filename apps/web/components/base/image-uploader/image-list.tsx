@@ -1,12 +1,15 @@
+// import { RefreshCcw01 } from '@/app/components/base/icons/src/vender/line/arrows'
+// import { AlertTriangle } from '@/app/components/base/icons/src/vender/solid/alertsAndFeedback'
+// import Tooltip from '@/app/components/base/tooltip'
+// import type { ImageFile } from '@/types/app'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/Tooltip";
 import { cn } from "@/lib/utils";
 // import { useTranslation } from 'react-i18next'
 import { RiCloseLine, RiLoader2Line } from "@remixicon/react";
 import type { FC } from "react";
 import { useState } from "react";
-// import { RefreshCcw01 } from '@/app/components/base/icons/src/vender/line/arrows'
-// import { AlertTriangle } from '@/app/components/base/icons/src/vender/solid/alertsAndFeedback'
-// import Tooltip from '@/app/components/base/tooltip'
-// import type { ImageFile } from '@/types/app'
+import { FiAlertTriangle } from "react-icons/fi";
+
 type ImageFile = any;
 // import { TransferMethod } from '@/types/app'
 export enum TransferMethod {
@@ -77,13 +80,18 @@ const ImageList: FC<ImageListProps> = ({
                 `}
             >
               {item.progress > -1 && <RiLoader2Line className="animate-spin w-5 h-5 text-white" />}
-              {/* {item.progress === -1 && (
-                <Tooltip
-                  popupContent={t('common.imageUploader.pasteImageLinkInvalid')}
-                >
-                  <AlertTriangle className="w-4 h-4 text-[#DC6803]" />
-                </Tooltip>
-              )} */}
+              {item.progress === -1 && (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <FiAlertTriangle className="w-4 h-4 text-[#DC6803]" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>pasteImageLinkInvalid</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
             </div>
           )}
           <img

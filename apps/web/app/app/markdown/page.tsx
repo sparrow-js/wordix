@@ -1,12 +1,15 @@
 "use client";
+import { Markdown } from "@/components/base/markdown";
 import { useState } from "react";
-import Markdown from "react-markdown";
 
 export default function MarkdownPage() {
   const [markdown, setMarkdown] = useState(`
 
 
 Provide an image and output a detailed description based on the image content, adhering to the following guidelines and examples provided.
+
+![Image description]( https://replicate.delivery/czjl/XetPfMnnBtnyLUNiNcnl2Hneyeo8AsfsOl2AG5Znql5f3VK9E/tmpuv7lgrx7.jpg)
+  
 
 # Steps
 
@@ -196,7 +199,7 @@ data-type="mention">
     <div className="container mx-auto p-4">
       <div className="grid grid-cols-2 gap-4">
         <div className="col-span-1 border rounded-lg p-4 overflow-auto h-[calc(100vh-200px)]">
-          <Markdown className="prose lg:prose-xl">{markdown}</Markdown>
+          <Markdown className="prose lg:prose-xl" content={markdown} />
         </div>
       </div>
     </div>

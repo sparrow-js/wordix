@@ -1,10 +1,17 @@
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/Tooltip";
 import type { FC } from "react";
 import type React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 // import { t } from 'i18next'
 import { createPortal } from "react-dom";
-// import Tooltip from '@/app/components/base/tooltip'
-// import Toast from '@/app/components/base/toast'
+import {
+  RiAddBoxLine,
+  RiCloseLine,
+  RiDownloadCloud2Line,
+  RiFileCopyLine,
+  RiZoomInLine,
+  RiZoomOutLine,
+} from "react-icons/ri";
 
 type ImagePreviewProps = {
   url: string;
@@ -218,45 +225,96 @@ const ImagePreview: FC<ImagePreviewProps> = ({ url, title, onCancel }) => {
           transition: isDragging ? "none" : "transform 0.2s ease-in-out",
         }}
       />
-      {/* <Tooltip popupContent={t('common.operation.copyImage')}>
-        <div className='absolute top-6 right-48 flex items-center justify-center w-8 h-8 rounded-lg cursor-pointer'
-          onClick={imageCopy}>
-          {isCopied
-            ? <RiFileCopyLine className='w-4 h-4 text-green-500'/>
-            : <RiFileCopyLine className='w-4 h-4 text-gray-500'/>}
-        </div>
-      </Tooltip>
-      <Tooltip popupContent={t('common.operation.zoomOut')}>
-        <div className='absolute top-6 right-40 flex items-center justify-center w-8 h-8 rounded-lg cursor-pointer'
-          onClick={zoomOut}>
-          <RiZoomOutLine className='w-4 h-4 text-gray-500'/>
-        </div>
-      </Tooltip>
-      <Tooltip popupContent={t('common.operation.zoomIn')}>
-        <div className='absolute top-6 right-32 flex items-center justify-center w-8 h-8 rounded-lg cursor-pointer'
-          onClick={zoomIn}>
-          <RiZoomInLine className='w-4 h-4 text-gray-500'/>
-        </div>
-      </Tooltip>
-      <Tooltip popupContent={t('common.operation.download')}>
-        <div className='absolute top-6 right-24 flex items-center justify-center w-8 h-8 rounded-lg cursor-pointer'
-          onClick={downloadImage}>
-          <RiDownloadCloud2Line className='w-4 h-4 text-gray-500'/>
-        </div>
-      </Tooltip>
-      <Tooltip popupContent={t('common.operation.openInNewTab')}>
-        <div className='absolute top-6 right-16 flex items-center justify-center w-8 h-8 rounded-lg cursor-pointer'
-          onClick={openInNewTab}>
-          <RiAddBoxLine className='w-4 h-4 text-gray-500'/>
-        </div>
-      </Tooltip>
-      <Tooltip popupContent={t('common.operation.cancel')}>
-        <div
-          className='absolute top-6 right-6 flex items-center justify-center w-8 h-8 bg-white/8 rounded-lg backdrop-blur-[2px] cursor-pointer'
-          onClick={onCancel}>
-          <RiCloseLine className='w-4 h-4 text-gray-500'/>
-        </div>
-      </Tooltip> */}
+      <div className="absolute top-6 right-6">
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <div className="flex items-center justify-center w-8 h-8 rounded-lg cursor-pointer" onClick={imageCopy}>
+                {isCopied ? (
+                  <RiFileCopyLine className="w-4 h-4 text-green-500" />
+                ) : (
+                  <RiFileCopyLine className="w-4 h-4 text-gray-500" />
+                )}
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>copyImage</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <div className="flex items-center justify-center w-8 h-8 rounded-lg cursor-pointer" onClick={zoomOut}>
+                <RiZoomOutLine className="w-4 h-4 text-gray-500" />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>zoomOut</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <div className="flex items-center justify-center w-8 h-8 rounded-lg cursor-pointer" onClick={zoomIn}>
+                <RiZoomInLine className="w-4 h-4 text-gray-500" />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>zoomIn</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <div
+                className="flex items-center justify-center w-8 h-8 rounded-lg cursor-pointer"
+                onClick={downloadImage}
+              >
+                <RiDownloadCloud2Line className="w-4 h-4 text-gray-500" />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>download</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <div
+                className="flex items-center justify-center w-8 h-8 rounded-lg cursor-pointer"
+                onClick={openInNewTab}
+              >
+                <RiAddBoxLine className="w-4 h-4 text-gray-500" />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>openInNewTab</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <div
+                className="flex items-center justify-center w-8 h-8 bg-white/8 rounded-lg backdrop-blur-[2px] cursor-pointer"
+                onClick={onCancel}
+              >
+                <RiCloseLine className="w-4 h-4 text-gray-500" />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>cancel</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </div>
     </div>,
     document.body,
   );

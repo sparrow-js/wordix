@@ -157,9 +157,6 @@ const StableDiffusion = ({ onDelete, editor }) => {
           </Button>
         </div>
       </div>
-      <p className="mt-16 align-bottom font-mono text-xs text-stone-200">
-        Selected id: cbdf7a50-bae7-46e7-bd26-fd46202fbe81
-      </p>
     </div>
   );
 };
