@@ -2,7 +2,7 @@
 // import { AlertTriangle } from '@/app/components/base/icons/src/vender/solid/alertsAndFeedback'
 // import Tooltip from '@/app/components/base/tooltip'
 // import type { ImageFile } from '@/types/app'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/Tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 // import { useTranslation } from 'react-i18next'
 import { RiCloseLine, RiLoader2Line } from "@remixicon/react";

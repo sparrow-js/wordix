@@ -1,4 +1,4 @@
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/Tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import type { FC } from "react";
 import type React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";

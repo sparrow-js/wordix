@@ -1,5 +1,6 @@
 "use client";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/Tooltip";
+
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import copy from "copy-to-clipboard";
 import { useState } from "react";
 import s from "./style.module.css";

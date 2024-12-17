@@ -1,8 +1,8 @@
 import { type ButtonHTMLAttributes, type HTMLProps, forwardRef } from "react";
 
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { Surface } from "./Surface";
-import Tooltip from "./Tooltip";
 import { Button, type ButtonProps } from "./button";
 
 export type ToolbarWrapperProps = {
@@ -81,9 +81,12 @@ const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
 
     if (tooltip) {
       return (
-        <Tooltip title={tooltip} shortcut={tooltipShortcut}>
-          {content}
-        </Tooltip>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>{content}</TooltipTrigger>
+            <TooltipContent>{tooltip}</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       );
     }
 
