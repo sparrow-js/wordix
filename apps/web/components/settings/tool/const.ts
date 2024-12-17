@@ -21,6 +21,6 @@ export const MODEL = [
 
 export const PARAMETER_LIST = [
   { label: "Aspect ratio", value: "aspect_ratio" },
-  { label: "Model", value: "image_model" },
+  { label: "Model", value: "model" },
   { label: "Prompt", value: "prompt" },
 ];

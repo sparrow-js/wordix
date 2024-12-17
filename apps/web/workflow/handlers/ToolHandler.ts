@@ -59,6 +59,7 @@ export class ToolHandler extends BaseHandler {
       parameters: resolvedParameters,
       toolId: attrs.toolId,
       output: {
+        result,
         // images: result.images,
         // timings: result.timings,
         // seed: result.seed,

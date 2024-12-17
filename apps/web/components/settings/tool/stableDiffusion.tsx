@@ -1,13 +1,13 @@
 import { VariableInput } from "@/components/common/VariableInput";
 import { Button } from "@/components/ui/button";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import useStores from "@/hooks/useStores";
+import { ASPECT_RATIO, ImageConfig } from "@/workflow/ai/config/flux-config";
 import { ChevronDown, ExternalLink, Trash2 } from "lucide-react";
 import { observer } from "mobx-react";
 import Link from "next/link";
 import { useState } from "react";
-import { ASPECT_RATIO, MODEL } from "./const";
 
 const useImageGeneration = () => {
   const [label, setLabel] = useState("Image generation");
@@ -90,9 +90,8 @@ const StableDiffusion = ({ onDelete, editor }) => {
                     <ChevronDown className="h-4 w-4 opacity-50" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
                   <Command>
-                    <CommandInput placeholder="Search aspect ratio..." />
                     <CommandList>
                       <CommandEmpty>No aspect ratio found.</CommandEmpty>
                       <CommandGroup>
@@ -102,7 +101,7 @@ const StableDiffusion = ({ onDelete, editor }) => {
                             value={ratio.value}
                             onSelect={(value) => {
                               setAspectRatio(value);
-                              tools.updateDataSyncToNode("parameters.aspectRatio", { type: "static", value });
+                              tools.updateDataSyncToNode("parameters.aspect_ratio", { type: "literal", value });
                             }}
                           >
                             {ratio.label}
@@ -125,22 +124,21 @@ const StableDiffusion = ({ onDelete, editor }) => {
                     <ChevronDown className="h-4 w-4 opacity-50" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
                   <Command>
-                    <CommandInput placeholder="Search model..." />
                     <CommandList>
                       <CommandEmpty>No model found.</CommandEmpty>
                       <CommandGroup>
-                        {MODEL.map((item) => (
+                        {ImageConfig.map((item) => (
                           <CommandItem
-                            key={item.value}
-                            value={item.value}
+                            key={item.model}
+                            value={item.model}
                             onSelect={(value) => {
                               setModel(value);
-                              tools.updateDataSyncToNode("parameters.model", { type: "static", value });
+                              tools.updateDataSyncToNode("parameters.model", { type: "literal", value });
                             }}
                           >
-                            {item.label}
+                            {item.name}
                           </CommandItem>
                         ))}
                       </CommandGroup>

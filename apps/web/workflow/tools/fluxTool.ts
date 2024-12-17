@@ -5,20 +5,17 @@ import { BaseTool } from "./baseTool";
 export class FLUXTool extends BaseTool {
   async execute(input: {
     prompt: string;
-    modelName?: string;
-    params?: {
-      negative_prompt?: string;
-      image_size?: string;
-      batch_size?: number;
-      seed?: number;
-      num_inference_steps?: number;
-      guidance_scale?: number;
-    };
+    model?: string;
+    aspect_ratio?: string;
   }): Promise<ToolResult<string>> {
     const aiService = ServiceFactory.getInstance().getAIService();
-    const result: any = await aiService.generateImage("flux", input.prompt);
 
-    const imgUrl = result.images[0].url;
+    console.log("***********input", input);
+    const result: any = await aiService.generateImage("flux", input.prompt, input.model, {
+      aspect_ratio: input.aspect_ratio,
+    });
+
+    const imgUrl = result.output;
 
     this.context.onStreamResponse({
       event: "message",

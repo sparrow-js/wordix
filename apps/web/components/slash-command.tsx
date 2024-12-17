@@ -13,7 +13,6 @@ import {
   ListOrdered,
   MessageSquarePlus,
   Parentheses,
-  RectangleHorizontal,
   Repeat,
   Spline,
   Split,
@@ -87,22 +86,22 @@ export const suggestionItems = createSuggestionItems([
       },
     ],
   },
-  {
-    label: "Inputs",
-    list: [
-      {
-        title: "inputs",
-        searchTerms: ["inputs", "inputs"],
-        icon: <RectangleHorizontal size={18} />,
-        description: "Insert a inputs divider",
-        // @ts-ignore
-        aliases: ["hr"],
-        command: ({ editor, range }) => {
-          editor.chain().focus().deleteRange(range).setInputs({}).run();
-        },
-      },
-    ],
-  },
+  // {
+  //   label: "Inputs",
+  //   list: [
+  //     {
+  //       title: "inputs",
+  //       searchTerms: ["inputs", "inputs"],
+  //       icon: <RectangleHorizontal size={18} />,
+  //       description: "Insert a inputs divider",
+  //       // @ts-ignore
+  //       aliases: ["hr"],
+  //       command: ({ editor, range }) => {
+  //         editor.chain().focus().deleteRange(range).setInputs({}).run();
+  //       },
+  //     },
+  //   ],
+  // },
   {
     label: "Tools",
     list: [
@@ -112,13 +111,6 @@ export const suggestionItems = createSuggestionItems([
         searchTerms: ["Image", "embed"],
         icon: <Wrench size={18} />,
         command: ({ editor, range }) => {
-          /**
-            id: props.node.attrs.id,
-            label: props.node.attrs.label,
-            toolId: props.node.attrs.toolId,
-            output: props.node.attrs.output,
-            parameters: props.node.attrs.parameters,
-           */
           editor
             .chain()
             .focus()
@@ -133,9 +125,9 @@ export const suggestionItems = createSuggestionItems([
                   type: "literal",
                   value: "16:9",
                 },
-                image_model: {
+                model: {
                   type: "literal",
-                  value: "Flux Pro",
+                  value: "black-forest-labs/flux-1.1-pro",
                 },
                 prompt: {
                   type: "literal",

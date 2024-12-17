@@ -1,10 +1,18 @@
 import useStores from "@/hooks/useStores";
 import { observer } from "mobx-react";
-
+import { useEffect } from "react";
 const StableDiffusionComponent = observer((props) => {
   const { tools, mentions } = useStores();
 
   const tool = tools.get(props.node.attrs.id);
+
+  useEffect(() => {
+    if (tool) {
+      props.updateAttributes({
+        parameters: tool?.parameters,
+      });
+    }
+  }, [tool?.parameters]);
 
   return (
     <div className="flex-0 mt-2 w-full px-2">

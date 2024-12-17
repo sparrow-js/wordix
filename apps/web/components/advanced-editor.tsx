@@ -96,6 +96,18 @@ const TailwindAdvancedEditor = ({ response }: any) => {
     setSaveStatus("Saved");
   }, 500);
 
+  const debouncedCheckNode = useDebouncedCallback(async (editor: EditorInstance) => {
+    const doc = editor.state.doc;
+    console.log("***********paragraph", editor);
+    const tr = editor.state.tr;
+    const start = doc.content.content
+      .slice(0, 4)
+      .map((node) => node.nodeSize)
+      .reduce((a, b) => a + b, 0);
+    tr.insert(start, editor.schema.nodes.paragraph.create());
+    editor.view.dispatch(tr);
+  }, 100);
+
   useEffect(() => {
     setInitialContent(response.document.content);
   }, []);
@@ -163,6 +175,13 @@ const TailwindAdvancedEditor = ({ response }: any) => {
                       }
                     }
 
+                    if (doc.content.content.length > 4) {
+                      const fifthNode = doc.content.content[4];
+                      if (fifthNode && fifthNode.type.name !== "paragraph") {
+                        debouncedCheckNode(editor);
+                      }
+                    }
+
                     debouncedUpdates(editor);
                     setSaveStatus("Unsaved");
                   }}
@@ -181,23 +200,22 @@ const TailwindAdvancedEditor = ({ response }: any) => {
                     }
                   }}
                   onTransaction={({ transaction, editor }) => {
-                    const doc = transaction.doc;
-
-                    // Check if fifthNode exists before accessing it
-                    if (doc.content.content.length > 4) {
-                      const fifthNode = doc.content.content[4];
-                      if (fifthNode && fifthNode.type.name !== "paragraph") {
-                        const tr = editor.state.tr;
-                        const start = doc.content.content
-                          .slice(0, 4)
-                          .map((node) => node.nodeSize)
-                          .reduce((a, b) => a + b, 0);
-                        const end = start + fifthNode.nodeSize;
-
-                        tr.replaceWith(start, end, editor.schema.nodes.paragraph.create());
-                        editor.view.dispatch(tr);
-                      }
-                    }
+                    // const doc = transaction.doc;
+                    // //Check if fifthNode exists before accessing it
+                    // if (doc.content.content.length > 4) {
+                    //   console.log("***********11doc.content.content.length", doc.content.content.length);
+                    //   const fifthNode = doc.content.content[4];
+                    //   if (fifthNode && fifthNode.type.name !== "paragraph") {
+                    //     const tr = editor.state.tr;
+                    //     const start = doc.content.content
+                    //       .slice(0, 4)
+                    //       .map((node) => node.nodeSize)
+                    //       .reduce((a, b) => a + b, 0);
+                    //     const end = start + fifthNode.nodeSize;
+                    //     tr.replaceWith(start, end, editor.schema.nodes.paragraph.create());
+                    //     editor.view.dispatch(tr);
+                    //   }
+                    // }
                   }}
                   slotAfter={<ImageResizer />}
                 >

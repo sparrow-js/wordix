@@ -34,8 +34,8 @@ export default class ToolsNodeStore extends Store<Tool> {
             value: "aspect_ratio",
           },
           {
-            label: "image model",
-            value: "image_model",
+            label: "model",
+            value: "model",
           },
           {
             label: "prompt",

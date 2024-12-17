@@ -17,7 +17,20 @@ class Tool extends Model {
   output: any[];
 
   @observable
-  parameters: any = {};
+  parameters: any = {
+    aspect_ratio: {
+      type: "literal",
+      value: "16:9",
+    },
+    model: {
+      type: "literal",
+      value: "black-forest-labs/flux-1.1-pro",
+    },
+    prompt: {
+      type: "literal",
+      value: "",
+    },
+  };
 
   inputs: any[];
 
