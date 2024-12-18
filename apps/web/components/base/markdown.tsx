@@ -21,7 +21,7 @@ import RemarkBreaks from "remark-breaks";
 import RemarkGfm from "remark-gfm";
 import RemarkMath from "remark-math";
 
-import "@/styles/markdown.scss";
+// import "@/styles/markdown.scss";
 
 // Available language https://github.com/react-syntax-highlighter/react-syntax-highlighter/blob/master/AVAILABLE_LANGUAGES_HLJS.MD
 const capitalizationLanguageNameMap: Record<string, string> = {
@@ -147,9 +147,9 @@ const CodeBlock: CodeComponent = memo(({ inline, className, children, ...props }
           style={atelierHeathLight}
           customStyle={{
             paddingLeft: 12,
-            backgroundColor: "#fff",
+            backgroundColor: "#1f2937",
           }}
-          language={match?.[1]}
+          language={match?.[1] || "typescript"}
           showLineNumbers
           PreTag="div"
         >

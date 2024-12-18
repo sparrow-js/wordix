@@ -20,7 +20,7 @@ const CopyBtn = ({ value, className, isPlain }: ICopyBtnProps) => {
         <Tooltip>
           <TooltipTrigger>
             <div
-              className={"box-border p-0.5 flex items-center justify-center rounded-md bg-white cursor-pointer"}
+              className={"box-border p-0.5 flex items-center justify-center rounded-md cursor-pointer"}
               style={
                 !isPlain
                   ? {
