@@ -129,7 +129,7 @@ export default function ExplorePage() {
   };
 
   const generatePrompt = async () => {
-    setMarkdownGen("");
+    contentRef.current = "";
     setIsLoading(true);
 
     ssePost(
@@ -220,7 +220,7 @@ export default function ExplorePage() {
         </div>
       </div>
 
-      <div className="w-full relative overflow-hidden pt-12">
+      <div className="w-full relative overflow-hidden pt-16">
         <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row space-y-12 md:space-y-0 md:space-x-12 relative pt-24">
           <div className="w-full md:w-1/2 flex flex-col items-start justify-center md:-mt-12 px-6">
             <div className="text-left mb-8">
@@ -231,11 +231,11 @@ export default function ExplorePage() {
             </div>
           </div>
           <div className="w-full md:w-1/2 space-y-12 relative">
-            <div className="max-w-md mx-auto relative">
+            <div className="fixed bottom-[150px] right-[5%] w-[40%] mx-auto">
               <div className="text-card-foreground shadow-sm border-0 relative bg-opacity-80 backdrop-blur-md rounded-lg p-8 text-center transition-colors">
                 <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-100 to-gray-300 -z-10" />
                 <div className="absolute inset-[1px] rounded-lg bg-gradient-to-r from-gray-100 to-gray-300 bg-opacity-80 backdrop-blur-md -z-10" />
-                <div className="relative z-0">
+                <div className="relative z-0 max-h-[45vh] overflow-y-auto px-2">
                   {inputList.map((input) => {
                     if (input.type === "image") {
                       return (
