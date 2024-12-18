@@ -4,7 +4,7 @@ import { ReactNodeViewRenderer } from "@tiptap/react";
 import { v4 as uuidv4 } from "uuid";
 import { GenerationComp } from "./generation";
 
-export interface GenerationOptions {
+export interface ImageGenerationOptions {
   /**
    * By default LaTeX decorations can render when mathematical expressions are not inside a code block.
    * @param state - EditorState
@@ -21,10 +21,8 @@ export interface GenerationOptions {
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
-    generation: {
-      setGeneration: (options: any) => ReturnType;
-
-      setGenerationLabel: (width: number) => ReturnType;
+    imageGeneration: {
+      setImageGeneration: (options: any) => ReturnType;
     };
   }
 }
@@ -34,8 +32,8 @@ declare module "@tiptap/core" {
  *
  * @see https://katex.org/
  */
-export const Generation = Node.create<GenerationOptions>({
-  name: "generation",
+export const ImageGeneration = Node.create<ImageGenerationOptions>({
+  name: "imageGeneration",
   inline: true,
   group: "inline",
   atom: true,
@@ -44,26 +42,20 @@ export const Generation = Node.create<GenerationOptions>({
 
   addAttributes() {
     return {
-      generation: {
-        default: "",
-      },
       id: {
         default: "",
       },
       label: {
         default: "",
       },
-      temperature: {
-        default: "",
-      },
       model: {
         default: "",
       },
-      type: {
+      aspect_ratio: {
         default: "",
       },
-      stopBefore: {
-        default: [],
+      generationType: {
+        default: "image",
       },
     };
   },
@@ -76,18 +68,17 @@ export const Generation = Node.create<GenerationOptions>({
 
   addCommands() {
     return {
-      setGeneration:
+      setImageGeneration:
         (options: any) =>
         ({ commands }) => {
           return commands.insertContent({
             type: this.name,
             attrs: {
               id: uuidv4(),
-              label: "new_generation",
-              temperature: 0.6,
-              model: "gpt-4o",
-              type: "short",
-              stopBefore: ["", "", "", ""],
+              label: "image_generation",
+              model: "black-forest-labs/flux-1.1-pro",
+              aspect_ratio: "1:1",
+              generationType: "image",
             },
           });
         },
@@ -104,7 +95,7 @@ export const Generation = Node.create<GenerationOptions>({
   },
 
   renderHTML({ node, HTMLAttributes }) {
-    const generation = node.attrs["generation"] ?? "";
+    const generation = node.attrs["imageGeneration"] ?? "";
     return [
       "span",
       mergeAttributes(HTMLAttributes, {
@@ -115,7 +106,7 @@ export const Generation = Node.create<GenerationOptions>({
   },
 
   renderText({ node }) {
-    return node.attrs["generation"] ?? "";
+    return node.attrs["imageGeneration"] ?? "";
   },
 
   addNodeView() {

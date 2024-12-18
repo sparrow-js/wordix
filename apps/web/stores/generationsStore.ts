@@ -25,11 +25,11 @@ export default class GenerationsStore extends Store<Generation> {
   }
 
   @action
-  updateDataSyncToNode(key: string, value: any, editor: any) {
+  updateDataSyncToNode(key: string, value: any, editor?: any) {
     const attr = {};
     attr[key] = value;
     this.currentGeneration.update(attr);
-    this.syncAttrToNode(editor, key, value);
+    editor && this.syncAttrToNode(editor, key, value);
   }
 
   syncAttrToNode(editor: any, key: string, value: string | number) {

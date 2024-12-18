@@ -1,19 +1,18 @@
 import useStores from "@/hooks/useStores";
 import { type NodeViewProps, NodeViewWrapper } from "@tiptap/react";
+import { Image } from "lucide-react";
 import { observer } from "mobx-react";
 import { useEffect } from "react";
 
 export const GenerationComp = observer((props: NodeViewProps) => {
   const { generations, setting, workbench } = useStores();
-  const { id, label, temperature, model, type, stopBefore } = props.node.attrs;
+  const { id, label, model, aspect_ratio } = props.node.attrs;
   useEffect(() => {
     generations.addGeneration({
       id,
       label,
-      temperature,
       model,
-      type,
-      stopBefore,
+      aspect_ratio,
     });
     return () => {
       generations.remove(id);
@@ -23,13 +22,22 @@ export const GenerationComp = observer((props: NodeViewProps) => {
   const labelValue = generation?.label || "";
   const modelName = generation?.model || "";
 
+  useEffect(() => {
+    if (generation?.aspect_ratio || generation?.model) {
+      props.updateAttributes({
+        aspect_ratio: generation?.aspect_ratio,
+        model: generation?.model,
+      });
+    }
+  }, [generation?.aspect_ratio, generation?.model]);
+
   return (
     <NodeViewWrapper as={"span"} style={{ position: "relative" }}>
       <span
         className="react-renderer node-generation"
         onClick={(e) => {
           e.stopPropagation();
-          setting.setSettingComponentName("generation");
+          setting.setSettingComponentName("imageGeneration");
           generations.currentId = id;
           workbench.setShowSidebar();
         }}
@@ -40,7 +48,7 @@ export const GenerationComp = observer((props: NodeViewProps) => {
         >
           <span className="inline-flex leading-6">
             <span className="ml-0.5 flex items-center justify-center gap-1 align-middle font-mono text-base font-medium text-sky-500">
-              ✨<span>{labelValue}</span>
+              ✨ <Image className="w-4 h-4" /> <span>{labelValue}</span>
               <span className="my-auto ml-2 rounded-full bg-stone-300 px-2 py-0 align-middle font-default text-xs font-semibold text-gray-700">
                 <span className="pt-1">{modelName}</span>
               </span>

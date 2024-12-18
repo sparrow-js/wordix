@@ -10,7 +10,6 @@
 //               // 找到最后一个节点的结束位置
 //               const lastNodeEnd = docSize;
 //               const endPosition = editor.state.doc.content.size;
-//               console.log("****************", lastNodeEnd, endPosition);
 //               markdown += "**test**";
 //               editor.commands.insertContentAt(lastNodeEnd, "**test**"); // setContent supports markdown format
 //               setTimeout(() => {

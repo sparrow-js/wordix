@@ -202,7 +202,6 @@ const TailwindAdvancedEditor = ({ response }: any) => {
                     // const doc = transaction.doc;
                     // //Check if fifthNode exists before accessing it
                     // if (doc.content.content.length > 4) {
-                    //   console.log("***********11doc.content.content.length", doc.content.content.length);
                     //   const fifthNode = doc.content.content[4];
                     //   if (fifthNode && fifthNode.type.name !== "paragraph") {
                     //     const tr = editor.state.tr;

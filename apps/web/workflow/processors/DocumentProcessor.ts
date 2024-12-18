@@ -6,6 +6,7 @@ import { GenerationHandler } from "../handlers/GenerationHandler";
 import { HardBreakHandler } from "../handlers/HardBreak";
 import { HeadingHandler } from "../handlers/HeadingHandler";
 import { IfElseHandler } from "../handlers/IfElseHandler";
+import { ImageGenerationHandler } from "../handlers/ImageGenerationHandler";
 import { ImageHandler } from "../handlers/ImageHandler";
 import { InputsHandler } from "../handlers/InputsHandler";
 import { ListItemHandler } from "../handlers/ListItemHandler";
@@ -104,6 +105,7 @@ export class DocumentProcessor extends BaseProcessor {
     this.handlers.set("orderedList", new OrderedListHandler());
     this.handlers.set("blockquote", new BlockquoteHandler());
     this.handlers.set("image", new ImageHandler());
+    this.handlers.set("imageGeneration", new ImageGenerationHandler());
   }
 
   private registerDefaultTools(): void {

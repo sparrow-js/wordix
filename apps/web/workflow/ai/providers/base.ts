@@ -17,7 +17,7 @@ export interface AIProvider {
     options?: Partial<ModelConfig>,
   ): Promise<string>;
 
-  generateImage?(prompt: string, modelName?: string, params?: any): Promise<string>;
+  generateImage?(prompt: string, modelName?: string, params?: any): Promise<{ output: string }>;
 }
 
 export interface Message {

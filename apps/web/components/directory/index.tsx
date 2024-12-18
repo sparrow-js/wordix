@@ -20,7 +20,7 @@ import { FillFlexParent } from "./fill-flex-parent";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import useStores from "@/hooks/useStores";
-import { FilePlus, FolderPlus, LayoutGrid } from "lucide-react";
+import { FolderPlus, LayoutGrid } from "lucide-react";
 import { observer } from "mobx-react";
 
 type Data = { id: string; title: string; children?: Data[] };
@@ -28,6 +28,7 @@ import type Collection from "@/models/Collection";
 import type { NavigationNode } from "@/shared/types";
 import { useParams, useRouter } from "next/navigation";
 import type { NodeApi } from "react-arborist";
+import { RiAiGenerateText } from "react-icons/ri";
 import { v4 as uuidv4 } from "uuid";
 
 const INDENT_STEP = 15;
@@ -175,7 +176,7 @@ function Directory() {
                 createDocument();
               }}
             >
-              <FilePlus className="h-5 w-5" />
+              <RiAiGenerateText className="h-5 w-5" />
             </Button>
             <Button variant="outline" size="icon" className="aspect-square w-fit" onClick={() => createFolder()}>
               <FolderPlus className="h-5 w-5" />

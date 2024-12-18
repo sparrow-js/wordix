@@ -84,3 +84,21 @@ export const PARAMETER_LIST = [
   { label: "Model", value: "model" },
   { label: "Prompt", value: "prompt" },
 ];
+
+export function getProviderFromModel(modelName: string): string {
+  const model = ImageConfig.find((m) => m.model === modelName);
+  if (!model) {
+    throw new Error(`Model ${modelName} not found`);
+  }
+  return model.provider;
+}
+
+export async function getFormatMessage(message: any[], modelName: string) {
+  const model = ImageConfig.find((m) => m.model === modelName);
+
+  return Promise.all(
+    message.map(async (m) => {
+      return m;
+    }),
+  );
+}

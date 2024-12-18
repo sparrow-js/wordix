@@ -40,6 +40,7 @@ import { IfElse } from "./extensions/ifElse";
 
 import { Comment } from "./extensions/comment";
 import { Description } from "./extensions/description";
+import { ImageGeneration } from "./extensions/image-generation";
 import { Input } from "./extensions/inputs/input";
 import { Prompt } from "./extensions/prompt";
 import { Title } from "./extensions/title";
@@ -213,34 +214,29 @@ export const defaultExtensions = [
   inputs,
   Input,
   generation,
+  ImageGeneration.configure({
+    HTMLAttributes: {},
+  }),
   mention,
   loop,
   codeExecutor,
   Description,
 
   IfElse.configure({
-    HTMLAttributes: {
-      class: "details",
-    },
+    HTMLAttributes: {},
   }),
 
   If.configure({
-    HTMLAttributes: {
-      class: "details",
-    },
+    HTMLAttributes: {},
   }),
 
   Else.configure({
-    HTMLAttributes: {
-      class: "details",
-    },
+    HTMLAttributes: {},
   }),
 
   Comment,
   Tool.configure({
-    HTMLAttributes: {
-      class: "details",
-    },
+    HTMLAttributes: {},
   }),
 
   Prompt,

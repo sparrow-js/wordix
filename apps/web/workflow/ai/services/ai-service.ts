@@ -63,7 +63,12 @@ export class AIService {
     return await provider.streamChat(messages, onText, modelName, options);
   }
 
-  async generateImage(providerName: string, prompt: string, modelName?: string, params?: any): Promise<string> {
+  async generateImage(
+    providerName: string,
+    prompt: string,
+    modelName?: string,
+    params?: any,
+  ): Promise<{ output: string }> {
     const provider = this.getProvider(providerName);
     return provider.generateImage(prompt, modelName, params);
   }

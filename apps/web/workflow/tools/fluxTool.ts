@@ -10,8 +10,7 @@ export class FLUXTool extends BaseTool {
   }): Promise<ToolResult<string>> {
     const aiService = ServiceFactory.getInstance().getAIService();
 
-    console.log("***********input", input);
-    const result: any = await aiService.generateImage("flux", input.prompt, input.model, {
+    const result = await aiService.generateImage("flux", input.prompt, input.model, {
       aspect_ratio: input.aspect_ratio,
     });
 

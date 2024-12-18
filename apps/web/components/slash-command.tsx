@@ -33,14 +33,16 @@ export const suggestionItems = createSuggestionItems([
         searchTerms: ["generation", "embed"],
         icon: <Brain size={18} />,
         command: ({ editor, range }) => {
-          editor
-            .chain()
-            .focus()
-            .deleteRange(range)
-            .setGeneration({
-              id: "44455",
-            })
-            .run();
+          editor.chain().focus().deleteRange(range).setGeneration({}).run();
+        },
+      },
+      {
+        title: "Image Generation",
+        description: "Embed a image generation.",
+        searchTerms: ["image", "generation", "embed"],
+        icon: <ImageIcon size={18} />,
+        command: ({ editor, range }) => {
+          editor.chain().focus().deleteRange(range).setImageGeneration({}).run();
         },
       },
     ],

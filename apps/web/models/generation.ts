@@ -1,49 +1,53 @@
-import { action, observable, makeObservable } from "mobx";
+import type GenerationsStore from "@/stores/generationsStore";
+import { action, makeObservable, observable } from "mobx";
 import Model from "./base/Model";
 import Field from "./decorators/Field";
-import GenerationsStore from "@/stores/generationsStore";
 
 class Generation extends Model {
-    static modelName = "Generation";
+  static modelName = "Generation";
 
-    @Field
-    @observable
-    label: string;
+  @Field
+  @observable
+  label: string;
 
+  @Field
+  @observable
+  model: string;
 
-    @Field
-    @observable
-    temperature: number;
+  @Field
+  @observable
+  aspect_ratio?: string;
 
-    @Field
-    @observable
-    model: string;
+  @Field
+  @observable
+  temperature?: number;
 
-    @Field
-    @observable
-    type: string;
+  @Field
+  @observable
+  type?: string;
 
-    @Field
-    @observable
-    stopBefore: string[]
+  @Field
+  @observable
+  stopBefore?: string[];
 
-    constructor(fields: Record<string, any>, store: GenerationsStore) {
-        super(fields, store);
-        makeObservable(this);
-        this.updateData(fields);
+  @Field
+  @observable
+  generationType?: string;
+
+  constructor(fields: Record<string, any>, store: GenerationsStore) {
+    super(fields, store);
+    makeObservable(this);
+    this.updateData(fields);
+  }
+
+  @action
+  update(data: Partial<Generation>) {
+    for (const key in data) {
+      try {
+        this[key] = data[key];
+      } catch (error) {}
     }
-
-
-    @action
-    update(data: Partial<Generation>) {
-        for (const key in data) {
-            try {
-              this[key] = data[key];
-            } catch (error) {
-            }
-        }
-    }
-
+  }
 }
 
 export default Generation;

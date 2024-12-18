@@ -12,11 +12,12 @@ import DebugExecute from "@/components/settings/execute/debug-execute";
 import { observer } from "mobx-react";
 import CodeExecutorEditor from "./codeExecutor";
 import IfElseSetting from "./ifElse";
+import ImageGeneration from "./imageGeneration";
 import Prompt from "./prompt";
 import Tool from "./tool";
-
 const MapComp = {
   generation: Generation,
+  imageGeneration: ImageGeneration,
   inputSetting: InputSetting,
   executeResult: DebugExecute,
   loop: LoopSetting,

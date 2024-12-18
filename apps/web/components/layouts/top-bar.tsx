@@ -99,7 +99,7 @@ const TopBar = observer(() => {
             </div>
             <Popover>
               <PopoverTrigger asChild>
-                <div className="rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground flex cursor-pointer select-none items-center gap-1 text-xs hover:bg-stone-100 mt-1.5">
+                <div className="rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground flex cursor-pointer select-none items-center gap-1 text-xs hover:bg-stone-100">
                   <span className="flex items-center gap-1 align-middle">
                     <Globe className="h-3 w-3" />
                     {collection.privacy}
