@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export async function POST(request: Request) {
   const body = await request.json();
 
-  const { collectionId, documentId, limit = 25, offset = 0 } = body;
+  const { collectionId, documentId, limit = 25, page = 0 } = body;
 
   try {
     const session = await auth();
@@ -17,7 +17,6 @@ export async function POST(request: Request) {
     // Build where clause based on provided parameters
     const whereClause = documentId
       ? {
-          collectionId: collectionId,
           documentId: documentId,
         }
       : {
@@ -31,7 +30,7 @@ export async function POST(request: Request) {
         createdAt: "desc",
       },
       take: limit,
-      skip: offset,
+      skip: page * limit,
       include: {
         document: {
           select: {

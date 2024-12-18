@@ -45,7 +45,8 @@ export default observer(function RunsPage() {
       visibility: "published",
       sort: "updatedAt",
     });
-    if (res[PAGINATION_SYMBOL].total <= runs.publishedList.length) {
+    console.log("*********", res[PAGINATION_SYMBOL].total, publishedRuns.length);
+    if (res[PAGINATION_SYMBOL].total <= publishedRuns.length) {
       setHasMore(false);
     } else {
       setPage(page + 1);
@@ -87,8 +88,8 @@ export default observer(function RunsPage() {
               <div className="flex h-[calc(100svh-120px)] overflow-hidden">
                 <ResizablePanelGroup direction="horizontal">
                   <ResizablePanel defaultSize={50}>
-                    <div style={{ flex: "100 1 0px", overflow: "hidden" }}>
-                      <div className="flex h-full overflow-y-auto">
+                    <div className="max-h-[calc(100svh-120px)] overflow-y-auto">
+                      <div className="flex flex-col">
                         <div className="w-full px-1 py-4 md:p-5">
                           <div className="w-full rounded-lg border border-border bg-background">
                             <div className="relative w-full overflow-auto">
