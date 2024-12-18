@@ -10,7 +10,7 @@ import type {
 import { META_PROMPT } from "./const";
 
 import { getProviderFromModel } from "@/workflow/ai/config/model-configs";
-export const maxDuration = 120;
+export const maxDuration = 60;
 
 export async function POST(request: Request) {
   const session = await auth();

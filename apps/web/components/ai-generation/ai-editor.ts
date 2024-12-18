@@ -952,7 +952,7 @@ const aiExtension = Extension.create({
       baseUrl: `${base_url}/api/ai`,
       autocompletion: false,
       autocompletionOptions: {
-        inputLength: 4000,
+        inputLength: 8000,
         trigger: "Tab",
       },
       append: false,

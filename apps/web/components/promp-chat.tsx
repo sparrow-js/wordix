@@ -64,7 +64,7 @@ const PrompChat = ({ editor }: { editor: Editor }) => {
             className="flex-1 w-full border-none outline-none  leading-[20px] max-h-[80px] bg-transparent"
             spellCheck="false"
             rows={1}
-            placeholder="Tell the AI what to change"
+            placeholder="Tell the AI what to change something"
             style={{
               resize: "none",
               overflowY: "scroll", // Allow scrolling
@@ -85,11 +85,20 @@ const PrompChat = ({ editor }: { editor: Editor }) => {
           )}
           onClick={() => {
             if (chatValue.length === 0) return;
+            const parentNode = editor.state.selection.$from.node(0);
+            const indexInParent =
+              parentNode.childCount > 0 ? parentNode.childAfter(editor.state.selection.$from.pos).index : -1;
+
+            let insertAt = editor.state.selection.from || editor.state.doc.content.size;
+            if (indexInParent < 4) {
+              insertAt = editor.state.doc.content.size;
+            }
+
             editor?.commands.aiTextPrompt({
               text: chatValue,
               format: "rich-text",
               stream: true,
-              insertAt: editor.state.selection.from || editor.state.doc.content.size,
+              insertAt,
               model: model,
             });
             setChatValue("");

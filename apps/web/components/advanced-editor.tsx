@@ -98,7 +98,6 @@ const TailwindAdvancedEditor = ({ response }: any) => {
 
   const debouncedCheckNode = useDebouncedCallback(async (editor: EditorInstance) => {
     const doc = editor.state.doc;
-    console.log("***********paragraph", editor);
     const tr = editor.state.tr;
     const start = doc.content.content
       .slice(0, 4)

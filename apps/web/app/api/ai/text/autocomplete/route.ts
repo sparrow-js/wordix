@@ -2,7 +2,7 @@ import { auth } from "@/lib/auth";
 import { respErr } from "@/lib/resp";
 import type { Message } from "@/workflow/ai/providers/base";
 import { ServiceFactory } from "@/workflow/ai/services/service-factory";
-export const maxDuration = 120;
+export const maxDuration = 60;
 
 export async function POST(request: Request) {
   const session = await auth();
