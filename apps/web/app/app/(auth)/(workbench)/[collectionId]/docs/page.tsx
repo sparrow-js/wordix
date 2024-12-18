@@ -49,23 +49,12 @@ export default observer(function DocsPage() {
               </div> */}
 
               <div className="card-container flex flex-wrap justify-center gap-4">
-                {/* 模板卡片1 */}
                 <div
-                  className="text-card-foreground border border-border card rounded-lg shadow w-[280px] cursor-pointer bg-transparent hover:bg-muted"
                   onClick={() => createDocument()}
+                  className="bg-[#f1f0f0] rounded-lg p-6 flex flex-col items-center text-center hover:ring-1 hover:ring-[#8ba3ff] shadow w-[280px]"
                 >
-                  <div className="relative rounded-md p-6">
-                    <div className="flex items-center">
-                      <div className="w-full flex-auto space-y-1">
-                        <p className="mb-2 truncate whitespace-nowrap text-sm font-medium leading-none text-muted-foreground">
-                          Blank Flow
-                        </p>
-                        <p className="truncate whitespace-normal text-sm text-muted-foreground/50">
-                          Start from scratch
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                  <h2 className="text-xl font-semibold mb-2"> Blank Flow</h2>
+                  <p className="text-gray-800 text-sm">Start from scratch</p>
                 </div>
               </div>
             </div>
