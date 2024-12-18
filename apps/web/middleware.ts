@@ -11,6 +11,8 @@ export const config = {
 // 定义无需认证的路径列表，包括根路径
 const publicPaths = ["/privacy-policy", "/terms"];
 
+const appPublicPaths = "explore";
+
 export default async function middleware(req: NextRequest) {
   // 获取当前路径
   const { pathname } = req.nextUrl;
@@ -30,6 +32,10 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (hostname === `app.${process.env.NEXT_PUBLIC_ROOT_DOMAIN}`) {
+    if (path.includes(appPublicPaths)) {
+      return NextResponse.rewrite(new URL(`/app${path === "/" ? "" : path}`, req.url));
+    }
+
     const session = await auth();
 
     if (!session && path !== "/login") {
