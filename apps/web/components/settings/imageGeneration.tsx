@@ -98,8 +98,8 @@ const ImageGeneration = observer(() => {
                       <CommandGroup>
                         {ImageConfig.map((item) => (
                           <CommandItem
-                            key={currentGeneration?.model}
-                            value={currentGeneration?.model}
+                            key={item?.model}
+                            value={item?.model}
                             onSelect={(value) => {
                               generations.updateDataSyncToNode("model", value);
                             }}

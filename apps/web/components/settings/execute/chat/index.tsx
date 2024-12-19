@@ -184,7 +184,6 @@ const Chat: FC<ChatProps> = ({
             size="icon"
             onClick={() => {
               const message = chatList.map((item) => item.content).join("\n");
-              console.log("message ********", message);
               navigator.clipboard.writeText(message);
               toast.success("Copied to clipboard!");
             }}

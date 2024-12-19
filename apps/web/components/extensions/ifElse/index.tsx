@@ -318,7 +318,6 @@ export const IfElse = Node.create({
         return false;
       },
       Delete: ({ editor }) => {
-        debugger;
         const { selection } = editor.state;
         const { $head } = selection;
 

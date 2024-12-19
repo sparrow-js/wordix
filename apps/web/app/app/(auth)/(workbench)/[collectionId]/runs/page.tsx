@@ -45,7 +45,6 @@ export default observer(function RunsPage() {
       visibility: "published",
       sort: "updatedAt",
     });
-    console.log("*********", res[PAGINATION_SYMBOL].total, publishedRuns.length);
     if (res[PAGINATION_SYMBOL].total <= publishedRuns.length) {
       setHasMore(false);
     } else {

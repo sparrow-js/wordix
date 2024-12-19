@@ -7,10 +7,10 @@ import {
 
 import type { ModelConfig } from "../config/model-configs";
 import { BaseAIProvider, type Message } from "./base";
-// const { setGlobalDispatcher, ProxyAgent } = require("undici");
-// const dispatcher = new ProxyAgent({ uri: new URL("http://127.0.0.1:7890").toString() });
-// //全局fetch调用启用代理
-// setGlobalDispatcher(dispatcher);
+const { setGlobalDispatcher, ProxyAgent } = require("undici");
+const dispatcher = new ProxyAgent({ uri: new URL("http://127.0.0.1:7890").toString() });
+//全局fetch调用启用代理
+setGlobalDispatcher(dispatcher);
 
 const apiKey = process.env.GEMINI_API_KEY;
 
@@ -121,5 +121,21 @@ export class GeminiProvider extends BaseAIProvider {
     }
 
     return text;
+  }
+
+  async generateImage(prompt: string, modelName?: string, options?: Partial<ModelConfig>): Promise<{ output: string }> {
+    // const model = this.gemini.getImageGenerationModel({ model: "imagen-3.0-generate-001" });
+    // const result = await model.generateImages({
+    //   prompt,
+    //   aspectRatio: "3:4",
+    //   numberOfImages: 1,
+    //   safetyFilterLevel: "block_only_high",
+    //   personGeneration: "allow_adult",
+    //   negativePrompt: "Outside",
+    // });
+
+    return {
+      output: "",
+    };
   }
 }

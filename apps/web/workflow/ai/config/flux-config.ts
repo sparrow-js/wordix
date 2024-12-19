@@ -1,4 +1,17 @@
 export const ImageConfig = [
+  // {
+  //   name: "imagen-3.0",
+  //   provider: "gemini",
+  //   model: "imagen-3.0-generate-001",
+  //   parameters: {
+  //     prompt: "a majestic snow-capped mountain peak bathed in a warm glow of the setting sun",
+  //     aspectRatio: "3:4",
+  //     numberOfImages: 1,
+  //     safetyFilterLevel: "block_only_high",
+  //     personGeneration: "allow_adult",
+  //     negativePrompt: "Outside",
+  //   },
+  // },
   {
     name: "flux 1.1 pro",
     provider: "flux",
@@ -77,6 +90,7 @@ export const MODEL = [
   { label: "Flux Pro Ultra", value: "Flux Pro Ultra" },
   { label: "Flux Pro Ultra Raw", value: "Flux Pro Ultra Raw" },
   { label: "Stable Diffusion 3", value: "Stable Diffusion 3" },
+  { label: "Imagen 3.0", value: "Imagen 3.0" },
 ];
 
 export const PARAMETER_LIST = [
