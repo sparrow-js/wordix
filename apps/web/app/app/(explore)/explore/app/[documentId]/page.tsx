@@ -202,14 +202,16 @@ export default function ExplorePage() {
       >
         <div className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50">
           <div className="w-full max-w-7xl mx-auto flex items-center justify-between py-6 px-20">
-            <div className="flex items-center space-x-3">
-              <div className="flex items-center justify-center">
-                <img src="/logo200.png" alt="Logo" className="w-10 h-10 object-cover rounded-lg" />
+            <Link href="https://www.wordix.so/">
+              <div className="flex items-center space-x-3">
+                <div className="flex items-center justify-center">
+                  <img src="/logo200.png" alt="Logo" className="w-10 h-10 object-cover rounded-lg" />
+                </div>
+                <div className="text-xl font-bold text-gray-900">
+                  Word<span className="text-red-600">ix</span>
+                </div>
               </div>
-              <div className="text-xl font-bold text-gray-900">
-                Word<span className="text-red-600">ix</span>
-              </div>
-            </div>
+            </Link>
 
             <nav className="hidden md:flex items-center space-x-8">
               <div className="flex items-center space-x-4">
