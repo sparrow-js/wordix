@@ -7,10 +7,10 @@ import {
 
 import type { ModelConfig } from "../config/model-configs";
 import { BaseAIProvider, type Message } from "./base";
-const { setGlobalDispatcher, ProxyAgent } = require("undici");
-const dispatcher = new ProxyAgent({ uri: new URL("http://127.0.0.1:7890").toString() });
-//全局fetch调用启用代理
-setGlobalDispatcher(dispatcher);
+// const { setGlobalDispatcher, ProxyAgent } = require("undici");
+// const dispatcher = new ProxyAgent({ uri: new URL("http://127.0.0.1:7890").toString() });
+// //全局fetch调用启用代理
+// setGlobalDispatcher(dispatcher);
 
 const apiKey = process.env.GEMINI_API_KEY;
 
