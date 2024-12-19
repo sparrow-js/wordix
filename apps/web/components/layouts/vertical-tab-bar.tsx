@@ -48,7 +48,7 @@ export function VerticalTabBar() {
         {/* <Button variant="ghost" size="icon" className="aspect-square h-fit relative">
           <Shapes size={20} />
         </Button> */}
-        <Link href="https://github.com/sparrow-js/wordix/discussions" target="_blank">
+        <Link href="https://github.com/sparrow-js/wordix-discuss/discussions/" target="_blank">
           <Button variant="ghost" size="icon" className="aspect-square h-fit relative">
             <MessageCircle size={20} />
           </Button>

@@ -46,7 +46,7 @@ const nextConfig = {
       },
       {
         source: "/feedback",
-        destination: "https://github.com/sparrow-js/wordix/issues",
+        destination: "https://github.com/sparrow-js/wordix-discuss/issues",
         permanent: true,
       }
     ];
