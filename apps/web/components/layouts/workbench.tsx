@@ -41,6 +41,23 @@ export const Workbench = () => {
     };
   }, [documents, id]);
 
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      const document = documents.get(id);
+      if (document) {
+        document.save({
+          content: document.content,
+        });
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [documents, id]);
+
   return (
     <div className="flex h-full w-full flex-col relative">
       <div className="w-full h-full">
