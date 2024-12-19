@@ -195,7 +195,7 @@ export default function ExplorePage() {
   return (
     <main className="flex-grow w-full min-h-screen">
       <div
-        className="h-[100vh]"
+        className="h-[90vh]"
         style={{
           background: "linear-gradient(to right, #81FBB8, #28C76F)",
         }}
@@ -360,16 +360,18 @@ export default function ExplorePage() {
           <div className="mx-auto flex w-full max-w-[989px] flex-1 flex-col gap-4">
             <div className="flex flex-col gap-9">
               <div className="flex flex-col gap-4">
-                <div className="text-center text-base font-medium sm:text-left">Generate results</div>
+                <div className="text-center text-2xl font-medium sm:text-left">Generate results</div>
                 <div className="grid gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
                   {runList.map((run) => {
                     return (
                       <div
-                        className="group/template has-[:focus-visible]:ring-offset-background relative flex w-full flex-col text-sm sm:min-w-0 xl:h-[--height]"
-                        style={{ "--aspect-ratio": "16/9", "--height": "240px" }}
+                        key={run.id} // Ensure each run has a unique identifier
+                        className="group/template has-[:focus-visible]:ring-offset-background relative flex w-full flex-col text-sm sm:min-w-0 xl:h-[240px]"
                       >
-                        <div className="shadow-base relative aspect-[--aspect-ratio] w-full overflow-hidden rounded-lg text-sm has-[:focus-visible]:outline-none has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-blue-600 has-[:focus-visible]:ring-offset-1">
-                          <Markdown className="prose lg:prose-xl w-full">{run?.metadata.markdownOutput}</Markdown>
+                        <div className="ring-2 ring-pink-300 ring-inset px-2 relative aspect-[16/9] w-full overflow-hidden rounded-lg text-sm has-[:focus-visible]:outline-none has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-blue-600 has-[:focus-visible]:ring-offset-1">
+                          <Markdown className="prose lg:prose-xl w-full -mt-[20px]">
+                            {run?.metadata.markdownOutput}
+                          </Markdown>
                           <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-[hsla(0,0%,100%,0.3)] to-[hsla(0,0%,40%,0.3)] opacity-0 transition-opacity focus-within:opacity-100 group-hover/template:opacity-100 has-[[data-pending=true]]:opacity-100">
                             <Button
                               onClick={() => {
