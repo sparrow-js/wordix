@@ -121,11 +121,12 @@ const ShareButton = observer(() => {
 });
 
 const RunButton = () => {
-  const { workbench, setting, dialogs } = useStores();
+  const { workbench, setting, dialogs, execute } = useStores();
   return (
     <Button
       className="bg-blue-800 hover:bg-blue-300"
       onClick={() => {
+        execute.setStatus("end");
         dialogs.showInputsModal();
       }}
     >
