@@ -3,14 +3,7 @@ import { auth } from "@/lib/auth";
 
 import { RunStatus } from "@prisma/client";
 
-export async function createRun(
-  documentId: string,
-  collectionId: string,
-  params: {
-    metadata: any;
-    duration: number;
-  },
-) {
+export async function createRun(documentId: string, collectionId: string, params: any) {
   const session = await auth();
   if (!session?.user?.id) {
     throw new Error("Unauthorized");
@@ -20,10 +13,9 @@ export async function createRun(
     data: {
       userId: session.user.id,
       status: RunStatus.COMPLETED,
-      metadata: params.metadata,
-      duration: params.duration,
       documentId: documentId,
       collectionId: collectionId,
+      ...params,
     },
   });
 

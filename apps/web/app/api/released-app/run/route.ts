@@ -30,6 +30,8 @@ export async function POST(request: Request, res: NextApiResponse) {
 
   const startTime = new Date();
 
+  const documentInputs = documentFlow?.content.find((node) => node.type === "inputs");
+
   processor.processNode(documentFlow, inputs).then(async () => {
     const context = processor.getContext();
     const endTime = new Date();
@@ -39,6 +41,8 @@ export async function POST(request: Request, res: NextApiResponse) {
         markdownOutput: context.markdownOutput,
       },
       duration,
+      inputValues: inputs,
+      inputs: documentInputs?.content,
     });
     await writer.close();
     writer.releaseLock();
