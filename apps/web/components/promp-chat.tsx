@@ -8,9 +8,11 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import useStores from "@/hooks/useStores";
 import { cn } from "@/lib/utils";
 import type { Editor } from "@tiptap/core";
 import { Sparkles } from "lucide-react";
+import { Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import LoadingDots from "./icons/loading-dots";
 
@@ -28,6 +30,22 @@ const models = [
     bigIcon: <FcGoogle className="w-[36px] h-[36px]" />,
   },
 ];
+
+const RunButton = () => {
+  const { workbench, setting, dialogs, execute } = useStores();
+  return (
+    <Button
+      className="bg-blue-800 hover:bg-blue-300 rounded-full h-[52px]"
+      onClick={() => {
+        execute.setStatus("end");
+        dialogs.showInputsModal();
+      }}
+    >
+      <Play className="mr-2 h-4 w-4" />
+      Execute
+    </Button>
+  );
+};
 
 const PrompChat = ({ editor }: { editor: Editor }) => {
   const [chatValue, setChatValue] = useState("");
@@ -136,6 +154,7 @@ const PrompChat = ({ editor }: { editor: Editor }) => {
       {/* <Button className="rounded-full">
         <X className="h-6 w-6" />
       </Button> */}
+      {/* <RunButton /> */}
     </footer>
   );
 };
