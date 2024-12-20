@@ -176,7 +176,6 @@ export class DocumentProcessor extends BaseProcessor {
       }
       // 1. Parent before
       await this.enterNode(node);
-      console.log("***********+", this.context.depth);
       if (handler?.before) {
         await handler.before(node, this.context);
       }

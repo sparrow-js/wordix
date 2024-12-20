@@ -4,8 +4,8 @@ import { FcGoogle } from "react-icons/fc";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import useStores from "@/hooks/useStores";
@@ -142,17 +142,18 @@ const PrompChat = ({ editor }: { editor: Editor }) => {
             <span className="flex items-center">{models.find((item) => item.value === model)?.bigIcon}</span>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            {models.map((model) => (
-              <DropdownMenuItem
-                key={model.name}
-                onClick={() => {
-                  setModel(model.value);
-                  localStorage.setItem("selectedModel", model.value);
+            {models.map((modelItem) => (
+              <DropdownMenuCheckboxItem
+                key={modelItem.name}
+                checked={modelItem.value === model}
+                onCheckedChange={() => {
+                  setModel(modelItem.value);
+                  localStorage.setItem("selectedModel", modelItem.value);
                 }}
               >
-                {model.icon}
-                {model.name}
-              </DropdownMenuItem>
+                {modelItem.icon}
+                {modelItem.name}
+              </DropdownMenuCheckboxItem>
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
