@@ -23,7 +23,7 @@ export class GeminiProvider extends BaseAIProvider {
   }
 
   async generateText(prompt: string, modelName?: string, options?: Partial<ModelConfig>): Promise<string> {
-    const model = this.gemini.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
+    const model = this.gemini.getGenerativeModel({ model: modelName });
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
@@ -38,7 +38,7 @@ export class GeminiProvider extends BaseAIProvider {
     options?: Partial<ModelConfig>,
   ): Promise<string> {
     const model = this.gemini.getGenerativeModel({
-      model: "gemini-2.0-flash-exp",
+      model: modelName,
     });
 
     const result = await model.generateContentStream(prompt);
@@ -56,7 +56,7 @@ export class GeminiProvider extends BaseAIProvider {
   async generateChat(messages: Message[], modelName?: string, options?: Partial<ModelConfig>): Promise<string> {
     // const config = this.getModelConfig(modelName, options);
     const model = this.gemini.getGenerativeModel({
-      model: "gemini-2.0-flash-exp",
+      model: modelName,
     });
 
     const generationConfig = {
@@ -87,7 +87,7 @@ export class GeminiProvider extends BaseAIProvider {
     options?: Partial<ModelConfig>,
   ): Promise<string> {
     const model = this.gemini.getGenerativeModel({
-      model: "gemini-2.0-flash-exp",
+      model: modelName,
     });
 
     const generationConfig = {

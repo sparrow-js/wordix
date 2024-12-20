@@ -120,6 +120,14 @@ export const allModels: ModelConfigWithProvider[] = [
     avatar: <GeminiIcon />,
   },
   {
+    provider: "gemini",
+    model: "gemini-2.0-flash-thinking-exp-1219",
+    name: "gemini-2.0-flash-thinking-exp-1219",
+    maxTokens: 4096,
+    temperature: 1,
+    avatar: <GeminiIcon />,
+  },
+  {
     provider: "cohere",
     model: "command-r-08-2024",
     name: "command-r-08-2024",

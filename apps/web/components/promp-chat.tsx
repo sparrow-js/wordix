@@ -29,6 +29,12 @@ const models = [
     icon: <FcGoogle className="w-4 h-4 mr-2" />,
     bigIcon: <FcGoogle className="w-[36px] h-[36px]" />,
   },
+  {
+    name: "gemini 2.0 thinking",
+    value: "gemini-2.0-flash-thinking-exp-1219",
+    icon: <FcGoogle className="w-4 h-4 mr-2" />,
+    bigIcon: <FcGoogle className="w-[36px] h-[36px]" />,
+  },
 ];
 
 const RunButton = () => {
