@@ -1,5 +1,6 @@
 "use client";
 
+import LoadingCircle from "@/components/icons/loading-circle";
 import useStores from "@/hooks/useStores";
 import type Collection from "@/models/Collection";
 import { observer } from "mobx-react";
@@ -9,6 +10,7 @@ import { useEffect, useState } from "react";
 export default observer(function DocsPage() {
   const { collections, documents, workspaces } = useStores();
   const { collectionId, id } = useParams<{ collectionId: string; id: string }>();
+  const [isSaving, setIsSaving] = useState(false);
 
   const [collection, setCollection] = useState<Collection | null>(null);
   const router = useRouter();
@@ -27,11 +29,14 @@ export default observer(function DocsPage() {
   }, [collectionId]);
 
   const createDocument = async (parentId?: string) => {
+    if (isSaving) return;
+    setIsSaving(true);
     const document = await documents.save(
       { title: "Untitled", collectionId: collectionId, workspaceId: workspaces.selectedWorkspaceId },
       { parentId },
     );
     await collection?.fetchDocuments({ force: true });
+    setIsSaving(false);
     router.push(`/${collectionId}/docs/${document.id}`);
   };
 
@@ -51,10 +56,16 @@ export default observer(function DocsPage() {
               <div className="card-container flex flex-wrap justify-center gap-4">
                 <div
                   onClick={() => createDocument()}
-                  className="bg-[#fff] border border-[#f1f0f0] rounded-lg p-6 flex flex-col items-center text-center hover:ring-1 hover:ring-[#8ba3ff] shadow w-[280px]"
+                  className="bg-[#fff] border border-[#f1f0f0] rounded-lg p-6 flex flex-col items-center text-center hover:ring-1 hover:ring-[#8ba3ff] shadow w-[280px] h-[106px] flex justify-center"
                 >
-                  <h2 className="text-xl font-semibold mb-2"> Blank Flow</h2>
-                  <p className="text-gray-800 text-sm">Start from scratch</p>
+                  {isSaving ? (
+                    <LoadingCircle dimensions="h-4 w-4" />
+                  ) : (
+                    <>
+                      <h2 className="text-xl font-semibold mb-2"> Blank Flow</h2>
+                      <p className="text-gray-800 text-sm">Start from scratch</p>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

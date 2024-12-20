@@ -64,7 +64,7 @@ export async function deleteDocument(documentId: string, collectionId: string) {
     },
   });
 
-  let documentStructure = await prisma.collection.findUnique({
+  const documentStructure = await prisma.collection.findUnique({
     where: {
       id: collectionId,
     },
