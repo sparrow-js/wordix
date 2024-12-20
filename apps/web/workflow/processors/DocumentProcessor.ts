@@ -26,6 +26,8 @@ import { BaseProcessor } from "./baseProcessor";
 import { ToolManager } from "../core/toolManager";
 import type { DocNode, NodeHandler, NodeState, ProcessingContext, Variable } from "../types/DocNode";
 
+const MAX_DEPTH = 100;
+
 export class DocumentProcessor extends BaseProcessor {
   private handlers: Map<string, NodeHandler>;
 
@@ -169,9 +171,12 @@ export class DocumentProcessor extends BaseProcessor {
 
     try {
       const handler = this.handlers.get(node.type);
-
+      if (this.context.depth > MAX_DEPTH) {
+        return;
+      }
       // 1. Parent before
       await this.enterNode(node);
+      console.log("***********+", this.context.depth);
       if (handler?.before) {
         await handler.before(node, this.context);
       }
