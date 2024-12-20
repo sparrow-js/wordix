@@ -30,8 +30,8 @@ export async function POST(request: Request) {
 
   const documents = await prisma.document.findMany({
     where: {
-      ...(collectionId ? { collectionId } : {}),
-      ...(workspaceId ? { workspaceId } : {}),
+      collectionId,
+      workspaceId,
     },
     skip: offset,
     take: limit,
