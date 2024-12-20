@@ -129,7 +129,7 @@ const TailwindAdvancedEditor = ({ response }: any) => {
                 <EditorContent
                   initialContent={initialContent}
                   extensions={extensions}
-                  className="relative min-h-[500px] w-full border-muted bg-background sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg"
+                  className="relative min-h-screen w-full border-muted bg-background sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg"
                   editorProps={{
                     handleDOMEvents: {
                       keydown: (_view, event) => handleCommandNavigation(event),
