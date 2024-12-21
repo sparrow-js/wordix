@@ -1,8 +1,8 @@
-import { Node, mergeAttributes } from '@tiptap/core';
-import { ReactNodeViewRenderer } from '@tiptap/react';
-import { NodeViewWrapper, NodeViewContent } from '@tiptap/react';
+import { Node, mergeAttributes } from "@tiptap/core";
+import { ReactNodeViewRenderer } from "@tiptap/react";
+import { NodeViewContent, NodeViewWrapper } from "@tiptap/react";
 
-import React from 'react';
+import type React from "react";
 
 interface DescriptionComponentProps {
   node: any;
@@ -18,11 +18,11 @@ const DescriptionComponent: React.FC<DescriptionComponentProps> = ({ node, updat
 };
 
 export const Description = Node.create({
-  name: 'description',
+  name: "description",
 
-  group: 'block',
+  group: "block",
 
-  content: 'block*',
+  content: "block*",
 
   defining: true,
   selectable: false,
@@ -38,13 +38,13 @@ export const Description = Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ['div', mergeAttributes({ 'data-type': 'description' }, HTMLAttributes), 0];
+    return ["div", mergeAttributes({ "data-type": "description" }, HTMLAttributes), 0];
   },
 
   addAttributes() {
     return {
       class: {
-        default: 'description',
+        default: "description",
       },
     };
   },
