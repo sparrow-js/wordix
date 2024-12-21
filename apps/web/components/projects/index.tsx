@@ -36,7 +36,7 @@ const Projects = observer(() => {
       limit: 25,
       page: page,
     });
-    if (res[PAGINATION_SYMBOL].total > collections.data.size) {
+    if (res[PAGINATION_SYMBOL].total >= collections.data.size) {
       setHasMore(false);
     } else {
       setPage(page + 1);
@@ -44,15 +44,17 @@ const Projects = observer(() => {
     setLoading(false);
   };
 
-  //   useEffect(() => {
-  //     fetchProjects(page);
-  //   }, []);
-
   useEffect(() => {
     if (inView && hasMore) {
       fetchProjects(page);
     }
   }, [inView]);
+
+  const handleDelete = async (e, collection: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    await collections.delete(collection);
+  };
 
   return (
     <div className="flex h-full w-full md:w-auto flex-1 flex-col bg-muted/30">
@@ -119,7 +121,7 @@ const Projects = observer(() => {
                                         <Pencil className="mr-2 h-4 w-4" />
                                         Rename
                                       </DropdownMenuItem>
-                                      <DropdownMenuItem className="text-destructive">
+                                      <DropdownMenuItem className="text-destructive" onClick={handleDelete}>
                                         <Trash2 className="mr-2 h-4 w-4" />
                                         Delete
                                       </DropdownMenuItem>

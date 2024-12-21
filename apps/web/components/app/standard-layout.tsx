@@ -7,6 +7,7 @@ import { ChevronRightIcon, Globe, Lock, PlusIcon } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 
+import LoadingCircle from "@/components/icons/loading-circle";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@/components/ui/breadcrumb";
 import { Label } from "@/components/ui/label";
 import useStores from "@/hooks/useStores";
@@ -17,6 +18,7 @@ import { observer } from "mobx-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { tools as toolsTemplate } from "./const";
+
 interface Project {
   title: string;
   timeAgo: string;
@@ -122,6 +124,7 @@ const StandardLayout = observer(() => {
 
   const { collections, documents, workspaces } = useStores();
   const [openDialog, setOpenDialog] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const fetchProjects = async (page: number) => {
     await collections.fetchPage({
@@ -149,6 +152,7 @@ const StandardLayout = observer(() => {
 
   const handleSubmit = useCallback(async () => {
     try {
+      setIsLoading(true);
       const collection = await collections.save({
         name: projectName,
         privacy: projectPrivacy as CollectionPermission,
@@ -164,6 +168,8 @@ const StandardLayout = observer(() => {
       // history.push(collection.path);
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setIsLoading(false);
     }
     setOpenDialog(false);
   }, [collections, projectName, projectPrivacy, projectTemplate, tools]);
@@ -254,8 +260,14 @@ const StandardLayout = observer(() => {
                         handleSubmit();
                       }}
                     >
-                      <PlusIcon className="mr-2 h-4 w-4" />
-                      <div className="text-lg">Create project</div>
+                      {isLoading ? (
+                        <LoadingCircle dimensions="h-4 w-4" />
+                      ) : (
+                        <>
+                          <PlusIcon className="mr-2 h-4 w-4" />
+                          <div className="text-lg">Create project</div>
+                        </>
+                      )}
                     </Button>
                   </div>
                 </div>

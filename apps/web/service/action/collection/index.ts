@@ -120,3 +120,12 @@ export async function deleteFolderDocument(documentId: string, collectionId: str
     documents: updatedCollection.documentStructure,
   };
 }
+
+export async function deleteCollection(collectionId: string, userId: string) {
+  return await prisma.collection.delete({
+    where: {
+      id: collectionId,
+      createdById: userId,
+    },
+  });
+}
