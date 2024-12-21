@@ -35,22 +35,21 @@ const ProjectList = observer(() => {
   const { collections } = useStores();
 
   return (
-    <div className="flex flex-col border border-border rounded-md overflow-hidden">
+    <div className="flex flex-row gap-4">
       {collections.orderedList.map((project, index) => (
         <Link key={project.id} href={`/${project.id}/docs`}>
-          <div
-            className={`flex flex-row gap-3 items-center bg-background p-3 justify-between cursor-pointer hover:bg-muted/30 ${
-              index > 0 ? "border-t border-border" : ""
-            }`}
-          >
-            <div className="flex flex-row gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-sm text-2xl font-bold text-background bg-muted-foreground">
-                {project.name.slice(0, 2).toUpperCase()}
+          <div className="flex flex-col border border-border rounded-lg overflow-hidden shadow-md w-40">
+            <div
+              className="relative h-24 w-full bg-cover bg-center"
+              style={{ backgroundImage: "url(/placeholder.png)" }}
+            >
+              <div className="absolute bottom-0 left-0 translate-y-1/2 translate-x-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-muted-foreground text-background">
+                {project.name.slice(0, 1).toUpperCase()}
               </div>
-              <div className="flex flex-col">
-                <p className="text-sm font-bold">{project.name}</p>
-                <p className="text-xs text-muted-foreground">{formatDistanceToNow(project.updatedAt)}</p>
-              </div>
+            </div>
+            <div className="flex flex-col p-3 text-start">
+              <p className="text-[16px] leading-[20px] font-bold mt-2 line-clamp-2 h-[40px]">{project.name}</p>
+              <p className="text-xs text-muted-foreground">{formatDistanceToNow(project.updatedAt)}</p>
             </div>
           </div>
         </Link>
@@ -60,16 +59,16 @@ const ProjectList = observer(() => {
 });
 
 const ProjectListSkeleton = () => (
-  <div className="flex flex-col rounded-md overflow-hidden">
+  <div className="flex flex-row gap-4">
     {[1, 2, 3].map((_, index) => (
-      <div
-        key={index}
-        className={`flex flex-row gap-3 items-center bg-background p-3 ${index > 0 ? "border-t border-border" : ""}`}
-      >
-        <Skeleton className="h-10 w-10 rounded-sm" />
-        <div className="flex flex-col gap-2">
-          <Skeleton className="h-4 w-32" />
-          <Skeleton className="h-3 w-24" />
+      <div key={index} className="flex flex-col border border-border rounded-lg overflow-hidden shadow-md w-40">
+        <div className="relative h-24">
+          <Skeleton className="h-24 w-full bg-cover bg-center" />
+          <Skeleton className="absolute bottom-0 left-0 translate-y-1/2 translate-x-1/2 h-8 w-8 rounded-full" />
+        </div>
+        <div className="flex flex-col p-3">
+          <Skeleton className="h-4 w-24 mt-2" />
+          <Skeleton className="h-3 w-16 mt-1" />
         </div>
       </div>
     ))}
@@ -99,16 +98,16 @@ const ProjectSection = observer(({ openDialog }: { openDialog: () => void }) => 
 });
 
 const DeploymentListSkeleton = () => (
-  <div className="flex flex-col rounded-md overflow-hidden">
+  <div className="flex flex-row gap-4">
     {[1, 2, 3].map((_, index) => (
-      <div
-        key={index}
-        className={`flex flex-row gap-3 items-center bg-background p-3 ${index > 0 ? "border-t border-border" : ""}`}
-      >
-        <Skeleton className="h-10 w-10 rounded-sm" />
-        <div className="flex flex-col gap-2">
-          <Skeleton className="h-4 w-32" />
-          <Skeleton className="h-3 w-24" />
+      <div key={index} className="flex flex-col border border-border rounded-lg overflow-hidden shadow-md w-40">
+        <div className="relative h-24">
+          <Skeleton className="h-24 w-full bg-cover bg-center" />
+          <Skeleton className="absolute bottom-0 left-0 translate-y-1/2 translate-x-1/2 h-8 w-8 rounded-full" />
+        </div>
+        <div className="flex flex-col p-3">
+          <Skeleton className="h-4 w-24 mt-2" />
+          <Skeleton className="h-3 w-16 mt-1" />
         </div>
       </div>
     ))}
@@ -278,90 +277,80 @@ const StandardLayout = observer(() => {
       </div>
 
       <div className="flex h-[calc(100svh-120px)] overflow-hidden">
-        <div className="flex h-full overflow-y-auto">
+        <div className="flex h-full overflow-y-auto w-full">
           <div className="w-full px-1 py-4 md:p-5">
             <main className="flex flex-1 flex-col gap-4">
-              {/* <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                <div className="rounded-lg border bg-card text-card-foreground shadow-sm relative h-full cursor-pointer transition-colors hover:bg-muted/30">
-                  <div className="flex flex-col gap-1.5 p-6">
-                    <h3 className="font-semibold tracking-tight text-lg">Tutorial Project</h3>
-                    <p className="text-sm text-muted-foreground">This project contains a bunch of useful examples.</p>
+              <div className="rounded-lg border bg-card text-card-foreground shadow-sm col-span-4">
+                <div className="flex items-start justify-between p-6">
+                  <div className="mt-1 flex flex-1 flex-col gap-1.5">
+                    <h3 className="text-2xl font-semibold leading-none tracking-tight">Latest Projects</h3>
                   </div>
-                </div>
-              </div> */}
-
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-8">
-                <div className="rounded-lg border bg-card text-card-foreground shadow-sm col-span-4">
-                  <div className="flex items-start justify-between p-6">
-                    <div className="mt-1 flex flex-1 flex-col gap-1.5">
-                      <h3 className="text-2xl font-semibold leading-none tracking-tight">Latest Projects</h3>
-                    </div>
-                    <div className="flex gap-2">
-                      <Link href="/projects">
-                        <Button variant="outline" size="sm">
-                          Go to Projects
-                          <ChevronRightIcon className="h-4 w-4 ml-2" />
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-
-                  <div className="p-6 pt-0 min-h-[100px]">
-                    <ProjectSection openDialog={() => setOpenDialog(true)} />
+                  <div className="flex gap-2">
+                    <Link href="/projects">
+                      <Button variant="outline" size="sm">
+                        Go to Projects
+                        <ChevronRightIcon className="h-4 w-4 ml-2" />
+                      </Button>
+                    </Link>
                   </div>
                 </div>
 
-                <div className="rounded-lg border bg-card text-card-foreground shadow-sm col-span-4">
-                  <div className="flex items-start justify-between p-6">
-                    <div className="mt-1 flex flex-1 flex-col gap-1.5">
-                      <h3 className="text-2xl font-semibold leading-none tracking-tight">Recent Deployments</h3>
-                    </div>
-                    <div className="flex gap-2">
-                      <Link href="/deployments">
-                        <Button variant="outline" size="sm">
-                          Go to Deployments
-                          <ChevronRightIcon className="h-4 w-4" />
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-
-                  <div className="p-6 pt-0">
-                    {!documents.isLoaded ? (
-                      <DeploymentListSkeleton />
-                    ) : documents.publishedList.length === 0 ? (
-                      <div className="flex flex-col rounded-md overflow-hidden">No deployments found</div>
-                    ) : (
-                      <div className="flex flex-col border border-border rounded-md overflow-hidden">
-                        {documents.publishedList.slice(0, 5).map((deployment, index) => (
-                          <div
-                            key={deployment.id}
-                            className={`flex flex-row gap-3 items-center bg-background p-3 justify-between cursor-pointer hover:bg-muted/30 ${
-                              index > 0 ? "border-t border-border" : ""
-                            }`}
-                          >
-                            <Link href={`/${deployment.collectionId}/deployments/${deployment.id}/overview`}>
-                              <div className="flex flex-row gap-3">
-                                <div className="flex h-10 w-10 items-center justify-center rounded-sm text-2xl font-bold text-background bg-muted-foreground">
-                                  <div className="flex h-10 w-10 items-center justify-center rounded-sm text-2xl font-bold text-background bg-muted-foreground">
-                                    {deployment.title.slice(0, 2).toUpperCase()}
-                                  </div>
-                                </div>
-                                <div className="flex flex-col">
-                                  <p className="text-sm font-bold">{deployment.title}</p>
-                                  <p className="text-xs text-muted-foreground">
-                                    {formatDistanceToNow(deployment.publishedAt)}
-                                  </p>
-                                </div>
-                              </div>
-                            </Link>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                <div className="p-6 pt-0 min-h-[100px]">
+                  <ProjectSection openDialog={() => setOpenDialog(true)} />
                 </div>
               </div>
+              <div className="rounded-lg border bg-card text-card-foreground shadow-sm col-span-4">
+                <div className="flex items-start justify-between p-6">
+                  <div className="mt-1 flex flex-1 flex-col gap-1.5">
+                    <h3 className="text-2xl font-semibold leading-none tracking-tight">Recent Deployments</h3>
+                  </div>
+                  <div className="flex gap-2">
+                    <Link href="/deployments">
+                      <Button variant="outline" size="sm">
+                        Go to Deployments
+                        <ChevronRightIcon className="h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+
+                <div className="p-6 pt-0">
+                  {!documents.isLoaded ? (
+                    <DeploymentListSkeleton />
+                  ) : documents.publishedList.length === 0 ? (
+                    <div className="flex flex-col rounded-md overflow-hidden">No deployments found</div>
+                  ) : (
+                    <div className="flex flex-row gap-4">
+                      {documents.publishedList.slice(0, 5).map((deployment, index) => (
+                        <Link
+                          key={deployment.id}
+                          href={`/${deployment.collectionId}/deployments/${deployment.id}/overview`}
+                        >
+                          <div className="flex flex-col border border-border rounded-lg overflow-hidden shadow-md w-40">
+                            <div
+                              className="relative h-24 w-full bg-cover bg-center"
+                              style={{ backgroundImage: "url(/placeholder.png)" }}
+                            >
+                              <div className="absolute bottom-0 left-0 translate-y-1/2 translate-x-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-muted-foreground text-background">
+                                {deployment.title.slice(0, 1).toUpperCase()}
+                              </div>
+                            </div>
+                            <div className="flex flex-col p-3">
+                              <p className="text-[16px] leading-[20px] font-bold mt-2 line-clamp-2 h-[40px]">
+                                {deployment.title}
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                {formatDistanceToNow(deployment.publishedAt)}
+                              </p>
+                            </div>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+              {/* <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-8"></div> */}
             </main>
           </div>
         </div>
