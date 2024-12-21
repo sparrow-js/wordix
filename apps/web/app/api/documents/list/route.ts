@@ -4,7 +4,7 @@ import { respData } from "@/lib/resp";
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { collectionId, workspaceId, direction = "DESC", limit = 25, offset = 0, sort = "publishedAt" } = body;
+  const { collectionId, workspaceId, direction = "DESC", limit = 25, page = 0, sort = "publishedAt" } = body;
 
   const session = await auth();
   // Check if user has access to the workspace
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
       collectionId,
       workspaceId,
     },
-    skip: offset,
+    skip: page * limit,
     take: limit,
     orderBy: {
       [sort]: direction.toLowerCase(),

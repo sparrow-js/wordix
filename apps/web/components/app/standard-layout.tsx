@@ -146,8 +146,8 @@ const StandardLayout = observer(() => {
 
   useEffect(() => {
     if (!workspaces.selectedWorkspaceId) return;
-    fetchProjects(1);
-    fetchDeployments(1);
+    fetchProjects(0);
+    fetchDeployments(0);
   }, [workspaces.selectedWorkspaceId]);
 
   const handleSubmit = useCallback(async () => {
