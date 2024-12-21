@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Check, File, FolderClosed, FolderIcon, FolderOpen, MoreHorizontal, Plus, X } from "lucide-react";
+import { Check, FileText, FolderClosed, FolderIcon, FolderOpen, MoreHorizontal, Plus, X } from "lucide-react";
 import styles from "./directory.module.css";
 import { FillFlexParent } from "./fill-flex-parent";
 
@@ -283,7 +283,7 @@ function wraperNode(
           <FolderArrow node={node} />
         ) : (
           <span className="pl-1">
-            <File className="w-4 h-4" />
+            <FileText className="w-4 h-4" />
           </span>
         )}
 

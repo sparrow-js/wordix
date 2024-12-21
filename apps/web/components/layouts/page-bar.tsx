@@ -124,7 +124,7 @@ const RunButton = () => {
   const { workbench, setting, dialogs, execute } = useStores();
   return (
     <Button
-      className="bg-blue-800 hover:bg-blue-300"
+      className="bg-[#fad400] hover:bg-[#fce062] text-black"
       onClick={() => {
         execute.setStatus("end");
         dialogs.showInputsModal();

@@ -105,7 +105,7 @@ const PrompChat = ({ editor }: { editor: Editor }) => {
         <Button
           className={cn(
             " rounded-full h-[36px] self-end",
-            chatValue.length === 0 ? "bg-stone-600 hover:bg-stone-600" : "bg-cyan-400 hover:bg-cyan-700",
+            chatValue.length === 0 ? "bg-stone-600 hover:bg-stone-600" : "bg-[#fad400] hover:bg-[#fce062] text-black",
           )}
           onClick={() => {
             if (chatValue.length === 0) return;
