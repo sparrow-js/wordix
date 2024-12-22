@@ -32,6 +32,9 @@ const CustomNodeComponent = observer((props: { node: { attrs: CodeExecutorAttrib
       includeOutput,
       continueOnError,
     });
+    return () => {
+      codeExecutors.removeCodeExecutor(props.editor);
+    };
   }, []);
   const codeExecutor = codeExecutors.get(id);
 
@@ -113,10 +116,6 @@ export const CodeExecutor = Node.create({
     return {
       id: {
         default: null,
-        parseHTML: (element) => element.getAttribute("data-id"),
-        renderHTML: (attributes) => {
-          return { "data-id": attributes.id };
-        },
       },
       logs: {
         default: "[]",

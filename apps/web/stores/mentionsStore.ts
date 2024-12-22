@@ -14,6 +14,7 @@ export default class AtsStore {
     const inputsList = Array.from(this.rootStore.inputsNode.data);
     const generationList = Array.from(this.rootStore.generations.data);
     const loopsList = Array.from(this.rootStore.loopsNode.data);
+    const codeExecutorsList = Array.from(this.rootStore.codeExecutors.data);
 
     const list = [];
     inputsList.forEach((item) => {
@@ -83,6 +84,31 @@ export default class AtsStore {
               referenceId: id,
               type: "loop",
               path: ".count",
+            })
+            .run();
+        },
+      });
+    });
+
+    codeExecutorsList.forEach((item) => {
+      const [id, codeExecutor] = item;
+      list.push({
+        id,
+        title: `${codeExecutor.label}.output`,
+        label: `${codeExecutor.label}.output`,
+        value: id,
+        type: "codeExecutor",
+        searchTerms: [`${codeExecutor.label}.output`],
+        description: "Just start typing with plain text.",
+        command: ({ editor, range }) => {
+          editor
+            .chain()
+            .focus()
+            .deleteRange(range)
+            .setMention({
+              referenceId: id,
+              type: "codeExecutor",
+              path: ".output",
             })
             .run();
         },

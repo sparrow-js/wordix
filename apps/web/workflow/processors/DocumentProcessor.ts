@@ -66,6 +66,7 @@ export class DocumentProcessor extends BaseProcessor {
       path: initialState?.path || [],
       markdown: initialState?.markdown || [],
       messages: [],
+      blockContext: {},
       markdownOutput: initialState?.markdownOutput || "",
       handlers: this.handlers,
       tempParentNode: initialState?.tempParentNode || null,

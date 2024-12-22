@@ -65,7 +65,16 @@ export const suggestionItems = createSuggestionItems([
         searchTerms: ["Code", "embed"],
         icon: <Code size={18} />,
         command: ({ editor, range }) => {
-          editor.chain().focus().deleteRange(range).setCodeExecutor({}).run();
+          editor
+            .chain()
+            .focus()
+            .deleteRange(range)
+            .setCodeExecutor({
+              id: uuidv4(),
+              label: "CodeExecutor",
+              language: "js",
+            })
+            .run();
         },
       },
       {

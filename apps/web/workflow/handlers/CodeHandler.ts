@@ -130,20 +130,13 @@ export class CodeHandler extends BaseHandler {
           }
 
           // Update variables if execution returned new values
-          if (result.newVariables) {
-            result.newVariables.forEach((newVar) => {
-              if (newVar.id && newVar.value !== undefined) {
-                const existingVar = context.variables.get(newVar.id);
-                if (existingVar) {
-                  context.variables.set(newVar.id, {
-                    ...existingVar,
-                    value: newVar.value,
-                  });
-                }
-              }
-            });
-          }
-
+          context.variables.set(node.attrs.id, {
+            id: node.attrs.id,
+            type: "codeExecutor",
+            value: {
+              output: result.output || "",
+            },
+          });
           // Emit execution result
           await this.emitStream(context, "code_execution", {
             id: attrs.id,
