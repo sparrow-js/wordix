@@ -187,7 +187,7 @@ const StandardLayout = observer(() => {
         <div className="flex items-center gap-2">
           <Dialog open={openDialog} onOpenChange={setOpenDialog}>
             <DialogTrigger asChild>
-              <Button>
+              <Button className="bg-[#fad400] hover:bg-[#fce062] text-black">
                 <PlusIcon className="mr-2 h-4 w-4" />
                 Create new project
               </Button>
