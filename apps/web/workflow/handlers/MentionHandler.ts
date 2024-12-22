@@ -43,7 +43,7 @@ export class MentionHandler extends BaseHandler {
       });
       context.markdown = [];
     } else {
-      markdown = `${value || node.attrs.referenceId}`;
+      markdown = `${typeof value === "object" ? JSON.stringify(value) : value || ""}`;
       context.markdown.push(markdown);
     }
 
