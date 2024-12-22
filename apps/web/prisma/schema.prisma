@@ -101,6 +101,7 @@ model Collection {
   content                    Json?
   icon                       String?
   color                      String?
+  bannerImage      String?
   index                      String?
   permission                 CollectionPermission?
   maintainerApprovalRequired Boolean               @default(false)
