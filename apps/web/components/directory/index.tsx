@@ -30,6 +30,7 @@ import { nanoid } from "nanoid";
 import { useParams, useRouter } from "next/navigation";
 import type { NodeApi } from "react-arborist";
 import { RiAiGenerateText } from "react-icons/ri";
+import LoadingCircle from "../icons/loading-circle";
 
 const INDENT_STEP = 15;
 
@@ -49,6 +50,7 @@ function Directory() {
   const handleSidebarRef = useCallback((node) => setDndArea(node), []);
   const [collection, setCollection] = useState<Collection | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isCreateLoading, setIsCreateLoading] = useState(false);
 
   useEffect(() => {
     const fetchCollection = async () => {
@@ -94,12 +96,15 @@ function Directory() {
   const onRename = ({ id, name }) => {};
 
   const createDocument = async (parentId?: string) => {
+    if (isCreateLoading) return;
+    setIsCreateLoading(true);
     const document = await documents.save(
       { title: "Untitled", collectionId: collectionId, workspaceId: workspaces.selectedWorkspaceId },
       { parentId },
     );
     setSelected(document.id);
     await collection?.fetchDocuments({ force: true });
+    setIsCreateLoading(false);
     router.push(`/${collectionId}/docs/${document.id}`);
   };
 
@@ -176,7 +181,7 @@ function Directory() {
                 createDocument();
               }}
             >
-              <RiAiGenerateText className="h-5 w-5" />
+              {isCreateLoading ? <LoadingCircle dimensions="h-5 w-5" /> : <RiAiGenerateText className="h-5 w-5" />}
             </Button>
             <Button variant="outline" size="icon" className="aspect-square w-fit" onClick={() => createFolder()}>
               <FolderPlus className="h-5 w-5" />
