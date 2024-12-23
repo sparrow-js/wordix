@@ -211,6 +211,9 @@ export const IfElse = Node.create({
                     type: "paragraph",
                   },
                 ],
+                attrs: {
+                  id: nanoid(10),
+                },
               },
             ],
           });

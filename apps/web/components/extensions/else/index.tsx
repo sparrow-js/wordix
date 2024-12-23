@@ -13,6 +13,7 @@ const DetailsContentComponent = observer((props: NodeViewProps) => {
   const currentIfElse = ifElses.get(parentId);
 
   useEffect(() => {
+    console.log("currentIfElse", currentIfElse);
     if (!currentIfElse) {
       return;
     }
@@ -27,7 +28,7 @@ const DetailsContentComponent = observer((props: NodeViewProps) => {
     // return () => {
     //   currentIfElse.removeItem(props.node.attrs.id);
     // };
-  }, [currentIfElse?.id]);
+  }, []);
 
   return (
     <NodeViewWrapper ref={domRef} data-type="else">
