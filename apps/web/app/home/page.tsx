@@ -53,7 +53,7 @@ export default function Home() {
                   Sign in
                 </Button>
               </Link>
-              <Link href={process.env.NEXT_PUBLIC_APP_DOMAIN}>
+              <Link href={process.env.NEXT_PUBLIC_APP_DOMAIN} prefetch={true}>
                 <Button
                   variant="default"
                   className="bg-gray-900 hover:bg-gray-800 transition-all duration-300 hover:scale-105"
