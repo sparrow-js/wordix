@@ -411,19 +411,18 @@ function wraperNode(
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <DropdownMenuItem>
-                  <div
-                    className="flex justify-center items-center"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setOpen(false);
+                <DropdownMenuItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setOpen(false);
 
-                      const documentId = Array.isArray(node.children) ? undefined : node.id;
-                      const folderId = Array.isArray(node.children) ? node.id : undefined;
+                    const documentId = Array.isArray(node.children) ? undefined : node.id;
+                    const folderId = Array.isArray(node.children) ? node.id : undefined;
 
-                      deleteFolder(documentId, folderId);
-                    }}
-                  >
+                    deleteFolder(documentId, folderId);
+                  }}
+                >
+                  <div className="flex justify-center items-center">
                     <span className="mr-2">Delete</span>
                   </div>
                 </DropdownMenuItem>
