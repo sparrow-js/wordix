@@ -43,6 +43,7 @@ export async function POST(request: Request, res: NextApiResponse) {
       duration,
       inputValues: inputs,
       inputs: documentInputs?.content,
+      from: "app",
     });
     await writer.close();
     writer.releaseLock();

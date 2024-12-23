@@ -50,6 +50,7 @@ export async function POST(request: Request, res: NextApiResponse) {
         markdownOutput: context.markdownOutput,
       },
       duration,
+      from: "test",
     });
     await writer.close();
     writer.releaseLock();

@@ -31,6 +31,7 @@ export async function GET(request: NextRequest) {
     // Build where clause based on provided parameters
     const whereClause = {
       documentId: documentId,
+      from: "app",
     };
 
     // Get runs for user with pagination
