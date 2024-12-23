@@ -272,6 +272,7 @@ model Run {
   duration    Int?
   inputs      Json?
   inputValues Json?
+  from     String?
 
   version     Int?
   // Foreign keys

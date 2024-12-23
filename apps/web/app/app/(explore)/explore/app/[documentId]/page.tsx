@@ -73,6 +73,8 @@ export default function ExplorePage() {
   const [isLoading, setIsLoading] = useState(false);
   const [runList, setRunList] = useState<any[]>([]);
   const [runDrawerOpen, setRunDrawerOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoadedDocument, setIsLoadedDocument] = useState(false);
 
   const dropzoneConfig = {
     accept: {
@@ -97,6 +99,7 @@ export default function ExplorePage() {
 
   const fetchDocument = async () => {
     const res = await client.get(`/released-app/getAppPublic/${documentId}`, {});
+    setIsLoadedDocument(true);
     if (res.data) {
       const content = res.data.content;
       setDocumentDoc(content);
@@ -127,6 +130,8 @@ export default function ExplorePage() {
         content: [descriptionNode],
       };
       setDescriptionDoc(descriptionDoc);
+    } else {
+      setErrorMessage(res.message);
     }
   };
 
@@ -235,81 +240,88 @@ export default function ExplorePage() {
             </nav>
           </div>
         </div>
+        {isLoadedDocument && (
+          <div>
+            {errorMessage ? (
+              <div className="text-center text-red-500 py-36 text-2xl">{errorMessage}</div>
+            ) : (
+              <>
+                <div className="w-full relative overflow-hidden pt-16">
+                  <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row space-y-12 md:space-y-0 md:space-x-12 relative pt-24">
+                    <div className="w-full md:w-1/2 flex flex-col items-start justify-center md:-mt-12 px-6">
+                      <div className="text-left mb-8">
+                        <p className="text-5xl font-semibold leading-tight md:leading-snug lg:leading-normal">
+                          {title}
+                        </p>
+                        {descriptionDoc && <DescriptionEditor initialContent={descriptionDoc} />}
+                      </div>
+                    </div>
+                    <div className="w-full md:w-1/2 space-y-12 relative h-[80vh]">
+                      <div className="absolute bottom-[150px] w-[70%] mx-auto">
+                        <div className="text-card-foreground shadow-sm border-0 relative bg-opacity-80 backdrop-blur-md rounded-lg p-8 text-center transition-colors">
+                          <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-100 to-gray-300 -z-10" />
+                          <div className="absolute inset-[1px] rounded-lg bg-gradient-to-r from-gray-100 to-gray-300 bg-opacity-80 backdrop-blur-md -z-10" />
+                          <div className="relative z-0 max-h-[45vh] overflow-y-auto px-2">
+                            {inputList.map((input) => {
+                              if (input.type === "image") {
+                                return (
+                                  <InputUploadImage
+                                    key={input.id}
+                                    onChange={(value) => {
+                                      setInputValues({ ...inputValues, [input.id]: value });
+                                    }}
+                                  />
+                                );
+                              }
 
-        <div className="w-full relative overflow-hidden pt-16">
-          <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row space-y-12 md:space-y-0 md:space-x-12 relative pt-24">
-            <div className="w-full md:w-1/2 flex flex-col items-start justify-center md:-mt-12 px-6">
-              <div className="text-left mb-8">
-                <p className="text-5xl font-semibold leading-tight md:leading-snug lg:leading-normal">{title}</p>
-                {descriptionDoc && <DescriptionEditor initialContent={descriptionDoc} />}
-              </div>
-            </div>
-            <div className="w-full md:w-1/2 space-y-12 relative h-[80vh]">
-              <div className="absolute bottom-[150px] w-[70%] mx-auto">
-                <div className="text-card-foreground shadow-sm border-0 relative bg-opacity-80 backdrop-blur-md rounded-lg p-8 text-center transition-colors">
-                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-100 to-gray-300 -z-10" />
-                  <div className="absolute inset-[1px] rounded-lg bg-gradient-to-r from-gray-100 to-gray-300 bg-opacity-80 backdrop-blur-md -z-10" />
-                  <div className="relative z-0 max-h-[45vh] overflow-y-auto px-2">
-                    {inputList.map((input) => {
-                      if (input.type === "image") {
-                        return (
-                          <InputUploadImage
-                            key={input.id}
-                            onChange={(value) => {
-                              setInputValues({ ...inputValues, [input.id]: value });
-                            }}
-                          />
-                        );
-                      }
+                              if (input.type === "text") {
+                                return (
+                                  <div key={input.id} className="mb-6 flex flex-col gap-2 justify-start items-start">
+                                    <Label>{input.label}</Label>
+                                    <Input
+                                      value={inputValues[input.id]}
+                                      onChange={(e) => {
+                                        setInputValues({ ...inputValues, [input.id]: e.target.value });
+                                      }}
+                                    />
+                                  </div>
+                                );
+                              }
 
-                      if (input.type === "text") {
-                        return (
-                          <div key={input.id} className="mb-6 flex flex-col gap-2 justify-start items-start">
-                            <Label>{input.label}</Label>
-                            <Input
-                              value={inputValues[input.id]}
-                              onChange={(e) => {
-                                setInputValues({ ...inputValues, [input.id]: e.target.value });
-                              }}
-                            />
+                              if (input.type === "longText") {
+                                return (
+                                  <div key={input.id} className="mb-6 flex flex-col gap-2 justify-start items-start">
+                                    <Label>{input.label}</Label>
+                                    <Textarea
+                                      value={inputValues[input.id]}
+                                      onChange={(e) => {
+                                        setInputValues({ ...inputValues, [input.id]: e.target.value });
+                                      }}
+                                    />
+                                  </div>
+                                );
+                              }
+
+                              return <div key={input.id} />;
+                            })}
                           </div>
-                        );
-                      }
-
-                      if (input.type === "longText") {
-                        return (
-                          <div key={input.id} className="mb-6 flex flex-col gap-2 justify-start items-start">
-                            <Label>{input.label}</Label>
-                            <Textarea
-                              value={inputValues[input.id]}
-                              onChange={(e) => {
-                                setInputValues({ ...inputValues, [input.id]: e.target.value });
+                          <div className="relative">
+                            <Button
+                              className="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 hover:from-purple-600 hover:via-pink-600 hover:to-orange-600 text-white border-none transition-all duration-300"
+                              onClick={() => {
+                                contentRef.current = "";
+                                setMarkdownGen("");
+                                setRunDrawerOpen(true);
+                                generatePrompt();
                               }}
-                            />
-                          </div>
-                        );
-                      }
-
-                      return <div key={input.id} />;
-                    })}
-                  </div>
-                  <div className="relative">
-                    <Button
-                      className="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 hover:from-purple-600 hover:via-pink-600 hover:to-orange-600 text-white border-none transition-all duration-300"
-                      onClick={() => {
-                        contentRef.current = "";
-                        setMarkdownGen("");
-                        setRunDrawerOpen(true);
-                        generatePrompt();
-                      }}
-                    >
-                      <span className="relative z-10 flex items-center justify-center gap-2">
-                        Generate
-                        <Sparkles className="w-5 h-5 ml-1" />
-                      </span>
-                    </Button>
-                    <Drawer open={runDrawerOpen} onOpenChange={setRunDrawerOpen}>
-                      {/* <DrawerTrigger asChild>
+                            >
+                              <span className="relative z-10 flex items-center justify-center gap-2">
+                                Generate
+                                <Sparkles className="w-5 h-5 ml-1" />
+                              </span>
+                            </Button>
+                            <Drawer open={runDrawerOpen} onOpenChange={setRunDrawerOpen}>
+                              {/* <DrawerTrigger asChild>
                         <Button
                           className="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 hover:from-purple-600 hover:via-pink-600 hover:to-orange-600 text-white border-none transition-all duration-300"
                           onClick={() => {
@@ -322,83 +334,87 @@ export default function ExplorePage() {
                           </span>
                         </Button>
                       </DrawerTrigger> */}
-                      <DrawerContent className="h-[82vh] py-8">
-                        {isLoading && (
-                          <div className="flex absolute top-[24px] right-[50%]">
-                            <LoadingDots />
-                          </div>
-                        )}
+                              <DrawerContent className="h-[82vh] py-8">
+                                {isLoading && (
+                                  <div className="flex absolute top-[24px] right-[50%]">
+                                    <LoadingDots />
+                                  </div>
+                                )}
 
-                        <div ref={scrollRef} className="mx-auto w-full px-24 relative h-full overflow-y-auto">
-                          <div className="p-4 select-text flex flex-col items-center">
-                            <Markdown className="prose lg:prose-xl w-full">{markdownGen}</Markdown>
-                          </div>
-                        </div>
-                        <DrawerClose asChild className="absolute right-4 top-4">
-                          <Button variant="outline" size="icon">
-                            <X className="w-4 h-4" />
-                          </Button>
-                        </DrawerClose>
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="absolute right-16 top-4"
-                          onClick={() => {
-                            navigator.clipboard.writeText(markdownGen);
-                            toast.success("Content copied to clipboard");
-                          }}
-                        >
-                          <Copy className="w-4 h-4" />
-                        </Button>
-                      </DrawerContent>
-                    </Drawer>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div className="mx-auto flex w-full max-w-[989px] flex-1 flex-col gap-4">
-            <div className="flex flex-col gap-9">
-              <div className="flex flex-col gap-4">
-                <div className="text-center text-2xl font-medium sm:text-left">Generate results</div>
-                <div className="grid gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-                  {runList.map((run) => {
-                    return (
-                      <div
-                        key={run.id} // Ensure each run has a unique identifier
-                        className="group/template has-[:focus-visible]:ring-offset-background relative flex w-full flex-col text-sm sm:min-w-0 xl:h-[240px]"
-                      >
-                        <div className="ring-2 ring-pink-300 ring-inset px-2 relative aspect-[16/9] w-full overflow-hidden rounded-lg text-sm has-[:focus-visible]:outline-none has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-blue-600 has-[:focus-visible]:ring-offset-1">
-                          <Markdown className="prose lg:prose-xl w-full -mt-[20px]">
-                            {run?.metadata.markdownOutput}
-                          </Markdown>
-                          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-[hsla(0,0%,100%,0.3)] to-[hsla(0,0%,40%,0.3)] opacity-0 transition-opacity focus-within:opacity-100 group-hover/template:opacity-100 has-[[data-pending=true]]:opacity-100">
-                            <Button
-                              onClick={() => {
-                                setRunDrawerOpen(true);
-                                // contentRef.current = run?.metadata.markdownOutput;
-                                setMarkdownGen(run?.metadata.markdownOutput);
-                              }}
-                            >
-                              View
-                            </Button>
-                          </div>
-                        </div>
-                        <div className="flex flex-col gap-0.5 px-1 py-2.5">
-                          <div className="line-clamp-1 font-medium">
-                            {run.inputValues ? (Object.values(run.inputValues) as string[]).join("\n") : ""}
+                                <div ref={scrollRef} className="mx-auto w-full px-24 relative h-full overflow-y-auto">
+                                  <div className="p-4 select-text flex flex-col items-center">
+                                    <Markdown className="prose lg:prose-xl w-full">{markdownGen}</Markdown>
+                                  </div>
+                                </div>
+                                <DrawerClose asChild className="absolute right-4 top-4">
+                                  <Button variant="outline" size="icon">
+                                    <X className="w-4 h-4" />
+                                  </Button>
+                                </DrawerClose>
+                                <Button
+                                  variant="outline"
+                                  size="icon"
+                                  className="absolute right-16 top-4"
+                                  onClick={() => {
+                                    navigator.clipboard.writeText(markdownGen);
+                                    toast.success("Content copied to clipboard");
+                                  }}
+                                >
+                                  <Copy className="w-4 h-4" />
+                                </Button>
+                              </DrawerContent>
+                            </Drawer>
                           </div>
                         </div>
                       </div>
-                    );
-                  })}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+                <div>
+                  <div className="mx-auto flex w-full max-w-[989px] flex-1 flex-col gap-4">
+                    <div className="flex flex-col gap-9">
+                      <div className="flex flex-col gap-4">
+                        <div className="text-center text-2xl font-medium sm:text-left">Generate results</div>
+                        <div className="grid gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+                          {runList.map((run) => {
+                            return (
+                              <div
+                                key={run.id} // Ensure each run has a unique identifier
+                                className="group/template has-[:focus-visible]:ring-offset-background relative flex w-full flex-col text-sm sm:min-w-0 xl:h-[240px]"
+                              >
+                                <div className="ring-2 ring-gray-300 ring-inset px-2 relative aspect-[16/9] w-full overflow-hidden rounded-lg text-sm has-[:focus-visible]:outline-none has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-blue-600 has-[:focus-visible]:ring-offset-1">
+                                  <Markdown className="prose lg:prose-xl w-full -mt-[20px]">
+                                    {run?.metadata.markdownOutput}
+                                  </Markdown>
+                                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-[hsla(0,0%,100%,0.3)] to-[hsla(0,0%,40%,0.3)] opacity-0 transition-opacity focus-within:opacity-100 group-hover/template:opacity-100 has-[[data-pending=true]]:opacity-100">
+                                    <Button
+                                      onClick={() => {
+                                        setRunDrawerOpen(true);
+                                        // contentRef.current = run?.metadata.markdownOutput;
+                                        setMarkdownGen(run?.metadata.markdownOutput);
+                                      }}
+                                    >
+                                      View
+                                    </Button>
+                                  </div>
+                                </div>
+                                <div className="flex flex-col gap-0.5 px-1 py-2.5">
+                                  <div className="line-clamp-1 font-medium">
+                                    {run.inputValues ? (Object.values(run.inputValues) as string[]).join("\n") : ""}
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
-        </div>
+        )}
       </div>
     </main>
   );
