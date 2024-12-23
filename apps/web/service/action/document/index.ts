@@ -54,7 +54,7 @@ export async function createDocument(data: any, parentId?: string) {
       );
     }
   }
-  console.log("********** endTime", new Date().getTime());
+  console.log("********* endTime", new Date().getTime());
 
   return document;
 }
