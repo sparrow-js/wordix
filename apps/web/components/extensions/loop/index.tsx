@@ -121,7 +121,7 @@ export const Loop = Node.create({
         default: "count",
       },
       label: {
-        default: "",
+        default: "new loop",
       },
       count: {
         default: 0,
