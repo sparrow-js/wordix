@@ -4,7 +4,6 @@ import { updateDocumentStructure } from "../collection";
 const DOCUMENT_VERSION = 1;
 
 export async function createDocument(data: any, parentId?: string) {
-  console.log("********** startTime", new Date().getTime());
   const document = await prisma.document.create({
     data: data,
     include: {
@@ -54,7 +53,6 @@ export async function createDocument(data: any, parentId?: string) {
       );
     }
   }
-  console.log("********* endTime", new Date().getTime());
 
   return document;
 }
