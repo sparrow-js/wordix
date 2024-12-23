@@ -1,3 +1,4 @@
+import { set } from "lodash";
 // @ts-nocheck
 import { executeFunction } from "../../variables/executeFunction";
 import type { DocNode, ProcessingContext } from "../types/DocNode";
@@ -29,15 +30,25 @@ export class CodeHandler extends BaseHandler {
     }
   }
 
-  private async handleCodeBlock(node: DocNode, context: ProcessingContext): Promise<string> {
+  private async handleCodeBlock(
+    node: DocNode,
+    context: ProcessingContext,
+  ): Promise<{ codeText: string; variables: Record<string, any> }> {
     // First pass: Handle mentions
     let codeText = "";
+    const variables = {};
     if (node.content) {
       for (const content of node.content) {
         if (content.type === "text") {
           codeText += content.text || "";
         } else if (content.type === "mention") {
-          codeText += content.attrs?.referenceId || "";
+          let variablePath = content.attrs?.referenceId;
+          if (content.attrs?.path) {
+            variablePath += content.attrs?.path;
+          }
+          set(variables, variablePath, this.resolveValue(content, context));
+
+          codeText += `variables['${variablePath}']`;
         }
       }
     }
@@ -54,7 +65,10 @@ export class CodeHandler extends BaseHandler {
       return value !== undefined ? String(value) : match;
     });
 
-    return codeText;
+    return {
+      codeText,
+      variables,
+    };
   }
 
   private resolveValue(node: DocNode, context: ProcessingContext): any {
@@ -94,6 +108,7 @@ export class CodeHandler extends BaseHandler {
 
   async handle(node: DocNode, context: ProcessingContext): Promise<void> {
     node._state.executed = true;
+    let variablesObject = {};
 
     if (node.type === "codeExecutor") {
       const attrs = node.attrs as CodeExecutorAttrs;
@@ -103,12 +118,19 @@ export class CodeHandler extends BaseHandler {
       if (node.content) {
         for (const block of node.content) {
           if (block.type === "codeBlock") {
-            codeToExecute += await this.handleCodeBlock(block, context);
+            const { codeText, variables } = await this.handleCodeBlock(block, context);
+            variablesObject = {
+              ...variablesObject,
+              ...variables,
+            };
+            codeToExecute += codeText;
           }
         }
       }
 
       if (codeToExecute) {
+        codeToExecute = `const variables = ${JSON.stringify(variablesObject)};\n${codeToExecute}`;
+
         try {
           const result = await executeFunction({
             variables: [],

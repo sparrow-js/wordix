@@ -5,13 +5,13 @@ import { useDropzone } from "react-dropzone";
 
 import useStores from "@/hooks/useStores";
 import { observer } from "mobx-react";
-import { v4 as uuidv4 } from "uuid";
 
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Play, Plus } from "lucide-react";
+import { nanoid } from "nanoid";
 import { toast } from "sonner";
 
 export const InputView = observer((props: NodeViewProps) => {
@@ -49,7 +49,7 @@ export const InputView = observer((props: NodeViewProps) => {
             onClick={(e) => {
               console.log("clicked");
               e.stopPropagation();
-              const id = uuidv4();
+              const id = nanoid(10);
 
               props.editor
                 .chain()

@@ -4,7 +4,7 @@ import { observer } from "mobx-react";
 import { useEffect } from "react";
 
 import { NodeViewWrapper, ReactNodeViewRenderer } from "@tiptap/react";
-import { v4 as uuidv4 } from "uuid";
+import { nanoid } from "nanoid";
 import PromptGenerationComponent from "./component/promptGeneration";
 import StableDiffusionComponent from "./component/stableDiffusion";
 
@@ -115,7 +115,7 @@ export const Tool = Node.create({
           return commands.insertContent({
             type: this.name,
             attrs: {
-              id: uuidv4(),
+              id: nanoid(10),
               ...options,
             },
           });

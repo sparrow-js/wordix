@@ -20,7 +20,7 @@ import {
   TextQuote,
   Wrench,
 } from "lucide-react";
-import { v4 as uuidv4 } from "uuid";
+import { nanoid } from "nanoid";
 import { uploadFn } from "./image-upload";
 
 export const suggestionItems = createSuggestionItems([
@@ -70,7 +70,7 @@ export const suggestionItems = createSuggestionItems([
             .focus()
             .deleteRange(range)
             .setCodeExecutor({
-              id: uuidv4(),
+              id: nanoid(10),
               label: "CodeExecutor",
               language: "js",
             })
@@ -127,7 +127,7 @@ export const suggestionItems = createSuggestionItems([
             .focus()
             .deleteRange(range)
             .setTool({
-              id: uuidv4(),
+              id: nanoid(10),
               label: "Image generation",
               toolId: "stableDiffusion",
               output: [],

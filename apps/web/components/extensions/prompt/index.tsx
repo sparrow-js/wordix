@@ -3,8 +3,8 @@ import { Node, mergeAttributes } from "@tiptap/core";
 import useStores from "@/hooks/useStores";
 import { NodeViewWrapper, ReactNodeViewRenderer } from "@tiptap/react";
 import { observer } from "mobx-react";
+import { nanoid } from "nanoid";
 import { useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 const CustomNodeComponent = observer((props) => {
   const { node } = props;
@@ -177,7 +177,7 @@ export const Prompt = Node.create({
           return commands.insertContent({
             type: this.name,
             attrs: {
-              id: uuidv4(),
+              id: nanoid(10),
               ...options,
             },
           });

@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import { nanoid } from "nanoid";
 export const defaultEditorContent = {
   type: "doc",
   content: [
@@ -11,7 +11,7 @@ export const defaultEditorContent = {
         {
           type: "input",
           attrs: {
-            id: uuidv4(),
+            id: nanoid(10),
             label: "name",
             description: "",
             type: "text",

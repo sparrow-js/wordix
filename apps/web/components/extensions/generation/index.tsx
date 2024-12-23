@@ -1,7 +1,7 @@
 import { Node, mergeAttributes } from "@tiptap/core";
-
 import { ReactNodeViewRenderer } from "@tiptap/react";
-import { v4 as uuidv4 } from "uuid";
+import { nanoid } from "nanoid";
+
 import { GenerationComp } from "./generation";
 
 export interface GenerationOptions {
@@ -82,7 +82,7 @@ export const Generation = Node.create<GenerationOptions>({
           return commands.insertContent({
             type: this.name,
             attrs: {
-              id: uuidv4(),
+              id: nanoid(10),
               label: "new_generation",
               temperature: 0.6,
               model: "gpt-4o",

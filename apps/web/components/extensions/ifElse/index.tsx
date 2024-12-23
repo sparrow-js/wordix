@@ -7,8 +7,8 @@ import type { NodeViewProps } from "@tiptap/react";
 import { cloneDeep } from "lodash";
 import { Repeat2 } from "lucide-react";
 import { observer } from "mobx-react";
+import { nanoid } from "nanoid";
 import { useEffect, useRef, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 const expression = {
   match: {
@@ -187,7 +187,7 @@ export const IfElse = Node.create({
           return commands.insertContent({
             type: this.name,
             attrs: {
-              id: options?.id || uuidv4(),
+              id: options?.id || nanoid(10),
               label: options?.label || "If/Else",
               state: options?.state || "default",
             },
@@ -200,7 +200,7 @@ export const IfElse = Node.create({
                   },
                 ],
                 attrs: {
-                  id: uuidv4(),
+                  id: nanoid(10),
                   expression: cloneDeep(expression),
                 },
               },
@@ -260,7 +260,7 @@ export const IfElse = Node.create({
                 },
               ],
               attrs: {
-                id: uuidv4(),
+                id: nanoid(10),
                 expression: cloneDeep(expression),
               },
             })

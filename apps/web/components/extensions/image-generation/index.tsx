@@ -1,7 +1,7 @@
 import { Node, mergeAttributes } from "@tiptap/core";
 
 import { ReactNodeViewRenderer } from "@tiptap/react";
-import { v4 as uuidv4 } from "uuid";
+import { nanoid } from "nanoid";
 import { GenerationComp } from "./generation";
 
 export interface ImageGenerationOptions {
@@ -74,7 +74,7 @@ export const ImageGeneration = Node.create<ImageGenerationOptions>({
           return commands.insertContent({
             type: this.name,
             attrs: {
-              id: uuidv4(),
+              id: nanoid(10),
               label: "image_generation",
               model: "black-forest-labs/flux-1.1-pro",
               aspect_ratio: "1:1",

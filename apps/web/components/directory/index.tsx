@@ -26,10 +26,10 @@ import { observer } from "mobx-react";
 type Data = { id: string; title: string; children?: Data[] };
 import type Collection from "@/models/Collection";
 import type { NavigationNode } from "@/shared/types";
+import { nanoid } from "nanoid";
 import { useParams, useRouter } from "next/navigation";
 import type { NodeApi } from "react-arborist";
 import { RiAiGenerateText } from "react-icons/ri";
-import { v4 as uuidv4 } from "uuid";
 
 const INDENT_STEP = 15;
 
@@ -105,7 +105,7 @@ function Directory() {
 
   const createFolder = async (parentId?: string) => {
     const newFolder = {
-      id: uuidv4(),
+      id: nanoid(10),
       title: "New Folder",
       children: [],
       url: "",
