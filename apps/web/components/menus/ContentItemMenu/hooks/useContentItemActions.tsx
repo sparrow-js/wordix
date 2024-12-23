@@ -51,9 +51,9 @@ const useContentItemActions = (editor: Editor, currentNode: Node | null, current
         .command(({ dispatch, tr, state }) => {
           if (dispatch) {
             if (currentNodeIsEmptyParagraph) {
-              tr.insertText("", currentNodePos, currentNodePos + 1);
+              tr.insertText(" ", currentNodePos, currentNodePos + 1);
             } else {
-              tr.insert(insertPos, state.schema.nodes.paragraph.create(null, [state.schema.text("")]));
+              tr.insert(insertPos, state.schema.nodes.paragraph.create(null, [state.schema.text(" ")]));
             }
 
             return dispatch(tr);

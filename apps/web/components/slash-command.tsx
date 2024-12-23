@@ -56,7 +56,16 @@ export const suggestionItems = createSuggestionItems([
         searchTerms: ["generation", "embed"],
         icon: <Repeat size={18} />,
         command: ({ editor, range }) => {
-          editor.chain().focus().deleteRange(range).setLoop({}).run();
+          editor
+            .chain()
+            .focus()
+            .deleteRange(range)
+            .setLoop({
+              id: nanoid(10),
+              count: 5,
+              expression: {},
+            })
+            .run();
         },
       },
       {

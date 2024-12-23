@@ -388,7 +388,13 @@ const LoopSetting = ({ onDelete, editor }) => {
                 </div>
 
                 <div className="mt-12 flex w-full justify-center">
-                  <Button variant="outline" className="hover:bg-red-500 hover:text-white active:bg-red-600">
+                  <Button
+                    variant="outline"
+                    className="hover:bg-red-500 hover:text-white active:bg-red-600"
+                    onClick={() => {
+                      loopsNode.removeLoop(editor);
+                    }}
+                  >
                     <Trash2 className="mr-1 h-4 w-4" />
                     <span className="mr-1">Delete</span>
                   </Button>

@@ -2,11 +2,54 @@ import { Node, mergeAttributes } from "@tiptap/core";
 
 import useStores from "@/hooks/useStores";
 import { NodeViewContent, NodeViewWrapper, ReactNodeViewRenderer } from "@tiptap/react";
+import { cloneDeep } from "lodash";
 import { Repeat2 } from "lucide-react";
 import { observer } from "mobx-react";
 import { useEffect, useRef } from "react";
 
 import "./index.css";
+
+const expression = {
+  match: {
+    firstValue: {
+      type: "literal",
+      value: "",
+    },
+    secondValue: {
+      type: "literal",
+      value: "",
+    },
+    ignoreCase: true,
+    ignoreWhitespace: true,
+    ignoreSymbols: true,
+  },
+  contains: {
+    value: {
+      type: "literal",
+      value: "",
+    },
+    searchValue: {
+      type: "literal",
+      value: "",
+    },
+    ignoreCase: true,
+    ignoreWhitespace: true,
+    ignoreSymbols: true,
+  },
+  relative: {
+    firstValue: {
+      type: "literal",
+      value: "",
+    },
+    secondValue: {
+      type: "literal",
+      value: "",
+    },
+    comparator: "gt",
+  },
+  else: true,
+};
+
 const CustomNodeComponent = observer((props) => {
   const domRef = useRef(null);
   const { workbench, setting, loopsNode } = useStores();
@@ -124,13 +167,13 @@ export const Loop = Node.create({
         default: "new loop",
       },
       count: {
-        default: 0,
+        default: 5,
       },
       description: {
         default: "description",
       },
       expression: {
-        default: {},
+        default: cloneDeep(expression),
       },
     };
   },
@@ -159,7 +202,10 @@ export const Loop = Node.create({
                 type: "paragraph",
               },
             ],
-            attrs: options,
+            attrs: {
+              ...options,
+              expression: cloneDeep(expression),
+            },
           });
         },
     };

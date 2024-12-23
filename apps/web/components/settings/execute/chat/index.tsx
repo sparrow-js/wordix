@@ -133,9 +133,10 @@ const Chat: FC<ChatProps> = ({
       const resizeObserver = new ResizeObserver((entries) => {
         for (const entry of entries) {
           const { blockSize } = entry.borderBoxSize[0];
-
-          chatContainerRef.current!.style.paddingBottom = `${blockSize}px`;
-          handleScrollToBottom();
+          if (chatContainerRef.current && chatContainerRef.current.style) {
+            chatContainerRef.current.style.paddingBottom = `${blockSize}px`;
+            handleScrollToBottom();
+          }
         }
       });
 
