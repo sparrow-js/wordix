@@ -247,17 +247,17 @@ export default function ExplorePage() {
             ) : (
               <>
                 <div className="w-full relative overflow-hidden pt-16">
-                  <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row space-y-12 md:space-y-0 md:space-x-12 relative pt-24">
-                    <div className="w-full md:w-1/2 flex flex-col items-start justify-center md:-mt-12 px-6">
-                      <div className="text-left mb-8">
+                  <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row space-y-12 md:space-y-0 md:space-x-12 relative">
+                    <div className="w-full md:w-1/2 flex flex-col items-center justify-center md:-mt-12 px-12 pt-20">
+                      <div className="text-left">
                         <p className="text-5xl font-semibold leading-tight md:leading-snug lg:leading-normal">
                           {title}
                         </p>
                         {descriptionDoc && <DescriptionEditor initialContent={descriptionDoc} />}
                       </div>
                     </div>
-                    <div className="w-full md:w-1/2 space-y-12 relative h-[80vh]">
-                      <div className="absolute bottom-[150px] w-[70%] mx-auto">
+                    <div className="w-full md:w-1/2 space-y-12 relative h-[80vh] flex items-center justify-center">
+                      <div className="w-[70%] mx-auto">
                         <div className="text-card-foreground shadow-sm border-0 relative bg-opacity-80 backdrop-blur-md rounded-lg p-8 text-center transition-colors">
                           <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-100 to-gray-300 -z-10" />
                           <div className="absolute inset-[1px] rounded-lg bg-gradient-to-r from-gray-100 to-gray-300 bg-opacity-80 backdrop-blur-md -z-10" />
@@ -370,7 +370,7 @@ export default function ExplorePage() {
                     </div>
                   </div>
                 </div>
-                <div>
+                <div className="mt-12">
                   <div className="mx-auto flex w-full max-w-[989px] flex-1 flex-col gap-4">
                     <div className="flex flex-col gap-9">
                       <div className="flex flex-col gap-4">

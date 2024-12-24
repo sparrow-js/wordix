@@ -14,7 +14,7 @@ export default class AtsStore {
     const inputsList = Array.from(this.rootStore.inputsNode.data);
     const generationList = this.rootStore.generations.generationDocumentIds;
     const loopsList = this.rootStore.loopsNode.loopDocumentIds;
-    const codeExecutorsList = Array.from(this.rootStore.codeExecutors.data);
+    const codeExecutorsList = this.rootStore.codeExecutors.codeExecutorDocumentIds;
 
     const list = [];
     inputsList.forEach((item) => {
@@ -88,13 +88,12 @@ export default class AtsStore {
       });
     });
 
-    codeExecutorsList.forEach((item) => {
-      const [id, codeExecutor] = item;
+    codeExecutorsList.forEach((codeExecutor) => {
       list.push({
-        id,
+        id: codeExecutor.id,
         title: `${codeExecutor.label}.output`,
         label: `${codeExecutor.label}.output`,
-        value: id,
+        value: codeExecutor.id,
         type: "codeExecutor",
         searchTerms: [`${codeExecutor.label}.output`],
         description: "Just start typing with plain text.",
@@ -104,7 +103,7 @@ export default class AtsStore {
             .focus()
             .deleteRange(range)
             .setMention({
-              referenceId: id,
+              referenceId: codeExecutor.id,
               type: "codeExecutor",
               path: ".output",
             })

@@ -10,14 +10,14 @@ const extensions = [...descriptionExtensions];
 
 export default function DescriptionEditor({ initialContent }) {
   return (
-    <div className="w-full h-full min-w-[600px] overflow-y-auto">
+    <div className="w-full h-full min-w-[600px] overflow-y-auto max-h-[calc(100vh-260px)]">
       <div className="relative w-full">
         <EditorRoot>
           <EditorContent
             editable={false}
             initialContent={initialContent}
             extensions={extensions}
-            className="relative w-full sm:mb-[calc(20vh)]"
+            className="relative w-full"
             editorProps={{
               handleDOMEvents: {
                 keydown: (_view, event) => handleCommandNavigation(event),
