@@ -24,6 +24,11 @@ export default class GenerationsStore extends Store<Generation> {
     return this.data.get(this.currentId);
   }
 
+  @computed
+  get generationDocumentIds(): Generation[] {
+    return this.orderedData.filter((generation) => generation.documentId === this.rootStore.documents.documentId);
+  }
+
   @action
   updateDataSyncToNode(key: string, value: any, editor?: any) {
     const attr = {};

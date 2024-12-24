@@ -1,11 +1,14 @@
 import useStores from "@/hooks/useStores";
 import { type NodeViewProps, NodeViewWrapper } from "@tiptap/react";
 import { observer } from "mobx-react";
+import { useParams } from "next/navigation";
 import { useEffect } from "react";
 
 export const GenerationComp = observer((props: NodeViewProps) => {
   const { generations, setting, workbench } = useStores();
   const { id, label, temperature, model, type, stopBefore } = props.node.attrs;
+  const { id: documentId } = useParams<{ id: string; collectionId: string }>();
+
   useEffect(() => {
     generations.addGeneration({
       id,
@@ -14,6 +17,7 @@ export const GenerationComp = observer((props: NodeViewProps) => {
       model,
       type,
       stopBefore,
+      documentId,
     });
     return () => {
       generations.remove(id);

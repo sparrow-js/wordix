@@ -4,10 +4,13 @@ import Store from "@/stores/base/Store";
 import type { FetchOptions, NavigationNode, PublicTeam } from "@/types/types";
 import { client } from "@/utils/ApiClient";
 import { cloneDeep, debounce, filter, find, orderBy } from "lodash";
-import { action, computed, makeObservable } from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
 
 export default class DocumentsStore extends Store<Document> {
   sharedCache: Map<string, { sharedTree: NavigationNode; team: PublicTeam } | undefined> = new Map();
+
+  @observable
+  documentId: string;
 
   private debouncedTitleUpdate = debounce(
     async (id: string, title: string, content: any, documents: any) => {
@@ -155,4 +158,9 @@ export default class DocumentsStore extends Store<Document> {
       this.debouncedTitleUpdate(id, title, document.content, documents);
     }
   };
+
+  @action
+  setDocumentId(id: string) {
+    this.documentId = id;
+  }
 }

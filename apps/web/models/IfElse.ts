@@ -24,6 +24,9 @@ class IfElse extends Model {
 
   declare store: IfElseStore;
 
+  @observable
+  documentId: string;
+
   constructor(fields: Record<string, any>, store: IfElseStore) {
     super(fields, store);
     makeObservable(this);

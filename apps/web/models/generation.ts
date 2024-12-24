@@ -34,6 +34,9 @@ class Generation extends Model {
   @observable
   generationType?: string;
 
+  @observable
+  documentId: string;
+
   constructor(fields: Record<string, any>, store: GenerationsStore) {
     super(fields, store);
     makeObservable(this);

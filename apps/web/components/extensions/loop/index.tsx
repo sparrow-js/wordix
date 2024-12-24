@@ -5,6 +5,7 @@ import { NodeViewContent, NodeViewWrapper, ReactNodeViewRenderer } from "@tiptap
 import { cloneDeep } from "lodash";
 import { Repeat2 } from "lucide-react";
 import { observer } from "mobx-react";
+import { useParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 import "./index.css";
@@ -55,6 +56,8 @@ const CustomNodeComponent = observer((props) => {
   const { workbench, setting, loopsNode } = useStores();
   const { id, label, type, description, expression, count } = props.node.attrs;
 
+  const { id: documentId } = useParams<{ id: string; collectionId: string }>();
+
   useEffect(() => {
     loopsNode.addLoop({
       id,
@@ -63,6 +66,7 @@ const CustomNodeComponent = observer((props) => {
       count,
       description,
       expression,
+      documentId,
     });
 
     return () => {

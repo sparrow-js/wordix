@@ -21,6 +21,11 @@ export default class CodeExecutorsStore extends Store<CodeExecutor> {
     return this.data.get(this.selectedId);
   }
 
+  @computed
+  get codeExecutorDocumentIds(): CodeExecutor[] {
+    return this.orderedData.filter((codeExecutor) => codeExecutor.documentId === this.rootStore.documents.documentId);
+  }
+
   @action
   addCodeExecutor(item: any) {
     if (!this.data.has(item.id)) {

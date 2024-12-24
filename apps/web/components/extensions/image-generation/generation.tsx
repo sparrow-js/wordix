@@ -2,17 +2,21 @@ import useStores from "@/hooks/useStores";
 import { type NodeViewProps, NodeViewWrapper } from "@tiptap/react";
 import { Image } from "lucide-react";
 import { observer } from "mobx-react";
+import { useParams } from "next/navigation";
 import { useEffect } from "react";
 
 export const GenerationComp = observer((props: NodeViewProps) => {
   const { generations, setting, workbench } = useStores();
   const { id, label, model, aspect_ratio } = props.node.attrs;
+  const { id: documentId } = useParams<{ id: string; collectionId: string }>();
+
   useEffect(() => {
     generations.addGeneration({
       id,
       label,
       model,
       aspect_ratio,
+      documentId,
     });
     return () => {
       generations.remove(id);

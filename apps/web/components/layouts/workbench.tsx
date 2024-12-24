@@ -14,6 +14,7 @@ export const Workbench = () => {
 
   useEffect(() => {
     inputsNode.setDocumentId(id);
+    documents.setDocumentId(id);
 
     async function fetchData() {
       try {

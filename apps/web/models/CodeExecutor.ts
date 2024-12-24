@@ -28,6 +28,9 @@ class CodeExecutor extends Model {
   @observable
   continueOnError: boolean;
 
+  @observable
+  documentId: string;
+
   constructor(fields: Record<string, any>, store: InputStore) {
     super(fields, store);
     makeObservable(this);

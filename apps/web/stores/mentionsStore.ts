@@ -12,8 +12,8 @@ export default class AtsStore {
   @computed
   get atList(): any[] {
     const inputsList = Array.from(this.rootStore.inputsNode.data);
-    const generationList = Array.from(this.rootStore.generations.data);
-    const loopsList = Array.from(this.rootStore.loopsNode.data);
+    const generationList = this.rootStore.generations.generationDocumentIds;
+    const loopsList = this.rootStore.loopsNode.loopDocumentIds;
     const codeExecutorsList = Array.from(this.rootStore.codeExecutors.data);
 
     const list = [];
@@ -41,13 +41,12 @@ export default class AtsStore {
       });
     });
 
-    generationList.forEach((item) => {
-      const [id, generation] = item;
+    generationList.forEach((generation) => {
       list.push({
-        id,
+        id: generation.id,
         title: generation.label,
         label: generation.label,
-        value: id,
+        value: generation.id,
         type: "generation",
         searchTerms: [generation.label],
         description: "Just start typing with plain text.",
@@ -57,7 +56,7 @@ export default class AtsStore {
             .focus()
             .deleteRange(range)
             .setMention({
-              referenceId: id,
+              referenceId: generation.id,
               type: "generation",
             })
             .run();
@@ -65,13 +64,12 @@ export default class AtsStore {
       });
     });
 
-    loopsList.forEach((item) => {
-      const [id, loop] = item;
+    loopsList.forEach((loop) => {
       list.push({
-        id,
+        id: loop.id,
         title: `${loop.label}.count`,
         label: `${loop.label}.count`,
-        value: id,
+        value: loop.id,
         type: "loop",
         searchTerms: [`${loop.label}.count`],
         description: "Just start typing with plain text.",
@@ -81,7 +79,7 @@ export default class AtsStore {
             .focus()
             .deleteRange(range)
             .setMention({
-              referenceId: id,
+              referenceId: loop.id,
               type: "loop",
               path: ".count",
             })

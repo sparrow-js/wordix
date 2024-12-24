@@ -24,6 +24,11 @@ export default class LoopsNodeStore extends Store<Loop> {
     return this.data.get(this.selectedId);
   }
 
+  @computed
+  get loopDocumentIds(): Loop[] {
+    return this.orderedData.filter((loop) => loop.documentId === this.rootStore.documents.documentId);
+  }
+
   @action
   addLoop(item: any) {
     if (!this.data.has(item.id)) {

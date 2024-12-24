@@ -3,6 +3,7 @@ import { Node, mergeAttributes } from "@tiptap/core";
 import { NodeViewContent, NodeViewWrapper, ReactNodeViewRenderer } from "@tiptap/react";
 import { Play } from "lucide-react";
 import { observer } from "mobx-react";
+import { useParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 interface CodeExecutorAttributes {
@@ -20,7 +21,7 @@ const CustomNodeComponent = observer((props: { node: { attrs: CodeExecutorAttrib
   const domRef = useRef<HTMLDivElement>(null);
   const { id, label, state, language, logs, error, includeOutput, continueOnError } = props.node.attrs;
   const { workbench, setting, ifElses, codeExecutors } = useStores();
-
+  const { id: documentId } = useParams<{ id: string; collectionId: string }>();
   useEffect(() => {
     codeExecutors.addCodeExecutor({
       id,
@@ -31,6 +32,7 @@ const CustomNodeComponent = observer((props: { node: { attrs: CodeExecutorAttrib
       error,
       includeOutput,
       continueOnError,
+      documentId,
     });
     return () => {
       codeExecutors.removeCodeExecutor(props.editor);
