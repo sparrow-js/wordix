@@ -2,7 +2,7 @@
 
 import useStores from "@/hooks/useStores";
 import { cn } from "@/lib/utils";
-import { File, FileAudio, FileText, Image, Text, Trash2 } from "lucide-react";
+import { FileText, Image, Text, Trash2 } from "lucide-react";
 import { observer } from "mobx-react";
 import type React from "react";
 
@@ -24,10 +24,7 @@ export const InputSetting: React.FC<InputSettingProps> = observer(({ onDelete, e
   return (
     <div className="p-8">
       <h2 className="font-default text-xl font-bold">Input</h2>
-      <p className="mt-2">
-        Inputs need to be passed in when the program is run. They can come from a user or be populated by another prompt
-        program
-      </p>
+      <p className="mt-2">nput blocks allow you to collect information from the user.</p>
 
       <div className="mb-9 mt-5">
         <p className="font-bold">Name</p>
