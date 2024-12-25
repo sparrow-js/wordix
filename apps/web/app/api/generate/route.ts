@@ -1,8 +1,9 @@
 import { Ratelimit } from "@upstash/ratelimit";
 import { kv } from "@vercel/kv";
-import { OpenAIStream, StreamingTextResponse } from "ai";
-import OpenAI from "openai";
-import type { ChatCompletionMessageParam } from "openai/resources/index.mjs";
+import { type CoreMessage, streamText } from "ai";
+
+import { createOpenAI } from "@ai-sdk/openai";
+
 import { match } from "ts-pattern";
 
 // Create an OpenAI API client (that's edge friendly!)
@@ -11,10 +12,11 @@ import { match } from "ts-pattern";
 export const runtime = "edge";
 
 export async function POST(req: Request): Promise<Response> {
-  const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-    baseURL: process.env.OPENAI_BASE_URL || "https://api.openai.com/v1",
+  const openai = createOpenAI({
+    apiKey: "sk-Yuxzg619EfPAnyd6rJ6el5xfQQzwFxI1HxS9vBfMC4bnqd2p",
+    baseURL: "https://api.openai-proxy.org/v1",
   });
+
   // Check if the OPENAI_API_KEY is set, if not return 400
   if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === "") {
     return new Response("Missing OPENAI_API_KEY - make sure to add it to your .env file.", {
@@ -130,22 +132,16 @@ export async function POST(req: Request): Promise<Response> {
         content: `For this text: ${prompt}. You have to respect the command: ${command}`,
       },
     ])
-    .run() as ChatCompletionMessageParam[];
+    .run() as CoreMessage[];
 
-  const response = await openai.chat.completions.create({
-    model: "gpt-4o",
-    stream: true,
+  const result = streamText({
+    model: openai("gpt-4o"),
     messages,
     temperature: 0.7,
-    top_p: 1,
-    frequency_penalty: 0,
-    presence_penalty: 0,
-    n: 1,
+    topP: 1,
+    frequencyPenalty: 0,
+    presencePenalty: 0,
   });
 
-  // Convert the response into a friendly text-stream
-  const stream = OpenAIStream(response);
-
-  // Respond with the stream
-  return new StreamingTextResponse(stream);
+  return result.toDataStreamResponse();
 }

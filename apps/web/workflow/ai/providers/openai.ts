@@ -95,6 +95,7 @@ export class OpenAIProvider extends BaseAIProvider {
     });
 
     const imageBuffer = Buffer.from(image.base64, "base64");
+    //@ts-ignore
     const { url } = await put(`images/${uuidv4()}.png`, imageBuffer, {
       access: "public",
     });
