@@ -15,6 +15,7 @@ import IfElseSetting from "./ifElse";
 import ImageGeneration from "./imageGeneration";
 import Prompt from "./prompt";
 import Tool from "./tool";
+import LoadingDots from "../icons/loading-dots";
 const MapComp = {
   generation: Generation,
   imageGeneration: ImageGeneration,
@@ -31,7 +32,7 @@ interface InputSettingProps {
   editor: any;
 }
 const Settings: React.FC<InputSettingProps> = ({ editor }) => {
-  const { workbench, setting } = useStores();
+  const { workbench, setting, execute } = useStores();
   const [Comp, setComp] = useState<any>(null);
 
   useEffect(() => {
@@ -52,7 +53,9 @@ const Settings: React.FC<InputSettingProps> = ({ editor }) => {
               <ChevronsRight className="h-4 w-4" />
             </button>
           </div>
-          <div className="flex items-center justify-self-center">Attributes</div>
+          <div className="flex items-center justify-self-center">
+            {execute.status === "pending" && <LoadingDots />}
+          </div>
         </div>
       </div>
       <div className="flex-1 overflow-y-auto">{Comp && <Comp onDelete={() => {}} editor={editor} />}</div>
