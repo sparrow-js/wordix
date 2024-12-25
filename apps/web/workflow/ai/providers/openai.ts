@@ -1,5 +1,8 @@
+import { ImageConfig } from "@/workflow/ai/config/flux-config";
 import { createOpenAI } from "@ai-sdk/openai";
-import { type CoreMessage, generateText, streamText } from "ai";
+import { put } from "@vercel/blob";
+import { type CoreMessage, experimental_generateImage as generateImage, generateText, streamText } from "ai";
+import { v4 as uuidv4 } from "uuid";
 import type { ModelConfig } from "../config/model-configs";
 import { BaseAIProvider, type Message } from "./base";
 
@@ -80,5 +83,23 @@ export class OpenAIProvider extends BaseAIProvider {
     }
 
     return result.text;
+  }
+
+  async generateImage(prompt: string, modelName?: string, options?: Partial<ModelConfig>): Promise<any> {
+    const config = ImageConfig.find((item) => item.model === modelName);
+
+    const { image } = await generateImage({
+      model: this.openai.image(config.model),
+      prompt: prompt,
+      size: "1024x1024",
+    });
+
+    const imageBuffer = Buffer.from(image.base64, "base64");
+    const { url } = await put(`images/${uuidv4()}.png`, imageBuffer, {
+      access: "public",
+    });
+
+    console.log(url);
+    return { output: url };
   }
 }

@@ -70,6 +70,19 @@ export const ImageConfig = [
       image_prompt_strength: 0.1,
     },
   },
+  {
+    name: "dall-e-3",
+    provider: "openai",
+    model: "dall-e-3",
+    parameters: {
+      prompt: "a majestic snow-capped mountain peak bathed in a warm glow of the setting sun",
+      n: 1,
+      size: "1024x1024",
+      response_format: "url",
+      quality: "standard",
+      style: "vivid",
+    },
+  },
 ];
 
 export const ASPECT_RATIO = [
