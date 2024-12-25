@@ -127,7 +127,16 @@ export default function Home() {
                     backgroundSize: "cover",
                   }}
                 >
-                  <span className="text-2xl text-red-600 font-bold top-[-10px] left-[-10px] ml-[36px]">AI</span>
+                  <span
+                    className="text-2xl font-bold top-[-10px] left-[-10px] ml-[36px] animate-pulse"
+                    style={{
+                      background: "linear-gradient(90deg, #ff7f50, #ff6347, #ffd700, #adff2f, #00ced1, #1e90ff, #dda0dd)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                    }}
+                  >
+                    AI
+                  </span>
                 </div>
               </div>
             </div>
