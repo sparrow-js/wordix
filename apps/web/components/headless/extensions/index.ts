@@ -74,8 +74,8 @@ const HighlightExtension = Highlight.configure({
 });
 
 const MarkdownExtension = Markdown.configure({
-  html: true,
-  transformCopiedText: true,
+  html: false,
+  transformCopiedText: false,
 });
 
 const Horizontal = HorizontalRule.extend({
