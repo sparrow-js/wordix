@@ -265,19 +265,21 @@ export default function ExplorePage() {
                             {inputList.map((input) => {
                               if (input.type === "image") {
                                 return (
-                                  <InputUploadImage
-                                    key={input.id}
-                                    onChange={(value) => {
-                                      setInputValues({ ...inputValues, [input.id]: value });
-                                    }}
-                                  />
+                                  <div key={input.id} className="mb-6 flex flex-col gap-2 justify-start items-start">
+                                    <Label>{input.description}</Label>
+                                    <InputUploadImage
+                                      onChange={(value) => {
+                                        setInputValues({ ...inputValues, [input.id]: value });
+                                      }}
+                                    />
+                                  </div>
                                 );
                               }
 
                               if (input.type === "text") {
                                 return (
                                   <div key={input.id} className="mb-6 flex flex-col gap-2 justify-start items-start">
-                                    <Label>{input.label}</Label>
+                                    <Label>{input.description}</Label>
                                     <Input
                                       value={inputValues[input.id]}
                                       onChange={(e) => {
@@ -291,7 +293,7 @@ export default function ExplorePage() {
                               if (input.type === "longText") {
                                 return (
                                   <div key={input.id} className="mb-6 flex flex-col gap-2 justify-start items-start">
-                                    <Label>{input.label}</Label>
+                                    <Label>{input.description}</Label>
                                     <Textarea
                                       value={inputValues[input.id]}
                                       onChange={(e) => {
