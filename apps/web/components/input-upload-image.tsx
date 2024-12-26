@@ -71,7 +71,7 @@ export default function InputUploadImage({
   const { getRootProps, getInputProps, isDragActive } = useDropzone(dropzoneConfig);
 
   return (
-    <div className="flex flex-col items-center justify-center h-56 md:h-72 space-y-6 relative mb-6">
+    <div className="flex flex-col items-center justify-center h-56 md:h-72 space-y-6 relative mb-6 w-full">
       <div
         {...getRootProps({
           onClick: (e) => getRootProps().onClick(e),
