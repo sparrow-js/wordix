@@ -14,6 +14,7 @@ export const InputComp = observer((props: NodeViewProps) => {
       description,
     });
     return () => {
+      console.log("*************88**");
       inputsNode.remove(id);
     };
   }, []);

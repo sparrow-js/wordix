@@ -88,10 +88,24 @@ export default class InputsNodeStore extends Store<Input> {
   @action
   removeInput(editor: any): void {
     const { state, dispatch } = editor.view;
-    const { selection } = state;
     this.rootStore.workbench.setHideSidebar();
-    const transaction = state.tr.delete(selection.from, selection.from + 1);
-    dispatch(transaction);
+    // const transaction = state.tr.delete(selection.from, selection.from + 1);
+    // dispatch(transaction);
+    let foundNode = null;
+    let foundPos = -1;
+    state.doc.descendants((node, pos) => {
+      if (node.attrs?.id === this.selectedId) {
+        foundNode = node;
+        foundPos = pos;
+        return false;
+      }
+      return true;
+    });
+
+    if (foundPos >= 0 && foundNode) {
+      const transaction = state.tr.delete(foundPos, foundPos + foundNode.nodeSize);
+      dispatch(transaction);
+    }
     this.remove(this.selectedId);
   }
 
