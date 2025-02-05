@@ -50,10 +50,10 @@ const Projects = observer(() => {
   };
 
   useEffect(() => {
-    if (inView && hasMore) {
+    if (inView && hasMore && workspaces.selectedWorkspaceId) {
       fetchProjects(page);
     }
-  }, [inView]);
+  }, [inView, workspaces.selectedWorkspaceId]);
 
   const handleDelete = async (e, collection: any) => {
     e.preventDefault();
