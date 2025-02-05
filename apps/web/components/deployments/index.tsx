@@ -97,9 +97,6 @@ export default function Page() {
                                   <TableCell colSpan={6} className="h-32 text-center">
                                     <div className="flex flex-col items-center justify-center gap-2">
                                       <p className="text-sm text-muted-foreground">No deployments found</p>
-                                      <p className="text-xs text-muted-foreground">
-                                        Create a deployment to get started
-                                      </p>
                                     </div>
                                   </TableCell>
                                 </TableRow>
