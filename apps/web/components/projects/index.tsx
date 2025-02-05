@@ -30,7 +30,7 @@ const Projects = observer(() => {
   const [openUploadDialog, setOpenUploadDialog] = useState(false);
   const [selectedCollection, setSelectedCollection] = useState<any>(null);
 
-  const { collections } = useStores();
+  const { collections, workspaces } = useStores();
 
   const { ref, inView } = useInView();
 
@@ -39,6 +39,7 @@ const Projects = observer(() => {
     const res = await collections.fetchPage({
       limit: 25,
       page: page,
+      workspaceId: workspaces.selectedWorkspaceId,
     });
     if (res[PAGINATION_SYMBOL].total >= collections.data.size) {
       setHasMore(false);
