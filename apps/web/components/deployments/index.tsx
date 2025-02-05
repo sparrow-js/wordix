@@ -13,13 +13,14 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(0);
-  const { documents } = useStores();
+  const { documents, workspaces } = useStores();
   const router = useRouter();
   const fetchDocuments = async (page: number) => {
     setIsLoading(true);
     const res = await documents.fetchPage({
       limit: 25,
       page: page,
+      workspaceId: workspaces.selectedWorkspaceId,
       visibility: "public",
       sort: "publishedAt",
     });
@@ -35,7 +36,7 @@ export default function Page() {
     if (inView && !isLoading && hasMore) {
       fetchDocuments(page);
     }
-  }, [inView]);
+  }, [inView, workspaces.selectedWorkspaceId]);
 
   return (
     <div className="flex h-full w-full md:w-auto flex-1 flex-col bg-muted/30">
