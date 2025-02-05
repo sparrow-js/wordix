@@ -16,31 +16,31 @@ export class ReplicateProvider implements AIProvider {
   }
 
   async generateImage(prompt: string, modelName?: string, options?: any): Promise<any> {
-    try {
-      const response = await this.openai.images.generate({
-        model: modelName || "dall-e-3",
-        prompt: prompt,
-        n: options?.n || 1,
-        size: options?.size || "1024x1024",
-        quality: options?.quality || "standard",
-        style: options?.style || "vivid",
-        response_format: "b64_json",
-      });
+    // try {
+    const response = await this.openai.images.generate({
+      model: modelName || "dall-e-3",
+      prompt: prompt,
+      n: options?.n || 1,
+      size: options?.size || "1024x1024",
+      quality: options?.quality || "standard",
+      style: options?.style || "vivid",
+      response_format: "b64_json",
+    });
 
-      const b64Json = response.data[0].b64_json;
-      if (!b64Json) throw new Error("Image generation failed: No b64_json received");
-      const imageBuffer = Buffer.from(b64Json.replace("data:image/png;base64,", ""), "base64");
-      // @ts-ignore
-      const { url } = await put(`images/${uuidv4()}.png`, imageBuffer, {
-        access: "public",
-      });
+    const b64Json = response.data[0].b64_json;
+    if (!b64Json) throw new Error("Image generation failed: No b64_json received");
+    const imageBuffer = Buffer.from(b64Json.replace("data:image/png;base64,", ""), "base64");
+    // @ts-ignore
+    const { url } = await put(`images/${uuidv4()}.png`, imageBuffer, {
+      access: "public",
+    });
 
-      return {
-        output: url,
-      };
-    } catch (error) {
-      console.error("Error generating image:", error);
-      throw error;
-    }
+    return {
+      output: url,
+    };
+    // } catch (error) {
+    //   console.error("Error generating image:", error);
+    //   throw error;
+    // }
   }
 }

@@ -23,7 +23,7 @@ export interface ModelConfigs {
   openai: ProviderModelConfig;
   anthropic: ProviderModelConfig;
   cohere: ProviderModelConfig;
-  perplexity: ProviderModelConfig;
+  // perplexity: ProviderModelConfig;
   gemini: ProviderModelConfig;
   deepseek: ProviderModelConfig;
 }
@@ -194,30 +194,30 @@ export const allModels: ModelConfigWithProvider[] = [
     temperature: 0.7,
     avatar: <CohereIcon />,
   },
-  {
-    provider: "perplexity",
-    model: "llama-3.1-sonar-small-128k-online",
-    name: "llama-3.1-sonar-small-128k-online",
-    maxTokens: 128000,
-    temperature: 0.7,
-    avatar: <PerplexityIcon />,
-  },
-  {
-    provider: "perplexity",
-    model: "llama-3.1-sonar-large-128k-online",
-    name: "llama-3.1-sonar-large-128k-online",
-    maxTokens: 128000,
-    temperature: 0.7,
-    avatar: <PerplexityIcon />,
-  },
-  {
-    provider: "perplexity",
-    model: "llama-3.1-sonar-huge-128k-online",
-    name: "llama-3.1-sonar-huge-128k-online",
-    maxTokens: 128000,
-    temperature: 0.7,
-    avatar: <PerplexityIcon />,
-  },
+  // {
+  //   provider: "perplexity",
+  //   model: "llama-3.1-sonar-small-128k-online",
+  //   name: "llama-3.1-sonar-small-128k-online",
+  //   maxTokens: 128000,
+  //   temperature: 0.7,
+  //   avatar: <PerplexityIcon />,
+  // },
+  // {
+  //   provider: "perplexity",
+  //   model: "llama-3.1-sonar-large-128k-online",
+  //   name: "llama-3.1-sonar-large-128k-online",
+  //   maxTokens: 128000,
+  //   temperature: 0.7,
+  //   avatar: <PerplexityIcon />,
+  // },
+  // {
+  //   provider: "perplexity",
+  //   model: "llama-3.1-sonar-huge-128k-online",
+  //   name: "llama-3.1-sonar-huge-128k-online",
+  //   maxTokens: 128000,
+  //   temperature: 0.7,
+  //   avatar: <PerplexityIcon />,
+  // },
 ];
 
 export const modelConfigs: ModelConfigs = {
@@ -333,23 +333,23 @@ export const modelConfigs: ModelConfigs = {
       },
     },
   },
-  perplexity: {
-    defaultModel: "llama-3.1-sonar-small-128k-online",
-    models: {
-      "llama-3.1-sonar-small-128k-online": {
-        name: "llama-3.1-sonar-small-128k-online",
-        maxTokens: 4096,
-      },
-      "llama-3.1-sonar-large-128k-online": {
-        name: "llama-3.1-sonar-large-128k-online",
-        maxTokens: 4096,
-      },
-      "llama-3.1-sonar-huge-128k-online	": {
-        name: "llama-3.1-sonar-huge-128k-online	",
-        maxTokens: 4096,
-      },
-    },
-  },
+  // perplexity: {
+  //   defaultModel: "llama-3.1-sonar-small-128k-online",
+  //   models: {
+  //     "llama-3.1-sonar-small-128k-online": {
+  //       name: "llama-3.1-sonar-small-128k-online",
+  //       maxTokens: 4096,
+  //     },
+  //     "llama-3.1-sonar-large-128k-online": {
+  //       name: "llama-3.1-sonar-large-128k-online",
+  //       maxTokens: 4096,
+  //     },
+  //     "llama-3.1-sonar-huge-128k-online	": {
+  //       name: "llama-3.1-sonar-huge-128k-online	",
+  //       maxTokens: 4096,
+  //     },
+  //   },
+  // },
   gemini: {
     defaultModel: "gemini-2.0-flash-exp",
     models: {

@@ -16,7 +16,6 @@ export const getWorkflowResponseWrite = ({
   return ({ event, data, stream }: WorkflowResponseParams) => {
     const useStreamResponse = stream ?? streamResponse;
     if (!useStreamResponse) return;
-
     write.write(
       `data: ${JSON.stringify({
         event: event,

@@ -205,6 +205,12 @@ export class DocumentProcessor extends BaseProcessor {
         await handler.after(node, this.context);
       }
       await this.completeNode(node);
+    } catch (e) {
+      this.context.onStreamResponse({
+        event: "error",
+        data: e,
+        stream: true,
+      });
     } finally {
       this.exitNode(node);
     }

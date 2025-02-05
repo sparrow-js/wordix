@@ -36,10 +36,10 @@ export class ServiceFactory {
       new CohereProvider(this.apiKey, modelConfigs.cohere.defaultModel, modelConfigs.cohere.models),
     );
 
-    this.aiService.registerProvider(
-      "perplexity",
-      new PerplexityProvider(this.apiKey, modelConfigs.perplexity.defaultModel, modelConfigs.perplexity.models),
-    );
+    // this.aiService.registerProvider(
+    //   "perplexity",
+    //   new PerplexityProvider(this.apiKey, modelConfigs.perplexity.defaultModel, modelConfigs.perplexity.models),
+    // );
 
     this.aiService.registerProvider(
       "gemini",

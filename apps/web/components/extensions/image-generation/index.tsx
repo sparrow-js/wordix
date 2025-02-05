@@ -76,7 +76,7 @@ export const ImageGeneration = Node.create<ImageGenerationOptions>({
             attrs: {
               id: nanoid(10),
               label: "image_generation",
-              model: "black-forest-labs/flux-1.1-pro",
+              model: "dall-e-3",
               aspect_ratio: "1:1",
               generationType: "image",
             },
