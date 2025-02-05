@@ -23,7 +23,7 @@ export default function VersionsPage() {
       page: page,
       collectionId: collectionId as string,
       documentId: documentId as string,
-      visibility: "published",
+      visibility: "public",
       sort: "updatedAt",
     });
     if (res[PAGINATION_SYMBOL].total <= revisions.publishedList.length) {

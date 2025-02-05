@@ -20,7 +20,7 @@ export default function Page() {
     const res = await documents.fetchPage({
       limit: 25,
       page: page,
-      visibility: "published",
+      visibility: "public",
       sort: "publishedAt",
     });
     if (res[PAGINATION_SYMBOL].total <= documents.publishedList.length) {

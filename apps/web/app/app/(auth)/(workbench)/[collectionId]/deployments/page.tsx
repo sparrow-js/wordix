@@ -24,7 +24,7 @@ export default function DeploymentsPage() {
       limit: 25,
       page: page,
       collectionId: collectionId as string,
-      visibility: "published",
+      visibility: "public",
       sort: "publishedAt",
     });
     if (res[PAGINATION_SYMBOL].total <= documents.publishedList.length) {

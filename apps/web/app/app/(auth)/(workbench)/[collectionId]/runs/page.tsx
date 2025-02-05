@@ -42,7 +42,7 @@ export default observer(function RunsPage() {
       limit: 25,
       page: page,
       collectionId: collectionId as string,
-      visibility: "published",
+      visibility: "public",
       sort: "updatedAt",
     });
     if (res[PAGINATION_SYMBOL].total <= publishedRuns.length) {
