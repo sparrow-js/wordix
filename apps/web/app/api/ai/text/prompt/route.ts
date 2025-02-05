@@ -60,7 +60,7 @@ export async function POST(request: Request) {
       ];
     }
 
-    if (model === "deepseek/deepseek-r1") {
+    if (model === "deepseek/deepseek-chat") {
       messages = [
         {
           role: "user",

@@ -14,6 +14,9 @@ interface Document {
   bannerImage?: string;
   collectionId: string;
   publishedAt: string;
+  collection: {
+    name: string;
+  };
 }
 
 const DeploymentListSkeleton = () => (
@@ -100,6 +103,13 @@ export default function ProjectPage({ params }: { params: { collectionId: string
       </div>
 
       <div className="max-w-7xl mx-auto px-20 pt-32">
+        {
+          documents.length > 0 ? (
+            <div className="p-6 pt-0 mb-6">
+              <h1 className="text-2xl font-bold text-center">{documents[0].collection.name}</h1>
+            </div>
+          ) : null
+        }
         <div className="p-6 pt-0">
           {!isLoaded ? (
             <DeploymentListSkeleton />

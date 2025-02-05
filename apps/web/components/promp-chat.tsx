@@ -31,8 +31,8 @@ const models = [
     bigIcon: <FcGoogle className="w-[36px] h-[36px]" />,
   },
   {
-    name: "deepseek r1",
-    value: "deepseek/deepseek-r1",
+    name: "deepseek v3",
+    value: "deepseek/deepseek-chat",
     icon: <DeepSeek className="w-4 h-4 mr-2" />,
     bigIcon: <DeepSeek className="w-[36px] h-[36px] pb-2" />,
   },
