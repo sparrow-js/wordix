@@ -74,7 +74,7 @@ const Projects = observer(() => {
             </BreadcrumbList>
           </Breadcrumb>
         </div>
-        <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
           <Button variant="outline" size="icon">
             <ArrowUpDown className="w-4 h-4" />
           </Button>
@@ -82,7 +82,7 @@ const Projects = observer(() => {
             <Plus className="w-4 h-4" />
             Create new project
           </Button>
-        </div>
+        </div> */}
       </div>
       <div className="flex h-[calc(100svh-120px)] overflow-hidden">
         <div className="flex h-full w-full data-[panel-group-direction=vertical]:flex-col">
