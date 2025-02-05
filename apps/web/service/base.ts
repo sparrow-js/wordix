@@ -262,7 +262,6 @@ const handleStream = (
         });
         buffer = lines[lines.length - 1];
       } catch (e) {
-        console.error("**********e2", e);
         onError?.("Server Error");
         onData("", false, {
           conversationId: undefined,
@@ -589,7 +588,6 @@ export const ssePost = (
         },
       )
       .catch((e) => {
-        console.error("**********e1", e);
         if (
           e.toString() !== "AbortError: The user aborted a request." &&
           !e.toString().errorMessage.includes("TypeError: Cannot assign to read only property")

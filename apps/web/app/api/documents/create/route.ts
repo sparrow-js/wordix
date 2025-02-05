@@ -6,7 +6,7 @@ import { defaultEditorContent } from "./default-doc";
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { title, collectionId, parentId, workspaceId, bannerImage } = body;
+  const { title, collectionId, parentId, workspaceId, bannerImage, content } = body;
   const session = await auth();
 
   if (!session?.user) {
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
       collectionId,
       isWelcome: false,
       collaboratorIds: [],
-      content: defaultEditorContent,
+      content: content ||defaultEditorContent,
       createdById: session.user.id,
       lastModifiedById: session.user.id,
       workspaceId,
