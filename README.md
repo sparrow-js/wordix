@@ -26,12 +26,10 @@
 ---
 
 ## Features
-
+---
 
 We streamline the development of generative AI solutions by executing document flow to produce results, making it accessible for both developers and non-technical innovators. 
 The ability to provide a knowledge base and customize application development will be available soon.
-
-Our platform integrates:
 
 - Notion-style WYSIWYG editor with AI-powered
 - Text Generation, Image Generation, Audio Generation
@@ -39,4 +37,25 @@ Our platform integrates:
 - AI Document Flow
 - Support debugging and deployment
 - API developer support
+- Share your application
+
+
+## Self-hosting
+---
+
+self-hosting Wordix on your server
+
+## Support
+---
+
+- Found a bug? [Create an issue on GitHub.](https://github.com/sparrow-js/wordix/issues/new)
+- Email: [wordixai@gmail.com](mailto:wordixai@gmail.com)
+
+
+
+
+
+
+
+
 
