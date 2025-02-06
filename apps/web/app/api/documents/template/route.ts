@@ -18,8 +18,7 @@ export async function POST(request: Request) {
       },
       orderBy: {
         createdAt: "desc",
-      },
-      take: 1,
+      }
     });
 
     return respData(document);

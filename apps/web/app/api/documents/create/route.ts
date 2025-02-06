@@ -15,7 +15,7 @@ export async function POST(request: Request) {
 
   const document = await createDocument(
     {
-      title,
+      title: title || 'Untitled',
       urlId: nanoid(10),
       collectionId,
       isWelcome: false,
