@@ -51,7 +51,7 @@ export async function POST(request: Request) {
       ];
     }
 
-    if (model === "gemini-2.0-flash-thinking-exp-1219" || model === "gemini-2.0-flash-exp") {
+    if (model === "gemini-2.0-flash-thinking-exp-01-21" || model === "gemini-2.0-flash-exp") {
       messages = [
         {
           role: "user",

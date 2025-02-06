@@ -140,8 +140,8 @@ export const allModels: ModelConfigWithProvider[] = [
   },
   {
     provider: "gemini",
-    model: "gemini-2.0-flash-thinking-exp-1219",
-    name: "gemini-2.0-flash-thinking-exp-1219",
+    model: "gemini-2.0-flash-thinking-exp-01-21",
+    name: "gemini-2.0-flash-thinking-exp-01-21",
     maxTokens: 4096,
     temperature: 1,
     avatar: <GeminiIcon />,

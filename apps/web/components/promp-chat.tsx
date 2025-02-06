@@ -67,8 +67,10 @@ const PrompChat = ({ editor }: { editor: Editor }) => {
 
   useEffect(() => {
     const storedModel = localStorage.getItem("selectedModel");
-    if (storedModel) {
-      setModel(storedModel);
+    const model = models.find((item) => item.value === storedModel);
+
+    if (model) {
+      setModel(model.value);
     } else {
       setModel(models[0].value);
     }
