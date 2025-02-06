@@ -77,7 +77,7 @@ export default function Home() {
       <div className="h-[88px]" />
 
       <div className="min-h-screen w-full px-20 mb-12">
-        <main className="container mx-auto px-4 mt-12 grid grid-cols-2 gap-8 pb-28">
+        <main className="container mx-auto px-4 mt-12 grid grid-cols-2 gap-8 pb-18">
           <div className="flex flex-col justify-center space-y-8">
             <h1 className="font-['Fascinate_Inline'] text-5xl leading-tight text-black">
               The Innovation Editor for GenAI Applications
@@ -153,7 +153,7 @@ export default function Home() {
             </div>
           </div>
         </main>
-        <div id="about" className="relative w-full h-screen flex flex-col items-center justify-center py-18 mt-12">
+        <div id="about" className="relative w-full h-screen flex flex-col items-center justify-center py-16">
           <div className="text-center mb-12">
             <h1 className="text-5xl font-bold text-gray-900 font-['Fascinate_Inline']">About Wordix</h1>
             <p className="text-lg text-gray-500 mt-2">
