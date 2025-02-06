@@ -14,7 +14,7 @@
 <br />
 
 <p align="center">
-**Wordix** is a tool that allows you to fastest generate a AI applications.
+    Wordix is a tool that allows you to fastest generate a AI applications.
 </p>
 
 
@@ -25,7 +25,7 @@
 
 ---
 
-## Introduction
+## Features
 
 
 We streamline the development of generative AI solutions by executing document flow to produce results, making it accessible for both developers and non-technical innovators. 
@@ -38,4 +38,5 @@ Our platform integrates:
 - Tool include Loop, If-Else, Code Execution, etc.
 - AI Document Flow
 - Support debugging and deployment
+- API developer support
 
