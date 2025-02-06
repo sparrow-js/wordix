@@ -90,7 +90,7 @@ export default function Home() {
 
             <div className="flex items-center space-x-6">
               <Link href={process.env.NEXT_PUBLIC_APP_DOMAIN}>
-                <Button className="px-8 py-3 bg-black text-gray-400 font-mono font-semibold rounded-full transition-all duration-300 hover:scale-105">
+                <Button className="px-8 py-3 bg-black font-mono font-semibold rounded-full transition-all duration-300 hover:scale-105">
                   Explore Now
                 </Button>
               </Link>
@@ -248,7 +248,7 @@ export default function Home() {
           {/* Section Header */}
           <div className="text-center mt-16">
             <h1 className="font-fascinate text-5xl text-gray-900 font-['Fascinate_Inline']">Why Choose Wordix?</h1>
-            <p className="mt-4 text-lg text-gray-500">Quickly build your own AI App</p>
+            <p className="mt-4 text-lg text-gray-500">Quickly build your own AI Application</p>
           </div>
           {/* Media and Content */}
           <div className="flex justify-center space-x-4 mt-12 w-full max-w-7xl">
