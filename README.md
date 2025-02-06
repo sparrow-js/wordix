@@ -60,8 +60,16 @@ self-hosting Wordix on your server
 - Email: [wordixai@gmail.com](mailto:wordixai@gmail.com)
 
 
+## Setting Up Locally
+
+```
+cp apps/web/.env.example apps/web/.env
+```
+fix the .env file
+
 
 ## License
 
 Licensed under the [Apache-2.0 license](https://github.com/sparrow-js/wordix?tab=Apache-2.0-1-ov-file)
+
 
