@@ -61,9 +61,7 @@ self-hosting Wordix on your server
 
 
 
+## License
 
-
-
-
-
+[Apache-2.0 license](https://github.com/sparrow-js/wordix?tab=Apache-2.0-1-ov-file)
 
