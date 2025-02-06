@@ -48,9 +48,9 @@ export async function POST(req: Request, { params }: { params: { documentId: str
     const documentContent = typeof documentFlow === "string" ? JSON.parse(documentFlow) : documentFlow;
 
     const inputList = documentContent?.content?.find((node) => node.type === "inputs");
+    const updatedInputs = {};
 
     if (inputList) {
-      const updatedInputs = {};
       inputList.content.forEach((input) => {
         updatedInputs[input.attrs.id] = inputs[input.attrs.label];
       });
@@ -75,9 +75,10 @@ export async function POST(req: Request, { params }: { params: { documentId: str
       },
     );
 
+
     const startTime = new Date();
 
-    processor.processNode(documentFlow as any, inputs).then(async () => {
+    processor.processNode(documentFlow as any, updatedInputs).then(async () => {
       const context = processor.getContext();
       const endTime = new Date();
       const duration = endTime.getTime() - startTime.getTime();
@@ -86,7 +87,7 @@ export async function POST(req: Request, { params }: { params: { documentId: str
           markdownOutput: context.markdownOutput,
         },
         duration,
-      });
+      }, user.id);
       await writer.close();
       writer.releaseLock();
     });
