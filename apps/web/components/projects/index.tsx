@@ -94,7 +94,7 @@ const Projects = observer(() => {
                     <div style={{ minWidth: "100%", display: "table" }}>
                       <div className="px-1 py-4 md:p-5">
                         <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                          {collections.orderedList.slice(0, 5).map((collection) => {
+                          {collections.orderedList.map((collection) => {
                             return (
                               <Link href={`/${collection.id}/docs`} key={collection.id}>
                                 <div

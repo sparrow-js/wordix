@@ -7,7 +7,7 @@ import { nanoid } from "nanoid";
 
 export async function POST(request: Request) {
   const body = await request.json();
-  const { name, privacy, template, tools, workspaceId } = body;
+  const { name, privacy, template, tools, workspaceId, bannerImage } = body;
 
   const session = await auth();
 
@@ -25,6 +25,7 @@ export async function POST(request: Request) {
       privacy: privacy as CollectionPrivacy,
       documentStructure: [],
       workspaceId,
+      bannerImage,
     },
   });
 

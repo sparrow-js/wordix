@@ -37,7 +37,7 @@ const ProjectList = observer(() => {
 
   return (
     <div className="flex flex-row gap-4">
-      {collections.orderedList.map((project, index) => (
+      {collections.orderedList.slice(0, 5).map((project, index) => (
         <Link key={project.id} href={`/${project.id}/docs`}>
           <div className="flex flex-col border border-border rounded-lg overflow-hidden shadow-md w-40 hover:ring-1 hover:ring-[#fad400]">
             <div
