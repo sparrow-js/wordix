@@ -9,7 +9,7 @@ export class ElevenlabsProvider implements AIProvider {
 
   constructor(apiKey: string, defaultModel: string, modelConfigs: Record<string, ModelConfig>) {
     this.client = new ElevenLabsClient({
-      apiKey: "sk_330767afcd775d98cdfa6b71717ada61997d84333415dbea", // Defaults to process.env.ELEVENLABS_API_KEY
+      apiKey: process.env.ELEVENLABS_API_KEY, // Defaults to process.env.ELEVENLABS_API_KEY
     });
   }
 

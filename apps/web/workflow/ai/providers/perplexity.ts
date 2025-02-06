@@ -6,7 +6,7 @@ import { BaseAIProvider, type Message } from "./base";
 export class PerplexityProvider extends BaseAIProvider {
   private perplexity = createOpenAI({
     name: "perplexity",
-    apiKey: "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",
+    apiKey: process.env.PERPLEXITY_API_KEY,
     baseURL: "https://api.perplexity.ai/",
   });
 
