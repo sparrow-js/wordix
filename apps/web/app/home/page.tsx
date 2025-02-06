@@ -10,6 +10,9 @@ import { RiAiGenerate2 } from "react-icons/ri";
 import { RiAiGenerateText } from "react-icons/ri";
 import { RiApps2AiFill } from "react-icons/ri";
 import { SiNotion } from "react-icons/si";
+import { FaGithub } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+
 
 export default function Home() {
   return (
@@ -406,24 +409,42 @@ export default function Home() {
       </div>
 
       <div className="flex justify-between items-center bg-black text-white p-8">
-        <div className="flex items-center space-x-8">
-          <div className="w-16 h-16">
-            <img src="/logo-white-256.png" alt="Logo" className="w-full h-full object-cover" />
+        <div className="flex flex-col">
+          <div className="w-10 h-10 mb-4">
+            <img src="/logo-white-256.png" alt="Logo" className="w-10 h-10 object-cover" />
           </div>
-          <p className="text-gray-400 font-source-code-pro text-sm text-center">
-            © 2025 Wordix, Inc.
-            <br />
-            All rights reserved.
+          <p className="text-gray-400 text-sm">
+            Wordix is a tool that allows you to fastest generate a AI applications.
+          </p>
+          <ul className="flex flex-row space-x-4 mt-8 mb-4">
+            <li>
+              <Link target="_blank" href="https://github.com/sparrow-js/wordix" className="mb-2 text-white hover:text-[#fad400] transition-colors duration-200">
+                <span>
+                  <FaGithub className="w-5 h-5" />
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link target="_blank" href="https://x.com/haitaowu18" className="mb-2 text-white hover:text-[#fad400] transition-colors duration-200">
+                <span>
+                  <FaXTwitter className="w-5 h-5" />
+                </span>
+              </Link>
+            </li>
+          </ul>
+          <p className="text-gray-400 font-source-code-pro text-sm">
+            © 2025 Wordix, Inc. All rights reserved.
           </p>
         </div>
-        <div className="flex space-x-4">
-          <Link href="/privacy-policy" className="text-gray-400 hover:text-white transition-colors duration-200">
+        <div className="flex flex-col">
+          <h2 className="text-gray-400 text-xs mb-4">LEGAL</h2>
+          <Link href="/privacy-policy" className="mb-2 text-white hover:text-[#fad400] transition-colors duration-200">
             Privacy Policy
           </Link>
-          <Link href="/terms-of-service" className="text-gray-400 hover:text-white transition-colors duration-200">
+          <Link href="/terms-of-service" className="mb-2 text-white hover:text-[#fad400] transition-colors duration-200">
             Terms of Service
           </Link>
-          <Link href="/refund" className="text-gray-400 hover:text-white transition-colors duration-200">
+          <Link href="/refund" className="mb-2 text-white hover:text-[#fad400] transition-colors duration-200">
             Refund Policy
           </Link>
         </div>

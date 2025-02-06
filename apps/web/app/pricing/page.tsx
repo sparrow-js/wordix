@@ -2,6 +2,7 @@ import { Pricing } from "@/components/landingpage/pricing";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { FaGithub } from "react-icons/fa";
 
 export default function Home() {
   return (
@@ -54,24 +55,32 @@ export default function Home() {
       </div>
 
       <div className="flex justify-between items-center bg-black text-white p-8">
-        <div className="flex items-center space-x-8">
+        <div className="flex flex-col">
           <div className="w-16 h-16">
-            <img src="/logo-white-256.png" alt="Logo" className="w-full h-full object-cover" />
+            <img src="/logo-white-256.png" alt="Logo" className="w-10 h-10 object-cover" />
           </div>
-          <p className="text-gray-400 font-source-code-pro text-sm text-center">
-            © 2025 Wordix, Inc.
-            <br />
-            All rights reserved.
+          <ul className="flex flex-row space-x-4">
+            <li>
+              <Link href="/privacy-policy" className="mb-2 text-white hover:text-[#fad400] transition-colors duration-200">
+                <span>
+                  <FaGithub className="w-4 h-4" />
+                </span>
+              </Link>
+            </li>
+          </ul>
+          <p className="text-gray-400 font-source-code-pro text-sm">
+            © 2025 Wordix, Inc. All rights reserved.
           </p>
         </div>
-        <div className="flex space-x-4">
-          <Link href="/privacy-policy" className="text-gray-400 hover:text-white transition-colors duration-200">
+        <div className="flex flex-col">
+          <h2 className="text-gray-400 text-xs mb-4">LEGAL</h2>
+          <Link href="/privacy-policy" className="mb-2 text-white hover:text-[#fad400] transition-colors duration-200">
             Privacy Policy
           </Link>
-          <Link href="/terms-of-service" className="text-gray-400 hover:text-white transition-colors duration-200">
+          <Link href="/terms-of-service" className="mb-2 text-white hover:text-[#fad400] transition-colors duration-200">
             Terms of Service
           </Link>
-          <Link href="/refund" className="text-gray-400 hover:text-white transition-colors duration-200">
+          <Link href="/refund" className="mb-2 text-white hover:text-[#fad400] transition-colors duration-200">
             Refund Policy
           </Link>
         </div>
