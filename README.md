@@ -25,6 +25,17 @@
 
 ---
 
+## Builder demo
+
+<p align="center">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/45eab8a3-c5e3-4f9a-88e4-85c455a48b67" />
+
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/235d7881-049a-47fb-b8b8-d677145c1f97" />
+
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/86300571-7166-4db6-bd36-7cbe6cc0673c" />
+</p>
+
+
 ## Features
 
 We streamline the development of generative AI solutions by executing document flow to produce results, making it accessible for both developers and non-technical innovators. 
