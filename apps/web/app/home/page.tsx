@@ -153,7 +153,7 @@ export default function Home() {
             </div>
           </div>
         </main>
-        <div id="about" className="relative w-full h-screen flex flex-col items-center justify-center py-28 mt-12">
+        <div id="about" className="relative w-full h-screen flex flex-col items-center justify-center py-18 mt-12">
           <div className="text-center mb-12">
             <h1 className="text-5xl font-bold text-gray-900 font-['Fascinate_Inline']">About Wordix</h1>
             <p className="text-lg text-gray-500 mt-2">
@@ -244,7 +244,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div id="products" className="relative w-full h-full flex flex-col items-center py-28">
+        <div id="products" className="relative w-full h-full flex flex-col items-center py-18">
           {/* Section Header */}
           <div className="text-center mt-16">
             <h1 className="font-fascinate text-5xl text-gray-900 font-['Fascinate_Inline']">Why Choose Wordix?</h1>
@@ -380,7 +380,7 @@ export default function Home() {
           <Pricing country="US" />
         </div>
 
-        <div className="flex flex-col items-center justify-center w-full h-full mt-24">
+        <div className="flex flex-col items-center justify-center w-full h-full mt-18">
           {/* Main Container */}
           <div className="flex flex-col items-center mt-10 w-full max-w-screen-lg">
             {/* Text Content */}

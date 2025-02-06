@@ -21,7 +21,7 @@ Wordix is ​​an AI app that uses natural language workflow and the power of g
 <h3 align="center">
   <b><a href="https://wordix.so">Try Wordix</a></b>
   •
-  <b><a href="https://docs.wordix.so/">Docs</a></b>
+  <b><a href="https://docs.wordix.so/docs">Docs</a></b>
 
 ---
 
