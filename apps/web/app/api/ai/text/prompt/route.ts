@@ -40,10 +40,10 @@ export async function POST(request: Request) {
     let messages: Message[];
     if (model === "gpt-4o") {
       messages = [
-        {
-          role: "system",
-          content: META_PROMPT,
-        },
+        // {
+        //   role: "system",
+        //   content: META_PROMPT,
+        // },
         {
           role: "user",
           content: text,
