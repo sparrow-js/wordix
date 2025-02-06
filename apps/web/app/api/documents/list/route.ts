@@ -37,9 +37,9 @@ export async function POST(request: Request) {
 
 
     isMember = collection.workspace?.members.some((member) => member.userId === session?.user?.id);
-    if (!isMember) {
-      return new Response("Unauthorized", { status: 401 });
-    }
+    // if (!isMember) {
+    //   return new Response("Unauthorized", { status: 401 });
+    // }
   }
 
 
