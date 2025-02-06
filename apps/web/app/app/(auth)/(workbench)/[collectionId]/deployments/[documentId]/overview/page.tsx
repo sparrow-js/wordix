@@ -40,7 +40,7 @@ export default function OverviewPage() {
           </div>
           <div className="flex gap-2">
             <Link href={`/${collectionId}/deployments/${documentId}/edit`}>
-              <Button variant="outline" size="icon">
+              <Button variant="outline" className="bg-[#fad400] hover:bg-[#fce062]" size="icon">
                 <Pencil className="h-4 w-4" />
               </Button>
             </Link>
