@@ -1,5 +1,30 @@
 # Wordix
 
+<br />
+<p align="center">
+
+<a href="https://wordix.so" target="_blank">
+<img width="300" alt="Image" src="https://github.com/user-attachments/assets/8035a97b-9e98-4e53-9520-742864e37c11" />
+</a>
+
+<a href="https://wordix.so" target="_blank">
+  <img width="300" alt="Image" src="https://github.com/user-attachments/assets/fc6958ed-4c7f-4506-824b-6add8fa602cc" />
+</a>
+</p>
+<br />
+
+<p align="center">
+Wordix is ​​an AI app that uses natural language workflow and the power of generation to create your own AI technology website.
+</p>
+
+
+<h3 align="center">
+  <b><a href="https://wordix.so">Try Wordix</a></b>
+  •
+  <b><a href="https://docs.wordix.so/">Docs</a></b>
+
+---
+
 ## Introduction
 
 **Wordix** is a tool that allows you to fastest generate a AI applications.
