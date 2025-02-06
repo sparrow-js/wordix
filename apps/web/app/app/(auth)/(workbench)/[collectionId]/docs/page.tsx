@@ -76,7 +76,7 @@ export default observer(function DocsPage() {
                 </div>
               </div> */}
 
-              <div className="card-container flex flex-wrap justify-center gap-4">
+              <div className="card-container flex flex-wrap gap-4">
                 <div
                   onClick={() => createDocument()}
                   className="bg-[#fff] border border-[#f1f0f0] rounded-lg p-6 flex flex-col items-center text-center hover:ring-1 hover:ring-[#fad400] shadow w-[280px] h-[106px] flex justify-center"
