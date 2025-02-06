@@ -14,7 +14,7 @@
 <br />
 
 <p align="center">
-Wordix is ​​an AI app that uses natural language workflow and the power of generation to create your own AI technology website.
+**Wordix** is a tool that allows you to fastest generate a AI applications.
 </p>
 
 
@@ -27,9 +27,8 @@ Wordix is ​​an AI app that uses natural language workflow and the power of g
 
 ## Introduction
 
-**Wordix** is a tool that allows you to fastest generate a AI applications.
 
-Wordix is an open-source platform for building AI applications. We streamline the development of generative AI solutions by executing document flow to produce results, making it accessible for both developers and non-technical innovators. 
+We streamline the development of generative AI solutions by executing document flow to produce results, making it accessible for both developers and non-technical innovators. 
 The ability to provide a knowledge base and customize application development will be available soon.
 
 Our platform integrates:
@@ -39,3 +38,4 @@ Our platform integrates:
 - Tool include Loop, If-Else, Code Execution, etc.
 - AI Document Flow
 - Support debugging and deployment
+
