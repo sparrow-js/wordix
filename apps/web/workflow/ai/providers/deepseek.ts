@@ -10,12 +10,12 @@ export class DeepseekProvider extends BaseAIProvider {
     this.client = new OpenAI({
       // apiKey: apiKey,
       // baseURL: `${process.env.PRO_URL}/v1`,
-      // apiKey: "sk-e25505bed9b74b2da45f62fd089e3652",
-      // baseURL: "https://api.deepseek.com/v1",
+      apiKey: "sk-e25505bed9b74b2da45f62fd089e3652",
+      baseURL: "https://api.deepseek.com/v1",
       // apiKey: "sk-hfdwkxomclfybhzpvhadsugyamjyefmvotrvfitispinxkiz",
       // baseURL: "https://api.siliconflow.cn/v1",
-      apiKey: process.env.OPENROUTER_API_KEY,
-      baseURL: "https://openrouter.ai/api/v1",
+      // apiKey: process.env.OPENROUTER_API_KEY,
+      // baseURL: "https://openrouter.ai/api/v1",
     });
   }
 

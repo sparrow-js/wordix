@@ -165,7 +165,7 @@ export const Template = [
                       "id": "uBchbfv5yi",
                       "type": "short",
                       "label": "new_generation",
-                      "model": "deepseek/deepseek-chat",
+                      "model": "deepseek-chat",
                       "generation": "",
                       "stopBefore": [
                         "",

@@ -32,7 +32,7 @@ const models = [
   },
   {
     name: "deepseek v3",
-    value: "deepseek/deepseek-chat",
+    value: "deepseek-chat",
     icon: <DeepSeek className="w-4 h-4 mr-2" />,
     bigIcon: <DeepSeek className="w-[36px] h-[36px] pb-2" />,
   },
