@@ -15,32 +15,39 @@ export async function POST(request: Request) {
   } = body;
 
   const session = await auth();
+  let isMember = false;
   // Check if user has access to the workspace
-  if (workspaceId) {
-    const workspace = await prisma.workspace.findUnique({
+  if (collectionId) {
+    const collection = await prisma.collection.findUnique({
       where: {
-        id: workspaceId,
+        id: collectionId,
       },
       include: {
-        members: true,
+        workspace: {
+          include: {
+            members: true
+          }
+        },
       },
     });
 
-    if (!workspace) {
+    if (!collection?.workspace) {
       return new Response("Workspace not found", { status: 404 });
     }
 
-    const isMember = workspace.members.some((member) => member.userId === session?.user?.id);
+
+    isMember = collection.workspace?.members.some((member) => member.userId === session?.user?.id);
     if (!isMember) {
       return new Response("Unauthorized", { status: 401 });
     }
   }
 
+
   const documents = await prisma.document.findMany({
     where: {
       collectionId,
       workspaceId,
-      ...(visibility ? { visibility } : {}),
+      ...(isMember ? {} : visibility ? { visibility } : {}),
     },
     skip: page * limit,
     take: limit,
@@ -60,7 +67,7 @@ export async function POST(request: Request) {
     where: {
       ...(collectionId ? { collectionId } : {}),
       ...(workspaceId ? { workspaceId } : {}),
-      ...(visibility ? { visibility } : {}),
+      ...(isMember ? {} : visibility ? { visibility } : {}),
     },
   });
 
