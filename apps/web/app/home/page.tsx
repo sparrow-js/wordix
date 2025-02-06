@@ -255,19 +255,19 @@ export default function Home() {
             {/* Left Image */}
             <div className="flex-1 bg-gray-50 rounded-lg shadow flex flex-col items-center justify-center p-4">
               <div className="w-full h-auto">
-                <img src="/introduce/1.png" alt="Left" className="object-cover w-full h-full" />
+                <img src="/landingpage/editor.png" alt="Left" className="object-cover w-full h-full" />
               </div>
             </div>
             {/* Middle Content */}
             <div className="flex-1 bg-gray-50 rounded-lg shadow flex flex-col items-center justify-center p-4">
               <div className="w-full h-auto">
-                <img src="/introduce/2.png" alt="Middle" className="object-contain w-full h-full" />
+                <img src="/landingpage/app.png" alt="Middle" className="object-contain w-full h-full" />
               </div>
             </div>
             {/* Right Image */}
             <div className="flex-1 bg-gray-50 rounded-lg shadow flex flex-col items-center justify-center p-4">
               <div className="w-full h-auto">
-                <img src="/introduce/3.png" alt="Right" className="object-cover w-full h-full" />
+                <img src="/landingpage/dashboard.png" alt="Right" className="object-cover w-full h-full" />
               </div>
             </div>
           </div>
@@ -276,17 +276,21 @@ export default function Home() {
             {/* Left Image */}
             <div className="flex-1 bg-gray-50 rounded-lg shadow flex flex-col items-center justify-center p-4">
               <div className="w-full h-auto">
-                <img src="/introduce/4.png" alt="Left" className="object-cover w-full h-full" />
+                <img src="/landingpage/collection.png" alt="Left" className="object-cover w-full h-full" />
               </div>
             </div>
             {/* Middle Content */}
             <div className="flex-1 bg-gray-50 rounded-lg shadow flex flex-col items-center justify-center p-4">
               <div className="w-full h-auto">
-                <img src="/introduce/5.png" alt="Middle" className="object-contain w-full h-full" />
+                <img src="/landingpage/result.png" alt="Middle" className="object-contain w-full h-full" />
               </div>
             </div>
             {/* Right Image */}
-            <div className="flex-1" />
+            <div className="flex-1 bg-gray-50 rounded-lg shadow flex flex-col items-center justify-center p-4">
+              <div className="w-full h-auto">
+                <img src="/landingpage/api.png" alt="Middle" className="object-contain w-full h-full" />
+              </div>
+            </div>
           </div>
         </div>
 
