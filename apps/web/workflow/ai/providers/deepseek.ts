@@ -12,8 +12,6 @@ export class DeepseekProvider extends BaseAIProvider {
       baseURL: `${process.env.PRO_URL}/v1`,
       // apiKey: process.env.DEEPSEEK_API_KEY,
       // baseURL: "https://api.deepseek.com/v1",
-      // apiKey: "sk-hfdwkxomclfybhzpvhadsugyamjyefmvotrvfitispinxkiz",
-      // baseURL: "https://api.siliconflow.cn/v1",
       // apiKey: process.env.OPENROUTER_API_KEY,
       // baseURL: "https://openrouter.ai/api/v1",
     });
