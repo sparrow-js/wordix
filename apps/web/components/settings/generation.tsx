@@ -124,29 +124,29 @@ const Generation = ({ editor }: SettingProps) => {
                       </div>
                     )} */}
                   </div>
-                  <div className="mb-9 mt-5 @container @container">
+                  <div className="mb-9 mt-5 @container">
                     <p className="font-bold">
                       Model<span className="ml-1 text-xs font-normal text-stone-700"></span>
                     </p>
                     <p className="mb-1 mt-1 text-sm text-stone-400">
                       Choose which model should be used for this generation
                     </p>
-                    <div className="mt-4 grid grid-cols-2 gap-2 @sm:grid-cols-4 @lg:grid-cols-6">
+                    <div className="mt-4 grid grid-cols-2 gap-2">
                       {models.map((item) => (
                         <div
                           className={cn(
-                            "relative aspect-square min-w-[75px] max-w-[180px] border-stone-200 flex-1 rounded-xl border hover:shadow-xl",
+                            "relative min-w-[75px] border-stone-200 flex-1 rounded-xl border hover:shadow-xl",
                             item.model === currentGeneration.model ? "bg-stone-100" : "",
                           )}
                           onClick={() => {
                             generations.updateDataSyncToNode("model", item.model, editor);
                           }}
                         >
-                          <div className="absolute right-1 top-1 flex gap-2">{item.supportsImage && <Image />}</div>
-                          <div className="grid h-full w-full place-content-center">
-                            <div className="mb-2 ml-auto mr-auto mt-2 w-fit">{item.avatar}</div>
-                            <div className="px-0.5 text-center leading-3">
-                              <span className="select-none text-xs font-bold uppercase">{item.name}</span>
+                          <div className="absolute right-1 top-1 flex gap-2">{item.supportsImage && <Image className="w-4 h-4" />}</div>
+                          <div className="h-full w-full flex flex-row items-center p-4">
+                            <div className="mr-3">{item.avatar}</div>
+                            <div className="text-left">
+                              <span className="select-none text-xs font-bold uppercase line-clamp-3">{item.name}</span>
                             </div>
                           </div>
                         </div>

@@ -152,7 +152,7 @@ export const allModels: ModelConfigWithProvider[] = [
     name: "deepseek-chat",
     maxTokens: 8000,
     temperature: 0.7,
-    avatar: <DeepSeek className="w-12" />,
+    avatar: <DeepSeek className="w-8" />,
   },
   {
     provider: "deepseek",
@@ -160,7 +160,7 @@ export const allModels: ModelConfigWithProvider[] = [
     name: "deepseek-reasoner",
     maxTokens: 8000,
     temperature: 0.7,
-    avatar: <DeepSeek className="w-12" />,
+    avatar: <DeepSeek className="w-8" />,
   },
   // {
   //   provider: "cohere",
