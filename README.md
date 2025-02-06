@@ -4,11 +4,11 @@
 <p align="center">
 
 <a href="https://wordix.so" target="_blank">
-<img width="300" alt="Image" src="https://github.com/user-attachments/assets/8035a97b-9e98-4e53-9520-742864e37c11" />
+<img width="350" alt="Image" src="https://github.com/user-attachments/assets/8035a97b-9e98-4e53-9520-742864e37c11" />
 </a>
 
 <a style="margin-left: 20px;" href="https://wordix.so" target="_blank">
-  <img width="300" alt="Image" src="https://github.com/user-attachments/assets/fc6958ed-4c7f-4506-824b-6add8fa602cc" />
+  <img width="350" alt="Image" src="https://github.com/user-attachments/assets/fc6958ed-4c7f-4506-824b-6add8fa602cc" />
 </a>
 </p>
 <br />
