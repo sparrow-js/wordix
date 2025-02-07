@@ -74,23 +74,26 @@ export async function POST(request: Request, res: NextApiResponse) {
 
   const startTime = new Date();
 
-  processor.processNode(documentFlow, inputs).then(async () => {
-    const context = processor.getContext();
-    const endTime = new Date();
-    const duration = endTime.getTime() - startTime.getTime();
-    await createRun(documentId, collectionId, {
-      metadata: {
-        markdownOutput: context.markdownOutput,
-      },
-      duration,
-      from: "test",
+  processor
+    .processNode(documentFlow, inputs)
+    .then(async () => {
+      const context = processor.getContext();
+      const endTime = new Date();
+      const duration = endTime.getTime() - startTime.getTime();
+      await createRun(documentId, collectionId, {
+        metadata: {
+          markdownOutput: context.markdownOutput,
+        },
+        duration,
+        from: "test",
+      });
+      writer.releaseLock();
+      await writer.close();
+    })
+    .catch(async (e) => {
+      writer.releaseLock();
+      await writer.close();
     });
-    await writer.close();
-    writer.releaseLock();
-  });
-
-
-
 
   return new Response(responseStream.readable);
 }

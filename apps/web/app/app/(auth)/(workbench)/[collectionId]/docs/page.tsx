@@ -6,13 +6,12 @@ import type Collection from "@/models/Collection";
 import { observer } from "mobx-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Template } from "@/utils/template";
 export default observer(function DocsPage() {
   const { collections, documents, workspaces } = useStores();
   const { collectionId, id } = useParams<{ collectionId: string; id: string }>();
   const [isSaving, setIsSaving] = useState(false);
-  const [ templateId, setTemplateId ] = useState('')
-  const [ templateList, setTemplateList ] = useState([])
+  const [templateId, setTemplateId] = useState("");
+  const [templateList, setTemplateList] = useState([]);
 
   const [collection, setCollection] = useState<Collection | null>(null);
   const router = useRouter();
@@ -30,36 +29,38 @@ export default observer(function DocsPage() {
     fetchCollection();
   }, [collectionId]);
 
-
   const fetchTemplate = async () => {
-    const template = await fetch('/api/documents/template', {
-      method: 'POST',
+    const template = await fetch("/api/documents/template", {
+      method: "POST",
       body: JSON.stringify({ collectionId }),
     });
 
     const res = await template.json();
     if (res.data) {
-      console.log('**********res.data', res.data)
-      setTemplateList(res.data)
+      setTemplateList(res.data);
     }
-  }
+  };
 
   useEffect(() => {
     fetchTemplate();
   }, []);
 
-
   const createDocument = async (parentId?: string, template?: any) => {
     if (isSaving) return;
     setIsSaving(true);
-    setTemplateId(template?.id)
+    setTemplateId(template?.id);
     const document = await documents.save(
-      { title: template?.title, collectionId: collectionId, workspaceId: workspaces.selectedWorkspaceId, content: template?.content},
+      {
+        title: template?.title,
+        collectionId: collectionId,
+        workspaceId: workspaces.selectedWorkspaceId,
+        content: template?.content,
+      },
       { parentId },
     );
     await collection?.fetchDocuments({ force: true });
     setIsSaving(false);
-    setTemplateId('')
+    setTemplateId("");
     router.push(`/${collectionId}/docs/${document.id}`);
   };
 
@@ -90,23 +91,21 @@ export default observer(function DocsPage() {
                     </>
                   )}
                 </div>
-                {
-                  templateList.map((item) => (
-                    <div
-                      onClick={() => createDocument(undefined, item)}
-                      className="bg-[#fff] border border-[#f1f0f0] rounded-lg p-6 flex flex-col items-center text-center hover:ring-1 hover:ring-[#fad400] shadow w-[280px] h-[106px] flex justify-center"
-                    >
-                      {isSaving && templateId === item.id ? (
-                        <LoadingCircle dimensions="h-4 w-4" />
-                      ) : (
-                        <>
-                          <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
-                          <p className="text-gray-800 text-sm">{item.description}</p>
-                        </>
-                      )}
-                      </div>
-                    ))
-                  }
+                {templateList.map((item) => (
+                  <div
+                    onClick={() => createDocument(undefined, item)}
+                    className="bg-[#fff] border border-[#f1f0f0] rounded-lg p-6 flex flex-col items-center text-center hover:ring-1 hover:ring-[#fad400] shadow w-[280px] h-[106px] flex justify-center"
+                  >
+                    {isSaving && templateId === item.id ? (
+                      <LoadingCircle dimensions="h-4 w-4" />
+                    ) : (
+                      <>
+                        <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
+                        <p className="text-gray-800 text-sm">{item.description}</p>
+                      </>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           </div>

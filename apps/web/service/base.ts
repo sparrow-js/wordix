@@ -181,99 +181,104 @@ const handleStream = (
   let isFirstMessage = true;
   function read() {
     let hasError = false;
-    reader?.read().then((result: any) => {
-      if (result.done) {
-        onCompleted && onCompleted();
-        return;
-      }
-      buffer += decoder.decode(result.value, { stream: true });
-      const lines = buffer.split("\n");
-      try {
-        lines.forEach((message) => {
-          if (message.startsWith("data: ")) {
-            // check if it starts with data:
-            try {
-              bufferObj = JSON.parse(message.substring(6)) as Record<string, any>; // remove data: and parse as json
-            } catch (e) {
-              // mute handle message cut off
-              onData("", isFirstMessage, {
-                conversationId: bufferObj?.conversation_id,
-                messageId: bufferObj?.message_id,
-              });
-              return;
+    reader
+      ?.read()
+      .then((result: any) => {
+        if (result.done) {
+          onCompleted && onCompleted();
+          return;
+        }
+        buffer += decoder.decode(result.value, { stream: true });
+        const lines = buffer.split("\n");
+        try {
+          lines.forEach((message) => {
+            if (message.startsWith("data: ")) {
+              // check if it starts with data:
+              try {
+                bufferObj = JSON.parse(message.substring(6)) as Record<string, any>; // remove data: and parse as json
+              } catch (e) {
+                // mute handle message cut off
+                onData("", isFirstMessage, {
+                  conversationId: bufferObj?.conversation_id,
+                  messageId: bufferObj?.message_id,
+                });
+                return;
+              }
+              if (bufferObj.status === 400 || !bufferObj.event) {
+                onData("", false, {
+                  conversationId: undefined,
+                  messageId: "",
+                  errorMessage: bufferObj?.message,
+                  errorCode: bufferObj?.code,
+                });
+                hasError = true;
+                onCompleted?.(true, bufferObj?.message);
+                return;
+              }
+              if (bufferObj.event === "message" || bufferObj.event === "agent_message") {
+                // can not use format here. Because message is splitted.
+                onData(unicodeToChar(bufferObj.answer), isFirstMessage, {
+                  conversationId: bufferObj.conversation_id,
+                  taskId: bufferObj.task_id,
+                  messageId: bufferObj.id,
+                });
+                isFirstMessage = false;
+              } else if (bufferObj.event === "agent_thought") {
+                onThought?.(bufferObj as ThoughtItem);
+              } else if (bufferObj.event === "message_file") {
+                onFile?.(bufferObj as VisionFile);
+              } else if (bufferObj.event === "message_end") {
+                onMessageEnd?.(bufferObj as MessageEnd);
+              } else if (bufferObj.event === "message_replace") {
+                onMessageReplace?.(bufferObj as MessageReplace);
+              } else if (bufferObj.event === "workflow_started") {
+                onWorkflowStarted?.(bufferObj as WorkflowStartedResponse);
+              } else if (bufferObj.event === "workflow_finished") {
+                onWorkflowFinished?.(bufferObj as WorkflowFinishedResponse);
+              } else if (bufferObj.event === "node_started") {
+                onNodeStarted?.(bufferObj as NodeStartedResponse);
+              } else if (bufferObj.event === "node_finished") {
+                onNodeFinished?.(bufferObj as NodeFinishedResponse);
+              } else if (bufferObj.event === "iteration_started") {
+                onIterationStart?.(bufferObj as IterationStartedResponse);
+              } else if (bufferObj.event === "iteration_next") {
+                onIterationNext?.(bufferObj as IterationNextResponse);
+              } else if (bufferObj.event === "iteration_completed") {
+                onIterationFinish?.(bufferObj as IterationFinishedResponse);
+              } else if (bufferObj.event === "parallel_branch_started") {
+                onParallelBranchStarted?.(bufferObj as ParallelBranchStartedResponse);
+              } else if (bufferObj.event === "parallel_branch_finished") {
+                onParallelBranchFinished?.(bufferObj as ParallelBranchFinishedResponse);
+              } else if (bufferObj.event === "text_chunk") {
+                onTextChunk?.(bufferObj as TextChunkResponse);
+              } else if (bufferObj.event === "text_replace") {
+                onTextReplace?.(bufferObj as TextReplaceResponse);
+              } else if (bufferObj.event === "tts_message") {
+                onTTSChunk?.(bufferObj.message_id, bufferObj.audio, bufferObj.audio_type);
+              } else if (bufferObj.event === "tts_message_end") {
+                onTTSEnd?.(bufferObj.message_id, bufferObj.audio);
+              } else if (bufferObj.event === "error") {
+                onError?.(bufferObj.data);
+              }
             }
-            if (bufferObj.status === 400 || !bufferObj.event) {
-              onData("", false, {
-                conversationId: undefined,
-                messageId: "",
-                errorMessage: bufferObj?.message,
-                errorCode: bufferObj?.code,
-              });
-              hasError = true;
-              onCompleted?.(true, bufferObj?.message);
-              return;
-            }
-            if (bufferObj.event === "message" || bufferObj.event === "agent_message") {
-              // can not use format here. Because message is splitted.
-              onData(unicodeToChar(bufferObj.answer), isFirstMessage, {
-                conversationId: bufferObj.conversation_id,
-                taskId: bufferObj.task_id,
-                messageId: bufferObj.id,
-              });
-              isFirstMessage = false;
-            } else if (bufferObj.event === "agent_thought") {
-              onThought?.(bufferObj as ThoughtItem);
-            } else if (bufferObj.event === "message_file") {
-              onFile?.(bufferObj as VisionFile);
-            } else if (bufferObj.event === "message_end") {
-              onMessageEnd?.(bufferObj as MessageEnd);
-            } else if (bufferObj.event === "message_replace") {
-              onMessageReplace?.(bufferObj as MessageReplace);
-            } else if (bufferObj.event === "workflow_started") {
-              onWorkflowStarted?.(bufferObj as WorkflowStartedResponse);
-            } else if (bufferObj.event === "workflow_finished") {
-              onWorkflowFinished?.(bufferObj as WorkflowFinishedResponse);
-            } else if (bufferObj.event === "node_started") {
-              onNodeStarted?.(bufferObj as NodeStartedResponse);
-            } else if (bufferObj.event === "node_finished") {
-              onNodeFinished?.(bufferObj as NodeFinishedResponse);
-            } else if (bufferObj.event === "iteration_started") {
-              onIterationStart?.(bufferObj as IterationStartedResponse);
-            } else if (bufferObj.event === "iteration_next") {
-              onIterationNext?.(bufferObj as IterationNextResponse);
-            } else if (bufferObj.event === "iteration_completed") {
-              onIterationFinish?.(bufferObj as IterationFinishedResponse);
-            } else if (bufferObj.event === "parallel_branch_started") {
-              onParallelBranchStarted?.(bufferObj as ParallelBranchStartedResponse);
-            } else if (bufferObj.event === "parallel_branch_finished") {
-              onParallelBranchFinished?.(bufferObj as ParallelBranchFinishedResponse);
-            } else if (bufferObj.event === "text_chunk") {
-              onTextChunk?.(bufferObj as TextChunkResponse);
-            } else if (bufferObj.event === "text_replace") {
-              onTextReplace?.(bufferObj as TextReplaceResponse);
-            } else if (bufferObj.event === "tts_message") {
-              onTTSChunk?.(bufferObj.message_id, bufferObj.audio, bufferObj.audio_type);
-            } else if (bufferObj.event === "tts_message_end") {
-              onTTSEnd?.(bufferObj.message_id, bufferObj.audio);
-            } else if (bufferObj.event === "error") {
-              onError?.(bufferObj.data);
-            }
-          }
-        });
-        buffer = lines[lines.length - 1];
-      } catch (e) {
-        onError?.("Server Error");
-        onData("", false, {
-          conversationId: undefined,
-          messageId: "",
-          errorMessage: `${e}`,
-        });
-        hasError = true;
-        onCompleted?.(true, e as string);
-        return;
-      }
-      if (!hasError) read();
-    });
+          });
+          buffer = lines[lines.length - 1];
+        } catch (e) {
+          onError?.("Server Error");
+          onData("", false, {
+            conversationId: undefined,
+            messageId: "",
+            errorMessage: `${e}`,
+          });
+          hasError = true;
+          onCompleted?.(true, e as string);
+          return;
+        }
+        if (!hasError) read();
+      })
+      .catch((e) => {
+        console.log("***************999", e);
+      });
   }
   read();
 };
@@ -522,72 +527,69 @@ export const ssePost = (
   const { body } = options;
   if (body) options.body = JSON.stringify(body);
 
+  console.log("***************777", globalThis);
   try {
     globalThis
       .fetch(urlWithPrefix, options as RequestInit)
-      .then(
-        async (res) => {
-          if (!/^(2|3)\d{2}$/.test(String(res.status))) {
-            const data = await res.json();
-            if (data.code === "no_quota") {
-              onError?.("No quota");
-              return;
-            }
-            if (isPublicAPI) {
-              if (data.code === "web_sso_auth_required") requiredWebSSOLogin();
-
-              if (data.code === "unauthorized") {
-                removeAccessToken();
-                globalThis.location.reload();
-              }
-
-              if (res.status === 401) return;
-            }
-            // Toast.notify({ type: 'error', message: data.message || 'Server Error' })
-            onError?.("Server Error");
+      .then(async (res) => {
+        if (!/^(2|3)\d{2}$/.test(String(res.status))) {
+          const data = await res.json();
+          if (data.code === "no_quota") {
+            onError?.("No quota");
             return;
           }
-          return handleStream(
-            res,
-            (str: string, isFirstMessage: boolean, moreInfo: IOnDataMoreInfo) => {
-              if (moreInfo.errorMessage) {
-                onError?.(moreInfo.errorMessage, moreInfo.errorCode);
-                // TypeError: Cannot assign to read only property ... will happen in page leave, so it should be ignored.
-                if (
-                  moreInfo.errorMessage !== "AbortError: The user aborted a request." &&
-                  !moreInfo.errorMessage.includes("TypeError: Cannot assign to read only property")
-                )
-                  // Toast.notify({ type: 'error', message: moreInfo.errorMessage })
-                  return;
-              }
-              onData?.(str, isFirstMessage, moreInfo);
-            },
-            onCompleted,
-            onThought,
-            onMessageEnd,
-            onMessageReplace,
-            onFile,
-            onWorkflowStarted,
-            onWorkflowFinished,
-            onNodeStarted,
-            onNodeFinished,
-            onIterationStart,
-            onIterationNext,
-            onIterationFinish,
-            onParallelBranchStarted,
-            onParallelBranchFinished,
-            onTextChunk,
-            onTTSChunk,
-            onTTSEnd,
-            onTextReplace,
-            onError,
-          );
-        },
-        (e) => {
-          console.error("**********e3", e);
-        },
-      )
+          if (isPublicAPI) {
+            if (data.code === "web_sso_auth_required") requiredWebSSOLogin();
+
+            if (data.code === "unauthorized") {
+              removeAccessToken();
+              globalThis.location.reload();
+            }
+
+            if (res.status === 401) return;
+          }
+          // Toast.notify({ type: 'error', message: data.message || 'Server Error' })
+          onError?.("Server Error");
+          return;
+        }
+        return handleStream(
+          res,
+          (str: string, isFirstMessage: boolean, moreInfo: IOnDataMoreInfo) => {
+            if (moreInfo.errorMessage) {
+              onError?.(moreInfo.errorMessage, moreInfo.errorCode);
+              // TypeError: Cannot assign to read only property ... will happen in page leave, so it should be ignored.
+              if (
+                moreInfo.errorMessage !== "AbortError: The user aborted a request." &&
+                !moreInfo.errorMessage.includes("TypeError: Cannot assign to read only property")
+              )
+                // Toast.notify({ type: 'error', message: moreInfo.errorMessage })
+                return;
+            }
+            onData?.(str, isFirstMessage, moreInfo);
+          },
+          onCompleted,
+          onThought,
+          onMessageEnd,
+          onMessageReplace,
+          onFile,
+          onWorkflowStarted,
+          onWorkflowFinished,
+          onNodeStarted,
+          onNodeFinished,
+          onIterationStart,
+          onIterationNext,
+          onIterationFinish,
+          onParallelBranchStarted,
+          onParallelBranchFinished,
+          onTextChunk,
+          onTTSChunk,
+          onTTSEnd,
+          onTextReplace,
+          onError,
+        );
+      })
       .catch((e) => {
+        console.log("***************888", e);
         if (
           e.toString() !== "AbortError: The user aborted a request." &&
           !e.toString().errorMessage.includes("TypeError: Cannot assign to read only property")

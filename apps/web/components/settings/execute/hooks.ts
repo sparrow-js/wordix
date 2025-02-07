@@ -65,7 +65,10 @@ export const useExecute = (
     hasStopResponded.current = true;
     handleResponding(false);
     if (stopExecute && taskIdRef.current) stopExecute(taskIdRef.current);
-    if (conversationMessagesAbortControllerRef.current) conversationMessagesAbortControllerRef.current.abort();
+    if (conversationMessagesAbortControllerRef.current) {
+      conversationMessagesAbortControllerRef.current.abort();
+      onCompleted();
+    }
     if (suggestedQuestionsAbortControllerRef.current) suggestedQuestionsAbortControllerRef.current.abort();
   }, [stopExecute, handleResponding]);
 
@@ -512,6 +515,10 @@ export const useExecute = (
           },
           onTTSEnd: (messageId: string, audio: string) => {
             // player.playAudioWithAudio(audio, false)
+          },
+          getAbortController: (abortController: AbortController) => {
+            console.log("***************555", abortController);
+            conversationMessagesAbortControllerRef.current = abortController;
           },
         },
       );

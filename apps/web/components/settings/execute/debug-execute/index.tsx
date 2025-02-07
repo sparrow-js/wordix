@@ -79,7 +79,10 @@ const DebugExecute = forwardRef<DebugWithSingleModelRefType, DebugWithSingleMode
         inputsForm: [],
       },
       [],
-      (taskId) => () => taskId,
+      (taskId) => () => {
+        console.log(taskId);
+        execute.setStatus("end");
+      },
       () => {
         execute.setStatus("end");
       },
@@ -141,10 +144,10 @@ const DebugExecute = forwardRef<DebugWithSingleModelRefType, DebugWithSingleMode
             Promise.resolve({ appId, responseItemId, getAbortController }),
           onError: (error) => {
             console.log(error);
-            if (error && typeof error === "string")  {
-              toast.error(error)
+            if (error && typeof error === "string") {
+              toast.error(error);
             } else {
-              toast.error('server error')
+              toast.error("server error");
             }
             execute.setStatus("end");
           },

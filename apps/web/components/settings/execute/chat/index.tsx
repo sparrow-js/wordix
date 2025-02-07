@@ -5,7 +5,7 @@ import type { ChatConfig, ChatItem, Feedback, InputForm, OnRegenerate, OnSend } 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { debounce } from "lodash-es";
-import { Copy } from "lucide-react";
+import { Copy, StopCircle } from "lucide-react";
 import { toast } from "sonner";
 import Answer from "../answer";
 import { ChatContextProvider } from "./context";
@@ -179,7 +179,7 @@ const Chat: FC<ChatProps> = ({
       onFeedback={onFeedback}
     >
       <div className="relative h-full w-full">
-        <div className="absolute top-2 right-2 z-10 w-10 h-10">
+        <div className="absolute top-2 right-2 flex flex-row gap-2 z-50">
           <Button
             variant="outline"
             size="icon"
@@ -190,6 +190,16 @@ const Chat: FC<ChatProps> = ({
             }}
           >
             <Copy className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            className="text-red-500"
+            onClick={() => {
+              onStopResponding();
+            }}
+          >
+            <StopCircle className="h-4 w-4" />
           </Button>
         </div>
         <div
