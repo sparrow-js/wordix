@@ -30,8 +30,8 @@ export default function Home() {
           </div>
 
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200">
-              Home
+            <Link href="https://docs.wordix.so/docs" className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200">
+              docs
             </Link>
             <Link
               href="#about"
