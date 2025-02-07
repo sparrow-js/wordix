@@ -4,13 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
-import type { IBillingFrequency } from "./billing-frequency";
 
-export const PriceCards = ({
-  frequency,
-  loading,
-  priceMap,
-}: { frequency: IBillingFrequency; loading: boolean; priceMap: Record<string, string> }) => {
+export const PriceCards = () => {
   return (
     <div className="container mx-auto px-4 py-16">
       <div className="text-center mb-16">
