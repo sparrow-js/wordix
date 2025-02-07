@@ -260,19 +260,19 @@ export default function Home() {
             {/* Left Image */}
             <div className="flex-1 bg-[#E3F2FF] rounded-lg shadow flex flex-col items-center justify-center p-4 min-h-[200px]">
               <div className="w-full h-auto">
-                <img src="/landingpage/editor.png" alt="Left" className="object-cover w-full h-full" />
+                <img src="/landingpage/editor.png" alt="Left" className="object-cover w-full h-full rounded-sm" />
               </div>
             </div>
             {/* Middle Content */}
             <div className="flex-1 bg-[#FFE8E8] rounded-lg shadow flex flex-col items-center justify-center p-4 min-h-[200px]">
               <div className="w-full h-auto">
-                <img src="/landingpage/app.png" alt="Middle" className="object-contain w-full h-full" />
+                <img src="/landingpage/app.png" alt="Middle" className="object-contain w-full h-full rounded-sm" />
               </div>
             </div>
             {/* Right Image */}
             <div className="flex-1 bg-[#E3FFE6] rounded-lg shadow flex flex-col items-center justify-center p-4 min-h-[200px]">
               <div className="w-full h-auto">
-                <img src="/landingpage/dashboard.png" alt="Right" className="object-cover w-full h-full" />
+                <img src="/landingpage/dashboard.png" alt="Right" className="object-cover w-full h-full rounded-sm" />
               </div>
             </div>
           </div>
@@ -281,19 +281,19 @@ export default function Home() {
             {/* Left Image */}
             <div className="flex-1 bg-[#FFF8E1] rounded-lg shadow flex flex-col items-center justify-center p-4 min-h-[200px]">
               <div className="w-full h-auto">
-                <img src="/landingpage/collection.png" alt="Left" className="object-cover w-full h-full" />
+                <img src="/landingpage/collection.png" alt="Left" className="object-cover w-full h-full rounded-sm" />
               </div>
             </div>
             {/* Middle Content */}
             <div className="flex-1 bg-[#F3E5FF] rounded-lg shadow flex flex-col items-center justify-center p-4 min-h-[200px]">
               <div className="w-full h-auto">
-                <img src="/landingpage/result.png" alt="Middle" className="object-contain w-full h-full" />
+                <img src="/landingpage/result.png" alt="Middle" className="object-contain w-full h-full rounded-sm" />
               </div>
             </div>
             {/* Right Image */}
             <div className="flex-1 bg-[#EEEEEE] rounded-lg shadow flex flex-col items-center justify-center p-4 min-h-[200px]">
               <div className="w-full h-auto">
-                <img src="/landingpage/api.png" alt="Middle" className="object-contain w-full h-full" />
+                <img src="/landingpage/api.png" alt="Middle" className="object-contain w-full h-full rounded-sm" />
               </div>
             </div>
           </div>
