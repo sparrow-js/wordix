@@ -4,15 +4,14 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { AiFillApi } from "react-icons/ai";
 import { FaRunning } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { IoDocument } from "react-icons/io5";
 import { IoLanguageSharp } from "react-icons/io5";
 import { RiAiGenerate2 } from "react-icons/ri";
 import { RiAiGenerateText } from "react-icons/ri";
 import { RiApps2AiFill } from "react-icons/ri";
 import { SiNotion } from "react-icons/si";
-import { FaGithub } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
-
 
 export default function Home() {
   return (
@@ -30,7 +29,10 @@ export default function Home() {
           </div>
 
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="https://docs.wordix.so/docs" className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200">
+            <Link
+              href="https://docs.wordix.so/docs"
+              className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200"
+            >
               Docs
             </Link>
             <Link
@@ -256,19 +258,19 @@ export default function Home() {
           {/* Media and Content */}
           <div className="flex justify-center space-x-4 mt-12 w-full max-w-7xl">
             {/* Left Image */}
-            <div className="flex-1 bg-gray-50 rounded-lg shadow flex flex-col items-center justify-center p-4">
+            <div className="flex-1 bg-[#E3F2FF] rounded-lg shadow flex flex-col items-center justify-center p-4">
               <div className="w-full h-auto">
                 <img src="/landingpage/editor.png" alt="Left" className="object-cover w-full h-full" />
               </div>
             </div>
             {/* Middle Content */}
-            <div className="flex-1 bg-gray-50 rounded-lg shadow flex flex-col items-center justify-center p-4">
+            <div className="flex-1 bg-[#FFE8E8] rounded-lg shadow flex flex-col items-center justify-center p-4">
               <div className="w-full h-auto">
                 <img src="/landingpage/app.png" alt="Middle" className="object-contain w-full h-full" />
               </div>
             </div>
             {/* Right Image */}
-            <div className="flex-1 bg-gray-50 rounded-lg shadow flex flex-col items-center justify-center p-4">
+            <div className="flex-1 bg-[#E3FFE6] rounded-lg shadow flex flex-col items-center justify-center p-4">
               <div className="w-full h-auto">
                 <img src="/landingpage/dashboard.png" alt="Right" className="object-cover w-full h-full" />
               </div>
@@ -277,19 +279,19 @@ export default function Home() {
           {/* Media and Content */}
           <div className="flex justify-center space-x-4 mt-12 w-full max-w-7xl">
             {/* Left Image */}
-            <div className="flex-1 bg-gray-50 rounded-lg shadow flex flex-col items-center justify-center p-4">
+            <div className="flex-1 bg-[#FFF8E1] rounded-lg shadow flex flex-col items-center justify-center p-4">
               <div className="w-full h-auto">
                 <img src="/landingpage/collection.png" alt="Left" className="object-cover w-full h-full" />
               </div>
             </div>
             {/* Middle Content */}
-            <div className="flex-1 bg-gray-50 rounded-lg shadow flex flex-col items-center justify-center p-4">
+            <div className="flex-1 bg-[#F3E5FF] rounded-lg shadow flex flex-col items-center justify-center p-4">
               <div className="w-full h-auto">
                 <img src="/landingpage/result.png" alt="Middle" className="object-contain w-full h-full" />
               </div>
             </div>
             {/* Right Image */}
-            <div className="flex-1 bg-gray-50 rounded-lg shadow flex flex-col items-center justify-center p-4">
+            <div className="flex-1 bg-[#EEEEEE] rounded-lg shadow flex flex-col items-center justify-center p-4">
               <div className="w-full h-auto">
                 <img src="/landingpage/api.png" alt="Middle" className="object-contain w-full h-full" />
               </div>
@@ -418,30 +420,39 @@ export default function Home() {
           </p>
           <ul className="flex flex-row space-x-4 mt-8 mb-4">
             <li>
-              <Link target="_blank" href="https://github.com/sparrow-js/wordix" className="mb-2 text-white hover:text-[#fad400] transition-colors duration-200">
+              <Link
+                target="_blank"
+                href="https://github.com/sparrow-js/wordix"
+                className="mb-2 text-white hover:text-[#fad400] transition-colors duration-200"
+              >
                 <span>
                   <FaGithub className="w-5 h-5" />
                 </span>
               </Link>
             </li>
             <li>
-              <Link target="_blank" href="https://x.com/haitaowu18" className="mb-2 text-white hover:text-[#fad400] transition-colors duration-200">
+              <Link
+                target="_blank"
+                href="https://x.com/haitaowu18"
+                className="mb-2 text-white hover:text-[#fad400] transition-colors duration-200"
+              >
                 <span>
                   <FaXTwitter className="w-5 h-5" />
                 </span>
               </Link>
             </li>
           </ul>
-          <p className="text-gray-400 font-source-code-pro text-sm">
-            © 2025 Wordix, Inc. All rights reserved.
-          </p>
+          <p className="text-gray-400 font-source-code-pro text-sm">© 2025 Wordix, Inc. All rights reserved.</p>
         </div>
         <div className="flex flex-col">
           <h2 className="text-gray-400 text-xs mb-4">LEGAL</h2>
           <Link href="/privacy-policy" className="mb-2 text-white hover:text-[#fad400] transition-colors duration-200">
             Privacy Policy
           </Link>
-          <Link href="/terms-of-service" className="mb-2 text-white hover:text-[#fad400] transition-colors duration-200">
+          <Link
+            href="/terms-of-service"
+            className="mb-2 text-white hover:text-[#fad400] transition-colors duration-200"
+          >
             Terms of Service
           </Link>
           <Link href="/refund" className="mb-2 text-white hover:text-[#fad400] transition-colors duration-200">
