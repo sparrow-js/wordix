@@ -276,9 +276,7 @@ const handleStream = (
         }
         if (!hasError) read();
       })
-      .catch((e) => {
-        console.log("***************999", e);
-      });
+      .catch((e) => {});
   }
   read();
 };
@@ -527,7 +525,6 @@ export const ssePost = (
   const { body } = options;
   if (body) options.body = JSON.stringify(body);
 
-  console.log("***************777", globalThis);
   try {
     globalThis
       .fetch(urlWithPrefix, options as RequestInit)
@@ -589,7 +586,6 @@ export const ssePost = (
         );
       })
       .catch((e) => {
-        console.log("***************888", e);
         if (
           e.toString() !== "AbortError: The user aborted a request." &&
           !e.toString().errorMessage.includes("TypeError: Cannot assign to read only property")

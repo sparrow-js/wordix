@@ -517,7 +517,6 @@ export const useExecute = (
             // player.playAudioWithAudio(audio, false)
           },
           getAbortController: (abortController: AbortController) => {
-            console.log("***************555", abortController);
             conversationMessagesAbortControllerRef.current = abortController;
           },
         },
