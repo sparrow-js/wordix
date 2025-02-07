@@ -114,7 +114,7 @@ export const PriceCards = () => {
         <div className="bg-white rounded-3xl shadow-lg p-8 flex flex-col border-t-2 border-gray-200">
           <h3 className="text-xl font-semibold mb-4 text-blue-500">Recommended</h3>
           <p className="text-sm text-gray-600 mb-2">
-            For early stage businesses looking to build their infrastructure on Wordware{" "}
+            For early stage businesses looking to build their infrastructure on Wordix{" "}
           </p>
           <div className="text-5xl font-bold mb-1">
             $299
