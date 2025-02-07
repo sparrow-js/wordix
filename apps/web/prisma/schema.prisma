@@ -480,26 +480,3 @@ model Pokemon {
 
   @@map("pokemon")
 }
-
-
-model Customer {
-  id String @id @default(cuid())
-  customer_id String @unique
-  user_id String
-  email String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-}
-
-model Subscription {
-  id String @id @default(cuid())
-  subscription_id String @unique
-  subscription_status String
-  price_id String
-  product_id String
-  scheduled_change String
-  customer_id String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-}
-
