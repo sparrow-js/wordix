@@ -180,8 +180,6 @@ const Prompt = ({ onDelete, editor }) => {
                       </div>
                     </div>
                   </div>
-
-                  <p className="mt-6a align-bottom font-mono text-xs text-stone-200">Prompt id: </p>
                 </div>
 
                 <div className="mt-12 flex w-full justify-center">
