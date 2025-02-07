@@ -24,7 +24,7 @@ export const InputSetting: React.FC<InputSettingProps> = observer(({ onDelete, e
   return (
     <div className="p-8">
       <h2 className="font-default text-xl font-bold">Input</h2>
-      <p className="mt-2">nput blocks allow you to collect information from the user.</p>
+      <p className="mt-2">input blocks allow you to collect information from the user.</p>
 
       <div className="mb-9 mt-5">
         <p className="font-bold">Name</p>
