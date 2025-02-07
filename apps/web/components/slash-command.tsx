@@ -97,9 +97,9 @@ export const suggestionItems = createSuggestionItems([
         },
       },
       {
-        title: "Prompt",
-        description: "Prompt.",
-        searchTerms: ["Prompt", "prompt"],
+        title: "Flow",
+        description: "Flow.",
+        searchTerms: ["Flow", "flow"],
         icon: <Parentheses size={18} />,
         command: ({ editor, range }) => {
           editor.chain().focus().deleteRange(range).setPrompt({}).run();
