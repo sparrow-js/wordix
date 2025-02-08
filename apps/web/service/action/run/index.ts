@@ -15,7 +15,7 @@ export async function createRun(documentId: string, collectionId: string, params
 
   const run = await prisma.run.create({
     data: {
-      userId: userId,
+      ...(userId ? { userId } : {}),
       status: RunStatus.COMPLETED,
       documentId: documentId,
       collectionId: collectionId,

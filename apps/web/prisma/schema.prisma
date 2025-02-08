@@ -261,12 +261,12 @@ model Run {
   inputs       Json?
   inputValues  Json?
   version      Int?
-  userId       String
+  userId       String?
   documentId   String?
   collectionId String?
   from         String?
   document     Document? @relation(fields: [documentId], references: [id])
-  user         User      @relation(fields: [userId], references: [id])
+  user         User?     @relation(fields: [userId], references: [id])
 
   @@index([userId])
   @@index([documentId])
