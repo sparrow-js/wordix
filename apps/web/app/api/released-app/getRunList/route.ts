@@ -29,7 +29,11 @@ export async function GET(request: NextRequest) {
     }
 
     // Build where clause based on provided parameters
-    const whereClause = {
+    const whereClause: {
+      documentId: string;
+      from: string;
+      userId?: string;
+    } = {
       documentId: documentId,
       from: "app",
     };
@@ -50,15 +54,43 @@ export async function GET(request: NextRequest) {
         },
       },
     });
+    let userRuns = [];
+    if (session?.user?.id) {
+      userRuns = await prisma.run.findMany({
+        where: {
+          userId: session.user.id,
+          documentId: documentId,
+          from: "app",
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+        take: limit,
+        skip: page * limit,
+        include: {
+          document: {
+            select: {
+              title: true,
+            },
+          },
+        },
+      });
+    }
 
     // Add total count
     const total = await prisma.run.count({
       where: whereClause,
     });
 
-    return respData(runs, {
-      total,
-    });
+    return respData(
+      {
+        runs,
+        userRuns,
+      },
+      {
+        total,
+      },
+    );
   } catch (error) {
     console.error("Error listing runs:", error);
     return respErr("Failed to list runs");

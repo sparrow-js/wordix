@@ -72,6 +72,7 @@ export default function ExplorePage() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [runList, setRunList] = useState<any[]>([]);
+  const [userRunList, setUserRunList] = useState<any[]>([]);
   const [runDrawerOpen, setRunDrawerOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoadedDocument, setIsLoadedDocument] = useState(false);
@@ -144,7 +145,8 @@ export default function ExplorePage() {
       page: 0,
     });
     if (res.data) {
-      setRunList(res.data);
+      setRunList(res.data.runs);
+      setUserRunList(res.data.userRuns);
     }
   };
 
@@ -380,6 +382,47 @@ export default function ExplorePage() {
                 <div className="mt-12">
                   <div className="mx-auto flex w-full max-w-[989px] flex-1 flex-col gap-4">
                     <div className="flex flex-col gap-9">
+                      {userRunList.length > 0 && (
+                        <div className="flex flex-col gap-4">
+                          <div className="text-center text-2xl font-medium sm:text-left">My results</div>
+                          <div className="grid gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+                            {userRunList.map((run) => {
+                              return (
+                                <div
+                                  key={run.id} // Ensure each run has a unique identifier
+                                  className="group/template has-[:focus-visible]:ring-offset-background relative flex w-full flex-col text-sm sm:min-w-0 xl:h-[240px]"
+                                >
+                                  <div className="ring-1 ring-gray-200 hover:ring-gray-300 transition-all duration-200 px-4 py-3 relative aspect-[16/9] w-full overflow-hidden rounded-lg text-sm">
+                                    <div className="max-h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
+                                      <Markdown className="prose prose-sm max-w-none prose-headings:font-semibold prose-headings:text-gray-900 prose-p:text-gray-600 prose-strong:text-gray-900 prose-code:text-gray-900">
+                                        {run?.metadata.markdownOutput}
+                                      </Markdown>
+                                    </div>
+                                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-transparent via-transparent to-white/80 opacity-0 transition-opacity duration-200 group-hover/template:opacity-100">
+                                      <Button
+                                        variant="secondary"
+                                        className="shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 bg-orange-500 hover:bg-orange-600 text-white font-medium"
+                                        onClick={() => {
+                                          setRunDrawerOpen(true);
+                                          setMarkdownGen(run?.metadata.markdownOutput);
+                                        }}
+                                      >
+                                        View Details
+                                      </Button>
+                                    </div>
+                                  </div>
+                                  <div className="flex flex-col gap-0.5 px-1 py-2.5">
+                                    <div className="font-medium line-clamp-2">
+                                      {run.inputValues ? (Object.values(run.inputValues) as string[]).join("\n") : ""}
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+
                       <div className="flex flex-col gap-4">
                         <div className="text-center text-2xl font-medium sm:text-left">Generate results</div>
                         <div className="grid gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -389,19 +432,22 @@ export default function ExplorePage() {
                                 key={run.id} // Ensure each run has a unique identifier
                                 className="group/template has-[:focus-visible]:ring-offset-background relative flex w-full flex-col text-sm sm:min-w-0 xl:h-[240px]"
                               >
-                                <div className="ring-2 ring-gray-300 ring-inset px-2 relative aspect-[16/9] w-full overflow-hidden rounded-lg text-sm has-[:focus-visible]:outline-none has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-blue-600 has-[:focus-visible]:ring-offset-1">
-                                  <Markdown className="prose lg:prose-xl w-full -mt-[20px]">
-                                    {run?.metadata.markdownOutput}
-                                  </Markdown>
-                                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-[hsla(0,0%,100%,0.3)] to-[hsla(0,0%,40%,0.3)] opacity-0 transition-opacity focus-within:opacity-100 group-hover/template:opacity-100 has-[[data-pending=true]]:opacity-100">
+                                <div className="ring-1 ring-gray-200 hover:ring-gray-300 transition-all duration-200 px-4 py-3 relative aspect-[16/9] w-full overflow-hidden rounded-lg text-sm">
+                                  <div className="max-h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
+                                    <Markdown className="prose prose-sm max-w-none prose-headings:font-semibold prose-headings:text-gray-900 prose-p:text-gray-600 prose-strong:text-gray-900 prose-code:text-gray-900">
+                                      {run?.metadata.markdownOutput}
+                                    </Markdown>
+                                  </div>
+                                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-transparent via-transparent to-white/80 opacity-0 transition-opacity duration-200 group-hover/template:opacity-100">
                                     <Button
+                                      variant="secondary"
+                                      className="shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 bg-orange-500 hover:bg-orange-600 text-white font-medium"
                                       onClick={() => {
                                         setRunDrawerOpen(true);
-                                        // contentRef.current = run?.metadata.markdownOutput;
                                         setMarkdownGen(run?.metadata.markdownOutput);
                                       }}
                                     >
-                                      View
+                                      View Details
                                     </Button>
                                   </div>
                                 </div>
