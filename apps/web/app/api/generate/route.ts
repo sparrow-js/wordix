@@ -6,7 +6,7 @@ import { createOpenAI } from "@ai-sdk/openai";
 
 import { getToken } from "@/service/action/oneapi";
 import { match } from "ts-pattern";
-export const maxDuration = 60;
+export const maxDuration = 300;
 export const dynamic = "force-dynamic";
 // Create an OpenAI API client (that's edge friendly!)
 

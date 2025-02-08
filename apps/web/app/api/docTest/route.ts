@@ -3,7 +3,7 @@ import { createRun } from "@/service/action/run";
 import { DocumentProcessor } from "@/workflow/processors/DocumentProcessor";
 import { getWorkflowResponseWrite } from "@/workflow/utils/utils";
 import type { NextApiResponse } from "next";
-export const maxDuration = 60;
+export const maxDuration = 300;
 export const dynamic = "force-dynamic";
 
 import { auth } from "@/lib/auth";

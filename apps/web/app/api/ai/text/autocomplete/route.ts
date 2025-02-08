@@ -4,7 +4,7 @@ import { getToken } from "@/service/action/oneapi";
 import type { Message } from "@/workflow/ai/providers/base";
 import { ServiceFactory } from "@/workflow/ai/services/service-factory";
 
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 export async function POST(request: Request) {
   const session = await auth();

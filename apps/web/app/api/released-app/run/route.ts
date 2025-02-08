@@ -4,7 +4,7 @@ import { DocumentProcessor } from "@/workflow/processors/DocumentProcessor";
 import { getWorkflowResponseWrite } from "@/workflow/utils/utils";
 import type { NextApiResponse } from "next";
 
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 export async function POST(request: Request, res: NextApiResponse) {
   const params = await request.json();

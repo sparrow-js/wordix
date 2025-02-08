@@ -3,10 +3,9 @@ import { respErr } from "@/lib/resp";
 import { getToken } from "@/service/action/oneapi";
 import type { Message } from "@/workflow/ai/providers/base";
 import { ServiceFactory } from "@/workflow/ai/services/service-factory";
-import { META_PROMPT } from "./const";
 
 import { getProviderFromModel } from "@/workflow/ai/config/model-configs";
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 export async function POST(request: Request) {
   const session = await auth();
