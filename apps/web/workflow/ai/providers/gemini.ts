@@ -51,7 +51,6 @@ export class GeminiProvider extends BaseAIProvider {
     modelName?: string,
     options?: Partial<ModelConfig>,
   ): Promise<string> {
-
     const response = await this.openai.chat.completions.create({
       model: modelName || "gpt-3.5-turbo",
       messages: messages,
@@ -66,7 +65,6 @@ export class GeminiProvider extends BaseAIProvider {
     modelName?: string,
     options?: Partial<ModelConfig>,
   ): Promise<string> {
-
     const stream = await this.openai.chat.completions.create({
       model: modelName || "gpt-3.5-turbo",
       messages: messages,

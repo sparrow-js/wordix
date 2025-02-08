@@ -92,7 +92,7 @@ const TailwindAdvancedEditor = ({ response }: any) => {
     setCharsCount(editor.storage.characterCount.words());
     window.localStorage.setItem("html-content", highlightCodeblocks(editor.getHTML()));
     window.localStorage.setItem("novel-content", JSON.stringify(json));
-    window.localStorage.setItem("markdown", editor.storage.markdown.getMarkdown());
+    // window.localStorage.setItem("markdown", editor.storage.markdown.getMarkdown());
     setSaveStatus("Saved");
   }, 500);
 
@@ -193,7 +193,7 @@ const TailwindAdvancedEditor = ({ response }: any) => {
                     const { selection } = state;
                     const { from } = selection;
                     const node = state.doc.nodeAt(from);
-                    const toggleNodes = ["input", "generation"];
+                    const toggleNodes = ["input", "generation", "imageGeneration"];
                     if (!node || !toggleNodes.includes(node.type.name)) {
                       workbench.setHideSidebar();
                     }

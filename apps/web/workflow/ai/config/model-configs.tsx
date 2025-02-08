@@ -1,4 +1,4 @@
-import { AnthropicIcon, CohereIcon, GeminiIcon, OpenaiIcon, PerplexityIcon } from "@/components/settings/icons";
+import { AnthropicIcon, CohereIcon, GeminiIcon, OpenaiIcon } from "@/components/settings/icons";
 import DeepSeek from "@/components/ui/icons/deepseek";
 
 export interface ModelConfig {
@@ -12,6 +12,7 @@ export interface ModelConfig {
   supportsImage?: boolean;
   reasoning_effort?: "low" | "medium" | "high";
   store?: boolean;
+  aspect_ratio?: string;
 }
 
 export interface ProviderModelConfig {

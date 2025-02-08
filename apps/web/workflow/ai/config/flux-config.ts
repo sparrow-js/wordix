@@ -41,6 +41,16 @@ export const ImageConfig = [
       prompt_strength: 0.8,
       num_inference_steps: 28,
     },
+    sizeOptions: [
+      { label: "1:1", value: "1:1" },
+      { label: "16:9", value: "16:9" },
+      { label: "3:2", value: "3:2" },
+      { label: "2:3", value: "2:3" },
+      { label: "4:5", value: "4:5" },
+      { label: "5:4", value: "5:4" },
+      { label: "3:4", value: "3:4" },
+      { label: "9:21", value: "9:21" },
+    ],
   },
   {
     name: "flux schnell",
@@ -56,6 +66,16 @@ export const ImageConfig = [
       output_quality: 80,
       num_inference_steps: 4,
     },
+    sizeOptions: [
+      { label: "1:1", value: "1:1" },
+      { label: "16:9", value: "16:9" },
+      { label: "3:2", value: "3:2" },
+      { label: "2:3", value: "2:3" },
+      { label: "4:5", value: "4:5" },
+      { label: "5:4", value: "5:4" },
+      { label: "3:4", value: "3:4" },
+      { label: "9:21", value: "9:21" },
+    ],
   },
   {
     name: "flux 1.1 pro ultra",
@@ -69,6 +89,16 @@ export const ImageConfig = [
       safety_tolerance: 2,
       image_prompt_strength: 0.1,
     },
+    sizeOptions: [
+      { label: "1:1", value: "1:1" },
+      { label: "16:9", value: "16:9" },
+      { label: "3:2", value: "3:2" },
+      { label: "2:3", value: "2:3" },
+      { label: "4:5", value: "4:5" },
+      { label: "5:4", value: "5:4" },
+      { label: "3:4", value: "3:4" },
+      { label: "9:21", value: "9:21" },
+    ],
   },
   {
     name: "dall-e-3",
@@ -82,6 +112,20 @@ export const ImageConfig = [
       quality: "standard",
       style: "vivid",
     },
+    sizeOptions: [
+      {
+        label: "1024x1024",
+        value: "1024x1024",
+      },
+      {
+        label: "1792x1024",
+        value: "1792x1024",
+      },
+      {
+        label: "1024x1792",
+        value: "1024x1792",
+      },
+    ],
   },
 ];
 

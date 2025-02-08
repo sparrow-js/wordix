@@ -134,7 +134,7 @@ export class OpenAIProvider extends BaseAIProvider {
     const response = await this.openai.images.generate({
       model: config.model,
       prompt: prompt,
-      size: "1024x1024",
+      size: (options?.aspect_ratio as any) || "1024x1024",
       response_format: "b64_json",
     });
     const b64Json = response.data[0].b64_json;

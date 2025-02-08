@@ -276,7 +276,10 @@ const handleStream = (
         }
         if (!hasError) read();
       })
-      .catch((e) => {});
+      .catch((e) => {
+        console.error(e);
+        onCompleted?.(true, e as string);
+      });
   }
   read();
 };

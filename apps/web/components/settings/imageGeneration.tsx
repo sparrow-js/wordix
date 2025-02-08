@@ -2,17 +2,29 @@ import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import useStores from "@/hooks/useStores";
-import { ASPECT_RATIO, ImageConfig } from "@/workflow/ai/config/flux-config";
+import { ImageConfig } from "@/workflow/ai/config/flux-config";
 import { ChevronDown, ExternalLink, Trash2 } from "lucide-react";
 import { observer } from "mobx-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const ImageGeneration = observer(() => {
   const { generations } = useStores();
   const { currentGeneration } = generations;
+  const [currentModel, setCurrentModel] = useState<any>(null);
+  const [openModel, setOpenModel] = useState(false);
+  const [openAspectRatio, setOpenAspectRatio] = useState(false);
+
   if (!currentGeneration) {
     return null;
   }
+
+  useEffect(() => {
+    const currentModelConfig = ImageConfig.find((config) => config.model === currentGeneration?.model);
+    if (currentModelConfig) {
+      setCurrentModel(currentModelConfig);
+    }
+  }, [currentGeneration?.model]);
 
   return (
     <div className="flex-1 overflow-y-auto p-8">
@@ -49,9 +61,9 @@ const ImageGeneration = observer(() => {
 
           <div className="px-2">
             <div className="mb-9 mt-5">
-              <p className="font-bold">Aspect ratio</p>
-              <p className="mb-1 mt-1 text-sm text-stone-400">Aspect ratio for the generated image.</p>
-              <Popover>
+              <p className="font-bold">Aspect ratio or size</p>
+              <p className="mb-1 mt-1 text-sm text-stone-400">Aspect ratio or size for the generated image.</p>
+              <Popover open={openAspectRatio} onOpenChange={setOpenAspectRatio}>
                 <PopoverTrigger asChild>
                   <Button variant="outline" role="combobox" className="w-full justify-between">
                     <span>{currentGeneration?.aspect_ratio}</span>
@@ -63,12 +75,13 @@ const ImageGeneration = observer(() => {
                     <CommandList>
                       <CommandEmpty>No aspect ratio found.</CommandEmpty>
                       <CommandGroup>
-                        {ASPECT_RATIO.map((ratio) => (
+                        {currentModel?.sizeOptions.map((ratio) => (
                           <CommandItem
                             key={ratio.value}
                             value={ratio.value}
                             onSelect={(value) => {
                               generations.updateDataSyncToNode("aspect_ratio", value);
+                              setOpenAspectRatio(false);
                             }}
                           >
                             {ratio.label}
@@ -84,7 +97,7 @@ const ImageGeneration = observer(() => {
             <div className="mb-9 mt-5">
               <p className="font-bold">Model</p>
               <p className="mb-1 mt-1 text-sm text-stone-400">The model to use for image generation.</p>
-              <Popover>
+              <Popover open={openModel} onOpenChange={setOpenModel}>
                 <PopoverTrigger asChild>
                   <Button variant="outline" role="combobox" className="w-full justify-between">
                     <span>{currentGeneration?.model}</span>
@@ -101,7 +114,9 @@ const ImageGeneration = observer(() => {
                             key={item?.model}
                             value={item?.model}
                             onSelect={(value) => {
+                              setOpenModel(false);
                               generations.updateDataSyncToNode("model", value);
+                              generations.updateDataSyncToNode("aspect_ratio", item.sizeOptions[0].value);
                             }}
                           >
                             {item.name}

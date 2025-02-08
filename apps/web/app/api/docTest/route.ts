@@ -87,12 +87,12 @@ export async function POST(request: Request, res: NextApiResponse) {
         duration,
         from: "test",
       });
-      writer.releaseLock();
       await writer.close();
+      writer.releaseLock();
     })
     .catch(async (e) => {
-      writer.releaseLock();
       await writer.close();
+      writer.releaseLock();
     });
 
   return new Response(responseStream.readable);
