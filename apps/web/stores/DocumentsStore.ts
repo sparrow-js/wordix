@@ -32,7 +32,7 @@ export default class DocumentsStore extends Store<Document> {
   @computed
   get all(): Document[] {
     // @ts-ignore
-    return filter(this.orderedData, (d) => !d.archivedAt && !d.deletedAt && !d.template);
+    return filter(this.orderedData, (d) => !d.archivedAt && !d.deletedAt);
   }
 
   @computed
