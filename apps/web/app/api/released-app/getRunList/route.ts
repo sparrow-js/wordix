@@ -28,32 +28,6 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Build where clause based on provided parameters
-    const whereClause: {
-      documentId: string;
-      from: string;
-      userId?: string;
-    } = {
-      documentId: documentId,
-      from: "app",
-    };
-
-    // Get runs for user with pagination
-    const runs = await prisma.run.findMany({
-      where: whereClause,
-      orderBy: {
-        createdAt: "desc",
-      },
-      take: limit,
-      skip: page * limit,
-      include: {
-        document: {
-          select: {
-            title: true,
-          },
-        },
-      },
-    });
     let userRuns = [];
     if (session?.user?.id) {
       userRuns = await prisma.run.findMany({
@@ -76,6 +50,38 @@ export async function GET(request: NextRequest) {
         },
       });
     }
+
+    // Build where clause based on provided parameters
+    const whereClause: {
+      documentId: string;
+      from: string;
+      OR?: any[];
+    } = {
+      documentId: documentId,
+      from: "app",
+    };
+
+    // Add condition to get runs where userId is not equal to current user's id OR userId is null
+    if (session?.user?.id) {
+      whereClause.OR = [{ userId: { not: session.user.id } }, { userId: null }];
+    }
+
+    // Get runs for user with pagination
+    const runs = await prisma.run.findMany({
+      where: whereClause,
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: limit,
+      skip: page * limit,
+      include: {
+        document: {
+          select: {
+            title: true,
+          },
+        },
+      },
+    });
 
     // Add total count
     const total = await prisma.run.count({
