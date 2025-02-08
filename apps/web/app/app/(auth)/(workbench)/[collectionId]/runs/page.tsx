@@ -35,6 +35,7 @@ export default observer(function RunsPage() {
   const { runs, execute, workbench } = useStores();
   const publishedRuns = runs.publishedInCollection(collectionId);
   const [selectedRunId, setSelectedRunId] = useState<string | null>(null);
+  const [selectedRun, setSelectedRun] = useState<any>(null);
 
   const fetchRuns = async (page: number) => {
     setIsLoading(true);
@@ -128,6 +129,7 @@ export default observer(function RunsPage() {
                                         onClick={() => {
                                           setSelectedRunId(run.id);
                                           workbench.setShowRunDetails();
+                                          setSelectedRun(run);
                                           execute.setInjectChatList([
                                             {
                                               id: uuidv4(),
@@ -186,7 +188,8 @@ export default observer(function RunsPage() {
                             </div>
                             <div className="flex items-center justify-self-center">
                               <CheckCircle className="mr-2 h-4 w-4 text-muted-foreground/50" />
-                              Runner: <span className="ml-1 max-w-32 truncate font-normal">Hello world 👋🌍</span>
+                              Runner:{" "}
+                              <span className="ml-1 max-w-32 truncate font-normal">{selectedRun?.document?.title}</span>
                             </div>
                             <div className="justify-self-end">
                               <DropdownMenu>
@@ -199,8 +202,14 @@ export default observer(function RunsPage() {
                                   </button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                  <DropdownMenuItem>Go to flow</DropdownMenuItem>
-                                  <DropdownMenuItem>Go to run</DropdownMenuItem>
+                                  <DropdownMenuItem
+                                    onClick={() => {
+                                      router.push(`/${collectionId}/docs/${selectedRun?.documentId}`);
+                                    }}
+                                  >
+                                    Go to flow
+                                  </DropdownMenuItem>
+                                  {/* <DropdownMenuItem>Go to run</DropdownMenuItem> */}
                                 </DropdownMenuContent>
                               </DropdownMenu>
                             </div>
