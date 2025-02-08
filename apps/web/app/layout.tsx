@@ -6,7 +6,7 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { Toaster } from "sonner";
 
-const title = "wordix - a tool that allows you to fastest generate a AI applications.";
+const title = "wordix | fastest AI app generator";
 const description = "wordix is a tool that allows you to fastest generate a AI applications.";
 
 export const metadata: Metadata = {
