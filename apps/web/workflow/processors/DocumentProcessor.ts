@@ -77,6 +77,9 @@ export class DocumentProcessor extends BaseProcessor {
       disableDocumentOutput: initialState?.disableDocumentOutput || false,
       onStop,
       onStreamResponse: (response) => {
+        if (this.stopped) {
+          return;
+        }
         if (response.event === "message") {
           this.context.markdownOutput += response.data;
         }
@@ -396,6 +399,10 @@ export class DocumentProcessor extends BaseProcessor {
     this.context.path = [];
     this.context.markdown = [];
     this.context.inputData = undefined;
+  }
+
+  public abort(): void {
+    this.stopped = true;
   }
 
   /**

@@ -51,22 +51,33 @@ export async function POST(request: Request, res: NextApiResponse) {
 
   const documentInputs = documentFlow?.content.find((node) => node.type === "inputs");
 
-  processor.processNode(documentFlow, inputs).then(async () => {
-    const context = processor.getContext();
-    const endTime = new Date();
-    const duration = endTime.getTime() - startTime.getTime();
-    await createRun(documentId, collectionId, {
-      metadata: {
-        markdownOutput: context.markdownOutput,
-      },
-      duration,
-      inputValues: inputs,
-      inputs: documentInputs?.content,
-      from: "app",
+  processor
+    .processNode(documentFlow, inputs)
+    .then(async () => {
+      const context = processor.getContext();
+      const endTime = new Date();
+      const duration = endTime.getTime() - startTime.getTime();
+      await createRun(documentId, collectionId, {
+        metadata: {
+          markdownOutput: context.markdownOutput,
+        },
+        duration,
+        inputValues: inputs,
+        inputs: documentInputs?.content,
+        from: "app",
+      });
+    })
+    .finally(() => {
+      processor.abort();
+      writer.close();
     });
+
+  request.signal.onabort = async () => {
+    console.log("abort");
+    processor.abort();
+    await writer.ready;
     await writer.close();
-    writer.releaseLock();
-  });
+  };
 
   return new Response(responseStream.readable);
 }

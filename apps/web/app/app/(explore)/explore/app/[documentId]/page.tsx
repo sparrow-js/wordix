@@ -1,5 +1,5 @@
 "use client";
-import { Copy, X } from "lucide-react";
+import { Copy, StopCircle, X } from "lucide-react";
 import { useParams } from "next/navigation";
 import { type DropEvent, type FileRejection, useDropzone } from "react-dropzone";
 
@@ -77,6 +77,7 @@ export default function ExplorePage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoadedDocument, setIsLoadedDocument] = useState(false);
   const [document, setDocument] = useState(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const dropzoneConfig = {
     accept: {
@@ -150,6 +151,12 @@ export default function ExplorePage() {
     }
   };
 
+  const handleStop = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+  };
+
   const generatePrompt = async () => {
     contentRef.current = "";
     setIsLoading(true);
@@ -185,6 +192,9 @@ export default function ExplorePage() {
         },
         onWorkflowStarted: () => {
           setMarkdownGen("");
+        },
+        getAbortController: (abortController) => {
+          abortControllerRef.current = abortController;
         },
       },
     );
@@ -371,6 +381,18 @@ export default function ExplorePage() {
                                 >
                                   <Copy className="w-4 h-4" />
                                 </Button>
+                                {isLoading && (
+                                  <Button
+                                    variant="outline"
+                                    size="icon"
+                                    className="absolute right-28 top-4 bg-red-500 hover:bg-red-600 text-white"
+                                    onClick={() => {
+                                      handleStop();
+                                    }}
+                                  >
+                                    <StopCircle className="w-4 h-4" />
+                                  </Button>
+                                )}
                               </DrawerContent>
                             </Drawer>
                           </div>

@@ -36,14 +36,12 @@ export class OpenAIProvider extends BaseAIProvider {
   ): Promise<string> {
     const config = this.getModelConfig(modelName, options);
 
-    const stream = (await this.openai.chat.completions
-      .create({
-        model: config.name,
-        messages: [{ role: "user", content: prompt }],
-        stream: true,
-        ...config,
-      })
-      .asResponse()) as any;
+    const stream = await this.openai.chat.completions.create({
+      model: config.name,
+      messages: [{ role: "user", content: prompt }],
+      stream: true,
+      ...config,
+    });
 
     let fullText = "";
     for await (const chunk of stream) {
