@@ -6,9 +6,8 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { Toaster } from "sonner";
 
-const title = "wordix - Notion-style WYSIWYG editor with AI-powered autocompletions";
-const description =
-  "wordix is a Notion-style WYSIWYG editor with AI-powered autocompletions. Built with Tiptap, OpenAI, and Vercel AI SDK.";
+const title = "wordix - a tool that allows you to fastest generate a AI applications.";
+const description = "wordix is a tool that allows you to fastest generate a AI applications.";
 
 export const metadata: Metadata = {
   title,
