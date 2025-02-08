@@ -7,12 +7,11 @@ export async function createRun(documentId: string, collectionId: string, params
   if (!userId) {
     const session = await auth();
     if (!session?.user?.id) {
-      throw new Error("Unauthorized");
+      userId = "";
+    } else {
+      userId = session.user.id;
     }
-
-    userId = session.user.id;
   }
-  
 
   const run = await prisma.run.create({
     data: {
