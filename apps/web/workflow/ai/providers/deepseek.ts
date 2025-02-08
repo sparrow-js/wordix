@@ -8,12 +8,12 @@ export class DeepseekProvider extends BaseAIProvider {
   constructor(apiKey: string, defaultModel: string, modelConfigs: Record<string, ModelConfig>) {
     super(apiKey, defaultModel, modelConfigs);
     this.client = new OpenAI({
-      apiKey: apiKey,
-      baseURL: `${process.env.PRO_URL}/v1`,
+      // apiKey: apiKey,
+      // baseURL: `${process.env.PRO_URL}/v1`,
       // apiKey: process.env.DEEPSEEK_API_KEY,
       // baseURL: "https://api.deepseek.com/v1",
-      // apiKey: process.env.OPENROUTER_API_KEY,
-      // baseURL: "https://openrouter.ai/api/v1",
+      apiKey: process.env.OPENROUTER_API_KEY,
+      baseURL: "https://openrouter.ai/api/v1",
     });
   }
 

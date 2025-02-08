@@ -149,16 +149,16 @@ export const allModels: ModelConfigWithProvider[] = [
   },
   {
     provider: "deepseek",
-    model: "deepseek-chat",
-    name: "deepseek-chat",
+    model: "deepseek/deepseek-chat",
+    name: "deepseek/deepseek-chat",
     maxTokens: 8000,
     temperature: 0.7,
     avatar: <DeepSeek className="w-8" />,
   },
   {
     provider: "deepseek",
-    model: "deepseek-reasoner",
-    name: "deepseek-reasoner",
+    model: "deepseek/deepseek-r1",
+    name: "deepseek/deepseek-r1",
     maxTokens: 8000,
     temperature: 0.7,
     avatar: <DeepSeek className="w-8" />,
@@ -361,14 +361,14 @@ export const modelConfigs: ModelConfigs = {
     },
   },
   deepseek: {
-    defaultModel: "deepseek-chat",
+    defaultModel: "deepseek/deepseek-chat",
     models: {
-      "deepseek-chat": {
-        name: "deepseek-chat",
+      "deepseek/deepseek-chat": {
+        name: "deepseek/deepseek-chat",
         maxTokens: 8000,
       },
-      "deepseek-reasoner": {
-        name: "deepseek-reasoner",
+      "deepseek/deepseek-r1": {
+        name: "deepseek/deepseek-r1",
         maxTokens: 8000,
       },
     },
