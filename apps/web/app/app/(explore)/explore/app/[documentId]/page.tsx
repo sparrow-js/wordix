@@ -406,7 +406,7 @@ export default function ExplorePage() {
                                   </div>
                                 </div>
                                 <div className="flex flex-col gap-0.5 px-1 py-2.5">
-                                  <div className="line-clamp-1 font-medium">
+                                  <div className="font-medium line-clamp-2">
                                     {run.inputValues ? (Object.values(run.inputValues) as string[]).join("\n") : ""}
                                   </div>
                                 </div>
