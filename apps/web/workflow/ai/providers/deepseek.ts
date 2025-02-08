@@ -73,8 +73,13 @@ export class DeepseekProvider extends BaseAIProvider {
     options?: Partial<ModelConfig>,
   ): Promise<string> {
     const config = this.getModelConfig(modelName, options);
+    const routerMap = {
+      "deepseek-chat": "deepseek/deepseek-chat",
+      "deepseek-reasoner": "deepseek/deepseek-r1",
+    };
+
     const stream = await this.client.chat.completions.create({
-      model: config.name,
+      model: routerMap[config.name],
       messages,
       stream: true,
       ...config,
