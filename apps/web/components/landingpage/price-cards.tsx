@@ -26,7 +26,7 @@ export const PriceCards = () => {
           </div>
           <div className="flex items-center mb-4">
             <Check className="w-5 h-5 mr-2 text-gray-600" />
-            <span className="text-gray-600">+$1 in free credits to try it out</span>
+            <span className="text-gray-600">+200,000 tokens to try it out</span>
           </div>
 
           <div className="flex items-center mb-4">
