@@ -11,7 +11,7 @@ export const PriceCards = () => {
       <div className="text-center mb-16">
         <h1 className="text-5xl font-bold mb-4 font-['Fascinate_Inline']">Pricing plan</h1>
         <p className="text-gray-600">
-          Quickly implement your ideas, start with Wordix, register for free and receive $1 experience.
+          Quickly implement your ideas, start with Wordix, register for free and receive 200,000 tokens to experience.
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
