@@ -376,7 +376,7 @@ export const modelConfigs: ModelConfigs = {
 };
 
 export function getProviderFromModel(modelName: string): string {
-  const model = allModels.find((m) => m.name === modelName);
+  const model = allModels.find((m) => m.model === modelName);
   if (!model) {
     throw new Error(`Model ${modelName} not found`);
   }
