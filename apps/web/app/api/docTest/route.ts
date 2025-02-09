@@ -88,12 +88,19 @@ export async function POST(request: Request, res: NextApiResponse) {
         from: "test",
       });
       await writer.close();
-      writer.releaseLock();
+      // writer.releaseLock();
     })
     .catch(async (e) => {
       await writer.close();
-      writer.releaseLock();
+      // writer.releaseLock();
     });
+
+  request.signal.onabort = async () => {
+    console.log("abort");
+    processor.abort();
+    await writer.ready;
+    await writer.close();
+  };
 
   return new Response(responseStream.readable);
 }
