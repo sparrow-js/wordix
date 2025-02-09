@@ -142,7 +142,9 @@ const Generation = ({ editor }: SettingProps) => {
                             generations.updateDataSyncToNode("model", item.model, editor);
                           }}
                         >
-                          <div className="absolute right-1 top-1 flex gap-2">{item.supportsImage && <Image className="w-4 h-4" />}</div>
+                          <div className="absolute right-1 top-1 flex gap-2">
+                            {item.supportsImage && <Image className="w-4 h-4" />}
+                          </div>
                           <div className="h-full w-full flex flex-row items-center p-4">
                             <div className="mr-3">{item.avatar}</div>
                             <div className="text-left">
