@@ -98,7 +98,7 @@ export default function InputUploadImage({
           <p className="text-lg md:text-xl text-black mb-4">Drop your image here...</p>
         ) : (
           <>
-            <p className="text-lg md:text-xl text-black mb-4">Drag & drop images of websites</p>
+            <p className="text-lg md:text-xl text-black mb-4">Drag & drop images </p>
             <p className="text-base md:text-lg text-black/70 mb-4">or</p>
             <Button variant="default" size="lg" className="mt-2 text-lg">
               Choose files
