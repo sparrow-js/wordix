@@ -76,7 +76,7 @@ export class CohereProvider extends BaseAIProvider {
     }));
 
     const stream = await this.openai.chat.completions.create({
-      model: "command-r",
+      model: config.name,
       messages: formattedMessages,
       stream: true,
       max_tokens: 4096,
