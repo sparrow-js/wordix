@@ -98,7 +98,7 @@ const PrompChat = ({ editor }: { editor: Editor }) => {
             className="flex-1 w-full border-none outline-none  leading-[20px] max-h-[80px] bg-transparent"
             spellCheck="false"
             rows={1}
-            placeholder="Tell the AI what to change something"
+            placeholder="Ask the wordix to do something"
             style={{
               resize: "none",
               overflowY: "scroll", // Allow scrolling
