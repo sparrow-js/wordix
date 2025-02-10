@@ -11,6 +11,7 @@ import { Drawer, DrawerClose, DrawerContent } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ssePost } from "@/service/base";
 import { client } from "@/utils/ApiClient";
 import { Sparkles } from "lucide-react";
@@ -401,69 +402,34 @@ export default function ExplorePage() {
                     </div>
                   </div>
                 </div>
-                <div className="mt-12">
-                  <div className="mx-auto flex w-full max-w-[989px] flex-1 flex-col gap-4">
-                    <div className="flex flex-col gap-9">
-                      {userRunList.length > 0 && (
-                        <div className="flex flex-col gap-4">
-                          <div className="text-center text-2xl font-medium sm:text-left">My results</div>
-                          <div className="grid gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-                            {userRunList.map((run) => {
-                              return (
-                                <div
-                                  key={run.id} // Ensure each run has a unique identifier
-                                  className="group/template has-[:focus-visible]:ring-offset-background relative flex w-full flex-col text-sm sm:min-w-0 xl:h-[240px]"
-                                >
-                                  <div className="ring-1 ring-gray-200 hover:ring-gray-300 transition-all duration-200 px-4 py-3 relative aspect-[16/9] w-full overflow-hidden rounded-lg text-sm">
-                                    <div className="max-h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
-                                      <Markdown className="prose prose-sm max-w-none prose-headings:font-semibold prose-headings:text-gray-900 prose-p:text-gray-600 prose-strong:text-gray-900 prose-code:text-gray-900">
-                                        {run?.metadata.markdownOutput}
-                                      </Markdown>
-                                    </div>
-                                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-transparent via-transparent to-white/80 opacity-0 transition-opacity duration-200 group-hover/template:opacity-100">
-                                      <Button
-                                        variant="secondary"
-                                        className="shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 bg-orange-500 hover:bg-orange-600 text-white font-medium"
-                                        onClick={() => {
-                                          setRunDrawerOpen(true);
-                                          setMarkdownGen(run?.metadata.markdownOutput);
-                                        }}
-                                      >
-                                        View Details
-                                      </Button>
-                                    </div>
-                                  </div>
-                                  <div className="flex flex-col gap-0.5 px-1 py-2.5">
-                                    <div className="font-medium line-clamp-2">
-                                      {run.inputValues ? (Object.values(run.inputValues) as string[]).join("\n") : ""}
-                                    </div>
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      )}
-
-                      <div className="flex flex-col gap-4">
-                        <div className="text-center text-2xl font-medium sm:text-left">Generate results</div>
-                        <div className="grid gap-x-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-                          {runList.map((run) => {
-                            return (
-                              <div
-                                key={run.id} // Ensure each run has a unique identifier
-                                className="group/template has-[:focus-visible]:ring-offset-background relative flex w-full flex-col text-sm sm:min-w-0 xl:h-[240px]"
-                              >
-                                <div className="ring-1 ring-gray-200 hover:ring-gray-300 transition-all duration-200 px-4 py-3 relative aspect-[16/9] w-full overflow-hidden rounded-lg text-sm">
-                                  <div className="max-h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
-                                    <Markdown className="prose prose-sm max-w-none prose-headings:font-semibold prose-headings:text-gray-900 prose-p:text-gray-600 prose-strong:text-gray-900 prose-code:text-gray-900">
+                <div className="mt-12 bg-gray-50 py-16">
+                  <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 px-6">
+                    {userRunList.length > 0 && (
+                      <div className="flex flex-col gap-6">
+                        <h2 className="text-3xl font-semibold text-gray-900">My Results</h2>
+                        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                          {userRunList.map((run) => (
+                            <div
+                              key={run.id}
+                              className="group relative flex flex-col overflow-hidden rounded-xl bg-white border border-gray-200 shadow-sm transition-all duration-200 hover:shadow-md hover:border-gray-300"
+                            >
+                              <div className="flex-1 p-6">
+                                <div className="group relative">
+                                  <div className="h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
+                                    <Markdown
+                                      className="prose prose-sm max-w-none 
+                                        prose-headings:font-semibold prose-headings:text-gray-900 
+                                        prose-p:text-gray-600 prose-strong:text-gray-900 
+                                        prose-code:text-gray-900"
+                                    >
                                       {run?.metadata.markdownOutput}
                                     </Markdown>
                                   </div>
-                                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-transparent via-transparent to-white/80 opacity-0 transition-opacity duration-200 group-hover/template:opacity-100">
+                                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-transparent via-white/60 to-white opacity-0 transition-all duration-200 group-hover:opacity-100">
                                     <Button
-                                      variant="secondary"
-                                      className="shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200 bg-orange-500 hover:bg-orange-600 text-white font-medium"
+                                      variant="default"
+                                      className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg transition-all duration-200 
+                                        hover:scale-105 hover:shadow-xl"
                                       onClick={() => {
                                         setRunDrawerOpen(true);
                                         setMarkdownGen(run?.metadata.markdownOutput);
@@ -473,15 +439,98 @@ export default function ExplorePage() {
                                     </Button>
                                   </div>
                                 </div>
-                                <div className="flex flex-col gap-0.5 px-1 py-2.5">
-                                  <div className="font-medium line-clamp-2">
-                                    {run.inputValues ? (Object.values(run.inputValues) as string[]).join("\n") : ""}
-                                  </div>
+                              </div>
+                              <div className="border-t border-gray-100 bg-gray-50 px-6 py-4">
+                                <TooltipProvider>
+                                  <Tooltip>
+                                    <TooltipTrigger asChild>
+                                      <p
+                                        className="line-clamp-2 text-sm text-gray-600 cursor-pointer hover:text-gray-900"
+                                        onClick={() => {
+                                          const content = run.inputValues
+                                            ? (Object.values(run.inputValues) as string[]).join(" · ")
+                                            : "";
+                                          navigator.clipboard.writeText(content);
+                                          toast.success("Content copied to clipboard");
+                                        }}
+                                      >
+                                        {run.inputValues
+                                          ? (Object.values(run.inputValues) as string[]).join(" · ")
+                                          : ""}
+                                      </p>
+                                    </TooltipTrigger>
+                                    <TooltipContent className="max-w-[300px] break-words">
+                                      {run.inputValues ? (Object.values(run.inputValues) as string[]).join(" · ") : ""}
+                                    </TooltipContent>
+                                  </Tooltip>
+                                </TooltipProvider>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="flex flex-col gap-6">
+                      <h2 className="text-3xl font-semibold text-gray-900">Generated Results</h2>
+                      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        {runList.map((run) => (
+                          <div
+                            key={run.id}
+                            className="group relative flex flex-col overflow-hidden rounded-xl bg-white border border-gray-200 shadow-sm transition-all duration-200 hover:shadow-md hover:border-gray-300"
+                          >
+                            <div className="flex-1 p-6">
+                              <div className="group relative">
+                                <div className="h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
+                                  <Markdown
+                                    className="prose prose-sm max-w-none 
+                                      prose-headings:font-semibold prose-headings:text-gray-900 
+                                      prose-p:text-gray-600 prose-strong:text-gray-900 
+                                      prose-code:text-gray-900"
+                                  >
+                                    {run?.metadata.markdownOutput}
+                                  </Markdown>
+                                </div>
+                                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-transparent via-white/60 to-white opacity-0 transition-all duration-200 group-hover:opacity-100">
+                                  <Button
+                                    variant="default"
+                                    className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg transition-all duration-200 
+                                      hover:scale-105 hover:shadow-xl"
+                                    onClick={() => {
+                                      setRunDrawerOpen(true);
+                                      setMarkdownGen(run?.metadata.markdownOutput);
+                                    }}
+                                  >
+                                    View Details
+                                  </Button>
                                 </div>
                               </div>
-                            );
-                          })}
-                        </div>
+                            </div>
+                            <div className="border-t border-gray-100 bg-gray-50 px-6 py-4">
+                              <TooltipProvider>
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <p
+                                      className="line-clamp-2 text-sm text-gray-600 cursor-pointer hover:text-gray-900"
+                                      onClick={() => {
+                                        const content = run.inputValues
+                                          ? (Object.values(run.inputValues) as string[]).join(" · ")
+                                          : "";
+                                        navigator.clipboard.writeText(content);
+                                        toast.success("Content copied to clipboard");
+                                      }}
+                                    >
+                                      {run.inputValues ? (Object.values(run.inputValues) as string[]).join(" · ") : ""}
+                                    </p>
+                                  </TooltipTrigger>
+                                  <TooltipContent className="max-w-[300px] break-words">
+                                    {run.inputValues ? (Object.values(run.inputValues) as string[]).join(" · ") : ""}
+                                  </TooltipContent>
+                                </Tooltip>
+                              </TooltipProvider>
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>

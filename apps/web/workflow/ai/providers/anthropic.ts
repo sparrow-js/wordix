@@ -70,6 +70,8 @@ export class AnthropicProvider extends BaseAIProvider {
   ): Promise<string> {
     const config = this.getModelConfig(modelName, options);
 
+    console.log("***************config", messages);
+
     const stream = await this.openai.chat.completions.create({
       model: config.name,
       messages: messages,

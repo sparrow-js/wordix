@@ -46,7 +46,7 @@ export const allModels: ModelConfigWithProvider[] = [
     frequencyPenalty: 0,
     presencePenalty: 0,
     avatar: <OpenaiIcon />,
-    supportsImage: true,
+    supportsImage: false,
   },
   {
     provider: "openai",
