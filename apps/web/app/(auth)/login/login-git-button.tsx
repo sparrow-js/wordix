@@ -13,7 +13,7 @@ export default function LoginGithubButton() {
       }}
     >
       <Button className="w-full">
-        <FaGithub className="mr-2 size-5" />
+        <FaGithub className="mr-2 text-[20px]" />
         <p className="text-sm font-medium">Login with Github</p>
       </Button>
     </form>

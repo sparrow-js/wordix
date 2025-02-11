@@ -11,7 +11,7 @@ export default function LoginGoogleButton() {
       }}
     >
       <Button className="w-full">
-        <FcGoogle className="mr-2 size-5" />
+        <FcGoogle className="mr-2 text-[20px]" />
         <p className="text-sm font-medium">Login with Google</p>
       </Button>
     </form>
