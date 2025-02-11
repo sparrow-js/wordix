@@ -93,7 +93,7 @@ export class DeepseekProvider extends BaseAIProvider {
       fullText += content;
 
       if (chunk.usage && workspaceId) {
-        await reduceToken(workspaceId, chunk.usage.completion_tokens);
+        await reduceToken(workspaceId, chunk.usage.completion_tokens * 2);
       }
 
       onText(content);
