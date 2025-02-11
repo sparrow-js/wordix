@@ -1,5 +1,6 @@
 "use client";
 
+import { getCoolHueImage } from "@/components/coolhue";
 import LoadingCircle from "@/components/icons/loading-circle";
 import useStores from "@/hooks/useStores";
 import type Collection from "@/models/Collection";
@@ -55,6 +56,7 @@ export default observer(function DocsPage() {
         collectionId: collectionId,
         workspaceId: workspaces.selectedWorkspaceId,
         content: template?.content,
+        bannerImage: getCoolHueImage(),
       },
       { parentId },
     );
