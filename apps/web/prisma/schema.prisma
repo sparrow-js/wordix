@@ -481,14 +481,13 @@ model Pokemon {
   @@map("pokemon")
 }
 
-model Whitelist {
+model Waitlist {
   id        String   @id @default(cuid())
   email     String   @unique
   name      String?
   reason    String?
+  status    String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@map("whitelist")
 }
 

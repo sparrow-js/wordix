@@ -58,6 +58,10 @@ export default async function middleware(req: NextRequest) {
       return NextResponse.rewrite(new URL("/login", req.url));
     }
 
+    if (session && path === "/waitlist") {
+      return NextResponse.rewrite(new URL("/waitlist", req.url));
+    }
+
     return NextResponse.rewrite(new URL(`/app${path === "/" ? "" : path}`, req.url));
   }
 
