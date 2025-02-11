@@ -19,6 +19,7 @@ export interface AIProvider {
     onText: (text: string) => void,
     modelName?: string,
     options?: Partial<ModelConfig>,
+    workspaceId?: string,
   ): Promise<string>;
 
   generateImage?(prompt: string, modelName?: string, params?: any): Promise<{ output: string }>;
@@ -59,6 +60,7 @@ export abstract class BaseAIProvider implements AIProvider {
     onText: (text: string) => void,
     modelName?: string,
     options?: Partial<ModelConfig>,
+    workspaceId?: string,
   ): Promise<string>;
 }
 

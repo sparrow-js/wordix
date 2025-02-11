@@ -53,9 +53,10 @@ export class AIService {
     onText: (text: string) => void,
     modelName?: string,
     options?: Partial<ModelConfig>,
+    workspaceId?: string,
   ): Promise<string> {
     const provider = this.getProvider(providerName);
-    return await provider.streamChat(messages, onText, modelName, options);
+    return await provider.streamChat(messages, onText, modelName, options, workspaceId);
   }
 
   async generateImage(

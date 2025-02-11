@@ -1,3 +1,4 @@
+import { reduceToken } from "@/lib/charge-token";
 import OpenAI from "openai";
 import type { ModelConfig } from "../config/model-configs";
 import { BaseAIProvider, type Message } from "./base";
@@ -71,6 +72,7 @@ export class DeepseekProvider extends BaseAIProvider {
     onText: (text: string) => void,
     modelName?: string,
     options?: Partial<ModelConfig>,
+    workspaceId?: string,
   ): Promise<string> {
     const config = this.getModelConfig(modelName, options);
     const routerMap = {
@@ -89,6 +91,11 @@ export class DeepseekProvider extends BaseAIProvider {
     for await (const chunk of stream) {
       const content = chunk.choices[0]?.delta?.content || "";
       fullText += content;
+
+      if (chunk.usage && workspaceId) {
+        await reduceToken(workspaceId, chunk.usage.completion_tokens);
+      }
+
       onText(content);
     }
 

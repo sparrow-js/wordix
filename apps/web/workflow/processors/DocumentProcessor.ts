@@ -55,6 +55,7 @@ export class DocumentProcessor extends BaseProcessor {
       tempParentNode?: DocNode;
       disableDocumentOutput?: boolean;
       apiKey?: string;
+      workspaceId?: string;
     },
   ) {
     super();
@@ -76,6 +77,7 @@ export class DocumentProcessor extends BaseProcessor {
       tempParentNode: initialState?.tempParentNode || null,
       disableDocumentOutput: initialState?.disableDocumentOutput || false,
       onStop,
+      workspaceId: initialState?.workspaceId || "",
       onStreamResponse: (response) => {
         if (this.stopped) {
           return;

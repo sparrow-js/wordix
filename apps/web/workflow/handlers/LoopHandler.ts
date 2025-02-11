@@ -135,6 +135,7 @@ export class LoopHandler extends BaseHandler {
           path: [...context.path],
           markdown: [...context.markdown],
           apiKey: context.apiKey,
+          workspaceId: context.workspaceId,
         });
 
         // 直接处理 content 作为文档
@@ -493,6 +494,7 @@ export class LoopHandler extends BaseHandler {
       path: [...context.path],
       markdown: [...context.markdown],
       apiKey: context.apiKey,
+      workspaceId: context.workspaceId,
     });
 
     // 处理文档

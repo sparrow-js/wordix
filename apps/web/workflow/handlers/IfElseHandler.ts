@@ -97,6 +97,7 @@ export class IfElseHandler extends BaseHandler {
         path: [...context.path, branchNode.attrs.id],
         markdown: [],
         apiKey: context.apiKey,
+        workspaceId: context.workspaceId,
       });
 
       // 创建文档节点

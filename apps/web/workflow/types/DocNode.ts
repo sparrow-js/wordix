@@ -45,6 +45,7 @@ export interface WorkflowStreamResponse {
 // Update ProcessingContext to include stream response
 export interface ProcessingContext {
   apiKey?: string;
+  workspaceId?: string;
   variables: Map<string, Variable>;
   depth: number;
   path: string[];

@@ -58,6 +58,7 @@ export class PromptHandler extends BaseHandler {
       apiKey: context.apiKey,
       //   path: [...context.path, attrs.id],
       markdown: [],
+      workspaceId: context.workspaceId,
     });
 
     // 处理文档

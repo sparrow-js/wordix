@@ -44,6 +44,7 @@ export async function POST(request: Request, res: NextApiResponse) {
     {
       disableDocumentOutput: true,
       apiKey: workspace.oneApiToken,
+      workspaceId: workspace.id,
     },
   );
 

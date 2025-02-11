@@ -38,10 +38,10 @@ export async function POST(req: Request, { params }: { params: { documentId: str
       include: {
         document: {
           include: {
-            workspace: true
-          }
-        }
-      }
+            workspace: true,
+          },
+        },
+      },
     });
 
     const documentFlow = document?.content;
@@ -72,9 +72,9 @@ export async function POST(req: Request, { params }: { params: { documentId: str
       {
         disableDocumentOutput: true,
         apiKey: document?.document?.workspace?.oneApiToken,
+        workspaceId: document?.document?.workspace?.id,
       },
     );
-
 
     const startTime = new Date();
 
@@ -82,12 +82,17 @@ export async function POST(req: Request, { params }: { params: { documentId: str
       const context = processor.getContext();
       const endTime = new Date();
       const duration = endTime.getTime() - startTime.getTime();
-      await createRun(documentId, undefined, {
-        metadata: {
-          markdownOutput: context.markdownOutput,
+      await createRun(
+        documentId,
+        undefined,
+        {
+          metadata: {
+            markdownOutput: context.markdownOutput,
+          },
+          duration,
         },
-        duration,
-      }, user.id);
+        user.id,
+      );
       await writer.close();
       writer.releaseLock();
     });
