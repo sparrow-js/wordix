@@ -30,7 +30,7 @@ export function PrismaAdapter(p: PrismaClient): Adapter {
         },
         body: JSON.stringify({
           name: workspaceId,
-          remain_quota: 200000,
+          remain_quota: 500000,
           expired_time: -1,
           unlimited_quota: false,
           models: "",
