@@ -34,7 +34,11 @@ const UserButton = observer(() => {
 
   const { workspaces } = useStores();
   const fetchWorkspaces = async () => {
-    await workspaces.fetchPage();
+    const res = await workspaces.fetchPage();
+    if (res.error) {
+      router.push("/waitlist");
+      return;
+    }
     if (workspaces.orderedList.length > 0) {
       workspaces.setSelectedWorkspaceId(workspaces.orderedList[0].id);
     }
@@ -50,7 +54,7 @@ const UserButton = observer(() => {
   if (!workspace) return null;
 
   const getTokenInfo = async () => {
-    const res = await client.get(`/one-api/getTokenInfo`, {
+    const res = await client.get("/one-api/getTokenInfo", {
       workspaceId: workspaces.selectedWorkspaceId,
     });
 

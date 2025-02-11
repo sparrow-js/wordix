@@ -9,6 +9,14 @@ export async function POST() {
     return new Response("Unauthorized", { status: 401 });
   }
 
+  // const waitlistEntry = await prisma.waitlist.findUnique({
+  //   where: { email: session.user.email },
+  // });
+
+  // if (!waitlistEntry || waitlistEntry.status !== "allow") {
+  //   return respData([], { total: 0 }, "waitlist");
+  // }
+
   const workspaces = await prisma.workspace.findMany({
     where: {
       members: {

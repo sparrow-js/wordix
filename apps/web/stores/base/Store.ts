@@ -318,6 +318,9 @@ export default abstract class Store<T extends Model> {
       });
 
       response[PAGINATION_SYMBOL] = res.pagination;
+      if (res.error) {
+        response["error"] = res.error;
+      }
       return response;
     } finally {
       this.isFetching = false;
