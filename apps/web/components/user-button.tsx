@@ -35,6 +35,7 @@ const UserButton = observer(() => {
   const { workspaces } = useStores();
   const fetchWorkspaces = async () => {
     const res = await workspaces.fetchPage();
+    // @ts-ignore
     if (res.error) {
       router.push("/waitlist");
       return;
