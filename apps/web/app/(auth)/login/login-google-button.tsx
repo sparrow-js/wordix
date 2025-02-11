@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { signIn } from "@/lib/auth";
-import { FaGoogle } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
 export default function LoginGoogleButton() {
   return (
@@ -11,7 +11,7 @@ export default function LoginGoogleButton() {
       }}
     >
       <Button className="w-full">
-        <FaGoogle className="mr-2" />
+        <FcGoogle className="mr-2" width={20} height={20} />
         <p className="text-sm font-medium">Login with Google</p>
       </Button>
     </form>
