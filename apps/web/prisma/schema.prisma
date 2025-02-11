@@ -480,3 +480,15 @@ model Pokemon {
 
   @@map("pokemon")
 }
+
+model Whitelist {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  reason    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("whitelist")
+}
+

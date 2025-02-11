@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
           from: "app",
         },
         orderBy: {
-          createdAt: "desc",
+          createdAt: "asc",
         },
         take: limit,
         skip: page * limit,
@@ -70,7 +70,7 @@ export async function GET(request: NextRequest) {
     const runs = await prisma.run.findMany({
       where: whereClause,
       orderBy: {
-        createdAt: "desc",
+        createdAt: "asc",
       },
       take: limit,
       skip: page * limit,
