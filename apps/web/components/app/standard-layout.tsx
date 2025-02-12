@@ -62,7 +62,7 @@ const ProjectList = observer(() => {
 
 const ProjectListSkeleton = () => (
   <div className="flex flex-row gap-4">
-    {[1, 2, 3].map((_, index) => (
+    {[1, 2, 3, 4, 5].map((_, index) => (
       <div key={index} className="flex flex-col border border-border rounded-lg overflow-hidden shadow-md w-40">
         <div className="relative h-24">
           <Skeleton className="h-24 w-full bg-cover bg-center" />
@@ -101,7 +101,7 @@ const ProjectSection = observer(({ openDialog }: { openDialog: () => void }) => 
 
 const DeploymentListSkeleton = () => (
   <div className="flex flex-row gap-4">
-    {[1, 2, 3].map((_, index) => (
+    {[1, 2, 3, 4, 5].map((_, index) => (
       <div key={index} className="flex flex-col border border-border rounded-lg overflow-hidden shadow-md w-40">
         <div className="relative h-24">
           <Skeleton className="h-24 w-full bg-cover bg-center" />
