@@ -38,8 +38,8 @@ export default function LoginPage() {
           <LoginGithubButton />
         </Suspense>
       </div>
-
-      {/* <div className="mx-auto mt-2 w-full">
+      {/* 
+      <div className="mx-auto mt-2 w-full">
         <Suspense
           fallback={
             <div className="my-2 h-10 w-full rounded-md border border-stone-200 bg-stone-100 dark:border-stone-700 dark:bg-stone-800" />

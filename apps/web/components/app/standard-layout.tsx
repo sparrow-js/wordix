@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ChevronRightIcon, Globe, Lock, PlusIcon } from "lucide-react";
+import { ChevronRightIcon, Globe, Lock, PlusIcon, Rocket } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 
@@ -19,6 +19,7 @@ import { observer } from "mobx-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { tools as toolsTemplate } from "./const";
+import { defaultContent } from "./default-content";
 
 interface Project {
   title: string;
@@ -125,6 +126,8 @@ const StandardLayout = observer(() => {
   const { collections, documents, workspaces } = useStores();
   const [openDialog, setOpenDialog] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isQuickExperienceLoading, setIsQuickExperienceLoading] = useState(false);
+
   const router = useRouter();
   const fetchProjects = async (page: number) => {
     await collections.fetchPage({
@@ -175,6 +178,37 @@ const StandardLayout = observer(() => {
     setOpenDialog(false);
   }, [collections, projectName, projectPrivacy, projectTemplate, tools]);
 
+  const createDocument = async (collectionId: string, parentId?: string, template?: any) => {
+    const document = await documents.save(
+      {
+        title: template?.title,
+        collectionId: collectionId,
+        workspaceId: workspaces.selectedWorkspaceId,
+        content: template?.content,
+        bannerImage: getCoolHueImage(),
+      },
+      { parentId },
+    );
+    router.push(`/${collectionId}/docs/${document.id}`);
+  };
+
+  const handleQuickExperience = async () => {
+    setIsQuickExperienceLoading(true);
+    const collection = await collections.save({
+      name: "Quick Experience",
+      privacy: "public" as CollectionPermission,
+      template: "quick-experience",
+      workspaceId: workspaces.selectedWorkspaceId,
+      bannerImage: getCoolHueImage(),
+    });
+
+    await createDocument(collection.id, undefined, {
+      title: "Quick Experience",
+      content: defaultContent,
+    });
+    setIsQuickExperienceLoading(false);
+  };
+
   return (
     <div className="flex h-full w-full md:w-auto flex-1 flex-col bg-muted/30">
       {/* Header */}
@@ -187,6 +221,14 @@ const StandardLayout = observer(() => {
           </Breadcrumb>
         </div>
         <div className="flex items-center gap-2">
+          <Button className="bg-purple-600 hover:bg-purple-800 text-white mr-2" onClick={handleQuickExperience}>
+            {isQuickExperienceLoading ? (
+              <LoadingCircle dimensions="h-4 w-4 mr-2" />
+            ) : (
+              <Rocket className="mr-2 h-4 w-4" />
+            )}
+            Quick Experience
+          </Button>
           <Dialog open={openDialog} onOpenChange={setOpenDialog}>
             <DialogTrigger asChild>
               <Button className="bg-[#fad400] hover:bg-[#fce062] text-black">
