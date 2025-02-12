@@ -63,7 +63,7 @@ export const Workbench = () => {
     <div className="flex h-full w-full flex-col relative">
       <div className="w-full h-full">
         <PageBar />
-        <div className="w-full h-[calc(100svh-120px)]">
+        <div className="w-full h-[calc(100svh-120px)] p-2">
           {response && response.document && <TailwindAdvancedEditor response={response} />}
         </div>
       </div>
