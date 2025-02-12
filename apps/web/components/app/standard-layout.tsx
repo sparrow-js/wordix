@@ -157,7 +157,7 @@ const StandardLayout = observer(() => {
     try {
       setIsLoading(true);
       const collection = await collections.save({
-        name: projectName,
+        name: projectName || "Start project",
         privacy: projectPrivacy as CollectionPermission,
         template: projectTemplate,
         workspaceId: workspaces.selectedWorkspaceId,
