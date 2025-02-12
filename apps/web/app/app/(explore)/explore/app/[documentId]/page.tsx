@@ -197,6 +197,12 @@ export default function ExplorePage() {
         getAbortController: (abortController) => {
           abortControllerRef.current = abortController;
         },
+        onError: (error) => {
+          setIsLoading(false);
+          setRunDrawerOpen(false);
+          toast.error(error);
+          console.error("Error generating prompt:", error);
+        },
       },
     );
   };

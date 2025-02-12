@@ -1,4 +1,5 @@
 import prisma from "@/backend/prisma";
+import { getToken } from "@/service/action/oneapi";
 import { createRun } from "@/service/action/run";
 import { DocumentProcessor } from "@/workflow/processors/DocumentProcessor";
 import { getWorkflowResponseWrite } from "@/workflow/utils/utils";
@@ -37,6 +38,26 @@ export async function POST(request: Request, res: NextApiResponse) {
     write: writer,
     streamResponse: true,
   });
+
+  const token = await getToken(workspace.id);
+
+  if (token) {
+    const { remain_quota } = token;
+    if (remain_quota < 10) {
+      workflowResponseWrite({
+        event: "error",
+        data: "No quota",
+      });
+      return new Response(
+        JSON.stringify({
+          code: "no_quota",
+          message: "No quota",
+        }),
+        { status: 401 },
+      );
+    }
+  }
+
   const processor = new DocumentProcessor(
     // onStop 回调
     async (node) => {},
