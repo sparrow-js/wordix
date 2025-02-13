@@ -39,11 +39,11 @@ const ImageGallery: FC<Props> = ({ srcs }) => {
         // eslint-disable-next-line @next/next/no-img-element
         <img
           key={index}
-          className={s.item}
+          // className={s.item}
           style={imgStyle}
           src={src}
           alt=""
-          onClick={() => setImagePreviewUrl(src)}
+          // onClick={() => setImagePreviewUrl(src)}
           onError={(e) => e.currentTarget.remove()}
         />
       ))}

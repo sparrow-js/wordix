@@ -3,6 +3,8 @@ import { Copy, StopCircle, X } from "lucide-react";
 import { useParams } from "next/navigation";
 import { type DropEvent, type FileRejection, useDropzone } from "react-dropzone";
 
+// import Markdown from "react-markdown";
+import { Markdown } from "@/components/base/markdown";
 import DescriptionEditor from "@/components/description-editor";
 import LoadingDots from "@/components/icons/loading-dots";
 import InputUploadImage from "@/components/input-upload-image";
@@ -17,7 +19,7 @@ import { client } from "@/utils/ApiClient";
 import { Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import Markdown from "react-markdown";
+
 import { toast } from "sonner";
 
 const onUpload = async (file: File) => {
@@ -346,7 +348,7 @@ export default function ExplorePage() {
                                 <Sparkles className="w-5 h-5 ml-1" />
                               </span>
                             </Button>
-                            <Drawer open={runDrawerOpen} onOpenChange={setRunDrawerOpen}>
+                            <Drawer open={runDrawerOpen} onOpenChange={setRunDrawerOpen} repositionInputs={false}>
                               {/* <DrawerTrigger asChild>
                         <Button
                           className="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 hover:from-purple-600 hover:via-pink-600 hover:to-orange-600 text-white border-none transition-all duration-300"
@@ -369,7 +371,7 @@ export default function ExplorePage() {
 
                                 <div ref={scrollRef} className="mx-auto w-full px-24 relative h-full overflow-y-auto">
                                   <div className="p-4 select-text flex flex-col items-center">
-                                    <Markdown className="prose lg:prose-xl w-full">{markdownGen}</Markdown>
+                                    <Markdown className="prose lg:prose-xl w-full" content={markdownGen} />
                                   </div>
                                 </div>
                                 <DrawerClose asChild className="absolute right-4 top-4">
@@ -423,13 +425,12 @@ export default function ExplorePage() {
                                 <div className="group relative">
                                   <div className="h-[200px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
                                     <Markdown
+                                      content={run?.metadata.markdownOutput}
                                       className="prose prose-sm max-w-none 
                                         prose-headings:font-semibold prose-headings:text-gray-900 
                                         prose-p:text-gray-600 prose-strong:text-gray-900 
                                         prose-code:text-gray-900"
-                                    >
-                                      {run?.metadata.markdownOutput}
-                                    </Markdown>
+                                    />
                                   </div>
                                   <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-transparent via-white/60 to-white opacity-0 transition-all duration-200 group-hover:opacity-100">
                                     <Button
