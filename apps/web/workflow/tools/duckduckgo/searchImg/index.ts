@@ -37,7 +37,7 @@ const main = async (props: Props, retry = 3): Response => {
     }
 
     await delay(Math.random() * 5000);
-    return main(props, retry - 1);
+    // return main(props, retry - 1);
   }
 };
 
