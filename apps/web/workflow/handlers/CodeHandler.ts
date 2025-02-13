@@ -151,7 +151,7 @@ export class CodeHandler extends BaseHandler {
             node._state.result = result.output;
           }
           if (typeof result.output === "string") {
-            await this.emitStream(context, "message", result.output);
+            await this.emitStream(context, "message", result.output, true, true);
           }
 
           // Update variables if execution returned new values
