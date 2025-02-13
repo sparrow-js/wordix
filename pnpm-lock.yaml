@@ -277,7 +277,7 @@ importers:
         version: 4.2.1
       duck-duck-scrape:
         specifier: ^2.2.5
-        version: 2.2.6
+        version: 2.2.5
       echarts:
         specifier: ^5.5.1
         version: 5.5.1
@@ -3698,8 +3698,8 @@ packages:
     resolution: {integrity: sha512-IrPdXQsk2BbzvCBGBOTmmSH5SodmqZNt4ERAZDmW4CT+tL8VtvinqywuANaFu4bOMWki16nqf0e4oC0QIaDr/g==}
     engines: {node: '>=10'}
 
-  duck-duck-scrape@2.2.6:
-    resolution: {integrity: sha512-ov8IwoueOXnXsqGrN6ESys9x2uesyCVZYRex9is9uXyDuI3Je9pxjH/Y6atIUVjBhnwWQ5d1omoo2vbUmVDBLQ==}
+  duck-duck-scrape@2.2.5:
+    resolution: {integrity: sha512-RTu/Ag5LhgD/j1l2zVGCwTINBoEYCffl58nMoBjtXWJG8tTex72h3gxpDjAr8jVqFaBvhgASNKTUsE31JeqYgw==}
 
   duck@0.1.12:
     resolution: {integrity: sha512-wkctla1O6VfP89gQ+J/yDesM0S7B7XLXjKGzXxMDVFg7uEn706niAtyYovKbyq1oT9YwDcly721/iUWoc8MVRg==}
@@ -10574,7 +10574,7 @@ snapshots:
 
   dotenv@8.6.0: {}
 
-  duck-duck-scrape@2.2.6:
+  duck-duck-scrape@2.2.5:
     dependencies:
       html-entities: 2.5.2
       needle: 3.3.1

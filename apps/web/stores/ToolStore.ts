@@ -74,6 +74,19 @@ export default class ToolsNodeStore extends Store<Tool> {
           },
         ];
       }
+
+      if (item.toolId === "duckduckgo") {
+        item.inputs = [
+          {
+            label: "query",
+            value: "query",
+          },
+          {
+            label: "search type",
+            value: "searchType",
+          },
+        ];
+      }
       this.add(item as Tool);
     }
   }

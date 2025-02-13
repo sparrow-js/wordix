@@ -17,6 +17,8 @@ import { ParagraphHandler } from "../handlers/ParagraphHandler";
 import { PromptHandler } from "../handlers/PromptHandler";
 import { TextHandler } from "../handlers/TextHandler";
 import { ToolHandler } from "../handlers/ToolHandler";
+
+import { DuckDuckGoTool } from "../tools/duckduckgo";
 import { FLUXTool } from "../tools/fluxTool";
 import { PromptGenerationTool } from "../tools/promptGenerationTool";
 import { TextToSpeechTool } from "../tools/textToSpeech";
@@ -127,6 +129,7 @@ export class DocumentProcessor extends BaseProcessor {
     this.registry.registerTool("promptGeneration", new PromptGenerationTool(this.context));
     this.registry.registerTool("webscrape", new WebscrapeTool(this.context));
     this.registry.registerTool("textToSpeech", new TextToSpeechTool(this.context));
+    this.registry.registerTool("duckduckgo", new DuckDuckGoTool(this.context));
   }
 
   /**

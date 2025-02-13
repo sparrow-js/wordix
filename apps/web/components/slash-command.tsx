@@ -184,6 +184,35 @@ export const suggestionItems = createSuggestionItems([
             .run();
         },
       },
+      {
+        title: "Duckduckgo",
+        description: "Duckduckgo",
+        searchTerms: ["Duckduckgo"],
+        icon: <Wrench size={18} />,
+        command: ({ editor, range }) => {
+          editor
+            .chain()
+            .focus()
+            .deleteRange(range)
+            .setTool({
+              id: nanoid(10),
+              label: "Duckduckgo",
+              toolId: "duckduckgo",
+              output: [],
+              parameters: {
+                query: {
+                  type: "literal",
+                  value: "",
+                },
+                searchType: {
+                  type: "literal",
+                  value: "search",
+                },
+              },
+            })
+            .run();
+        },
+      },
     ],
   },
   {

@@ -6,6 +6,7 @@ import { useEffect } from "react";
 
 import { NodeViewWrapper, ReactNodeViewRenderer } from "@tiptap/react";
 import { nanoid } from "nanoid";
+import DuckDuckGoComponent from "./component/duckduckgo";
 import PromptGenerationComponent from "./component/promptGeneration";
 import StableDiffusionComponent from "./component/stableDiffusion";
 import TextToSpeechComponent from "./component/textToSpeech";
@@ -16,6 +17,7 @@ const TOOL_COMPONENTS = {
   promptGeneration: PromptGenerationComponent,
   webscrape: WebscrapeComponent,
   textToSpeech: TextToSpeechComponent,
+  duckduckgo: DuckDuckGoComponent,
 };
 
 const CustomNodeComponent = observer((props) => {
