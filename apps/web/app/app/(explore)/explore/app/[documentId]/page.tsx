@@ -494,9 +494,8 @@ export default function ExplorePage() {
                                       prose-headings:font-semibold prose-headings:text-gray-900 
                                       prose-p:text-gray-600 prose-strong:text-gray-900 
                                       prose-code:text-gray-900"
-                                  >
-                                    {run?.metadata.markdownOutput}
-                                  </Markdown>
+                                    content={run?.metadata.markdownOutput}
+                                  />
                                 </div>
                                 <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-transparent via-white/60 to-white opacity-0 transition-all duration-200 group-hover:opacity-100">
                                   <Button
