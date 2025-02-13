@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Folder, LayoutDashboard, Rocket } from "lucide-react";
+import { ChevronRight, Folder, LayoutDashboard, Rocket, Shapes } from "lucide-react";
 
 import Link from "next/link";
 
@@ -100,10 +100,10 @@ const LeftSidebar = observer(() => {
             </div>
           </Link>
         </div>
-        {/* 
+
         <div className="flex flex-col gap-1 h-fit">
           <h2 className="text-xl font-semibold text-primary px-2.5 pt-2.5 pb-1 truncate">Community</h2>
-          <Link href="/explore" target="_blank">
+          <Link href="/explore">
             <div className="flex h-10 cursor-pointer items-center gap-2.5 rounded-md p-2.5 text-sm font-medium text-foreground hover:bg-muted/30">
               <Shapes className="h-4 w-4" />
               Explore
@@ -112,7 +112,7 @@ const LeftSidebar = observer(() => {
               </div>
             </div>
           </Link>
-        </div> */}
+        </div>
       </div>
     </div>
   );

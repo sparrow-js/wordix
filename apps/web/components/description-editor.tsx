@@ -10,7 +10,7 @@ const extensions = [...descriptionExtensions];
 
 export default function DescriptionEditor({ initialContent }) {
   return (
-    <div className="w-full h-full min-w-[600px] overflow-y-auto max-h-[calc(100vh-260px)]">
+    <div className="w-full h-full overflow-y-auto max-h-[calc(100vh-260px)]">
       <div className="relative w-full">
         <EditorRoot>
           <EditorContent
