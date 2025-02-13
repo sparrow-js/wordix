@@ -5,14 +5,11 @@ import TopBar from "@/components/layouts/top-bar";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import stores from "@/stores";
 import { Provider } from "mobx-react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
-  const router = useRouter();
   const pathname = usePathname();
-
-  console.log("pathname", pathname, router);
 
   return (
     <Provider {...stores}>

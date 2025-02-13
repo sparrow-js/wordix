@@ -7,6 +7,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import { Skeleton } from "@/components/ui/skeleton";
 import useStores from "@/hooks/useStores";
 import { cn } from "@/lib/utils";
 import { Rocket } from "lucide-react";
@@ -28,6 +29,7 @@ export default function ExplorePage() {
   const router = useRouter();
 
   const fetchTemplate = async () => {
+    setLoading(true);
     const template = await fetch("/api/documents/template-collection", {
       method: "POST",
       body: JSON.stringify({
@@ -57,6 +59,7 @@ export default function ExplorePage() {
       setTemplateList(res.data);
       setAccordionValues(res.data.map((item: any) => item.id));
     }
+    setLoading(false);
   };
 
   const createDocument = async (collectionId: string, parentId?: string, template?: any) => {
@@ -99,34 +102,55 @@ export default function ExplorePage() {
         <div className="w-full h-full p-2">
           <h2 className="text font-bold mt-2">类别</h2>
           <div className="h-[calc(100svh-100px)] overflow-y-auto">
-            <Accordion type="multiple" className="w-full" defaultValue={accordionValues} value={accordionValues}>
-              {templateList.map((item) => {
-                return (
-                  <AccordionItem key={item.id} value={item.id}>
-                    <AccordionTrigger>{item.title}</AccordionTrigger>
-                    <AccordionContent>
-                      {item.list.map((doc) => {
-                        return (
-                          <div
-                            key={doc.id}
-                            className={cn(
-                              "px-4 py-2 hover:bg-accent rounded-md cursor-pointer flex items-center gap-2",
-                              selectedTemplate?.id === doc.id && "bg-accent",
-                            )}
-                            onClick={() => {
-                              setSelectedTemplate(doc);
-                            }}
-                          >
-                            <img src={doc.bannerImage} alt={doc.title} width={20} height={20} />
-                            {doc.title}
-                          </div>
-                        );
-                      })}
-                    </AccordionContent>
-                  </AccordionItem>
-                );
-              })}
-            </Accordion>
+            {loading ? (
+              <div className="space-y-2">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <div key={i} className="space-y-2">
+                    <Skeleton className="h-10 w-full" />
+                    <div className="pl-4 space-y-2">
+                      {Array.from({ length: 3 }).map((_, j) => (
+                        <Skeleton key={j} className="h-8 w-full" />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <Accordion type="multiple" className="w-full" defaultValue={accordionValues} value={accordionValues}>
+                {templateList.map((item) => {
+                  return (
+                    <AccordionItem key={item.id} value={item.id}>
+                      <AccordionTrigger>{item.title}</AccordionTrigger>
+                      <AccordionContent>
+                        {item.list.map((doc) => {
+                          return (
+                            <div
+                              key={doc.id}
+                              className={cn(
+                                "px-4 py-2 hover:bg-accent rounded-md cursor-pointer flex items-center gap-2",
+                                selectedTemplate?.id === doc.id && "bg-accent",
+                              )}
+                              onClick={() => {
+                                setSelectedTemplate(doc);
+                              }}
+                            >
+                              <img
+                                className="rounded-md"
+                                src={doc.bannerImage}
+                                alt={doc.title}
+                                width={20}
+                                height={20}
+                              />
+                              {doc.title}
+                            </div>
+                          );
+                        })}
+                      </AccordionContent>
+                    </AccordionItem>
+                  );
+                })}
+              </Accordion>
+            )}
           </div>
         </div>
       </ResizablePanel>
