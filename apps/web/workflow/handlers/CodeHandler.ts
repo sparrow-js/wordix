@@ -150,7 +150,11 @@ export class CodeHandler extends BaseHandler {
           } else {
             node._state.result = result.output;
           }
+          if (typeof result.output === "string") {
+            await this.emitStream(context, "message", result.output);
+          }
 
+          // Update variables if execution returned new values
           // Update variables if execution returned new values
           context.variables.set(node.attrs.id, {
             id: node.attrs.id,
