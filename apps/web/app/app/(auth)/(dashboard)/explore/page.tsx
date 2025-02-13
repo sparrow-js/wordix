@@ -10,10 +10,12 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 import { Skeleton } from "@/components/ui/skeleton";
 import useStores from "@/hooks/useStores";
 import { cn } from "@/lib/utils";
+import { formatDistanceToNow } from "date-fns";
 import { Rocket } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { ScrollArea } from "@/components/ui/scroll-area";
 import type { CollectionPermission } from "@prisma/client";
 
 export default function ExplorePage() {
@@ -24,11 +26,12 @@ export default function ExplorePage() {
   const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
   const [isCopying, setIsCopying] = useState(false);
   const [document, setDocument] = useState<any>(null);
+  const [template, setTemplate] = useState<any>(null);
 
   const { collections, workspaces, documents } = useStores();
   const router = useRouter();
 
-  const fetchTemplate = async () => {
+  const fetchTemplateList = async () => {
     setLoading(true);
     const template = await fetch("/api/documents/template-collection", {
       method: "POST",
@@ -60,6 +63,18 @@ export default function ExplorePage() {
       setAccordionValues(res.data.map((item: any) => item.id));
     }
     setLoading(false);
+  };
+
+  const fetchTemplate = async () => {
+    const template = await fetch("/api/documents/template", {
+      method: "POST",
+      body: JSON.stringify({}),
+    });
+
+    const res = await template.json();
+    if (res.data) {
+      setTemplate(res.data);
+    }
   };
 
   const createDocument = async (collectionId: string, parentId?: string, template?: any) => {
@@ -94,12 +109,13 @@ export default function ExplorePage() {
 
   useEffect(() => {
     fetchTemplate();
+    fetchTemplateList();
   }, []);
 
   return (
     <ResizablePanelGroup direction="horizontal">
       <ResizablePanel defaultSize={20}>
-        <div className="w-full h-full p-2">
+        <div className="w-full h-full p-4">
           <h2 className="text font-bold mt-2">类别</h2>
           <div className="h-[calc(100svh-100px)] overflow-y-auto">
             {loading ? (
@@ -181,7 +197,55 @@ export default function ExplorePage() {
                 <RunApp documentId={selectedTemplate?.id} onDocumentChange={(doc) => setDocument(doc)} />
               ) : (
                 <div className="flex items-center justify-center w-full text-muted-foreground">
-                  Please select a template from the left
+                  {template ? (
+                    <ScrollArea className="h-full w-full">
+                      <div
+                        className="h-full w-full rounded-[inherit] [&>div]:!block"
+                        style={{ overflow: "hidden scroll" }}
+                      >
+                        <div style={{ minWidth: "100%", display: "table" }}>
+                          <div className="px-1 py-4 md:p-5">
+                            <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                              {template.map((document) => {
+                                return (
+                                  <div
+                                    key={document.id}
+                                    className="flex flex-col border border-border rounded-lg overflow-hidden shadow-md hover:ring-1 hover:ring-[#fad400]"
+                                    onClick={() => {
+                                      setSelectedTemplate(document);
+                                    }}
+                                  >
+                                    <div
+                                      className="relative h-24 w-full bg-cover bg-center"
+                                      style={{
+                                        backgroundImage: `url(${document.bannerImage || "/placeholder.png"})`,
+                                      }}
+                                    >
+                                      <div className="absolute bottom-0 left-0 translate-y-1/2 translate-x-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-muted-foreground text-background">
+                                        {document.title.slice(0, 1).toUpperCase()}
+                                      </div>
+                                    </div>
+                                    <div className="flex flex-col p-3 text-start">
+                                      <p className="text-[16px] leading-[20px] font-bold mt-2 line-clamp-2 h-[40px]">
+                                        {document.title}
+                                      </p>
+                                      <p className="text-xs text-muted-foreground">
+                                        {formatDistanceToNow(document.updatedAt)}
+                                      </p>
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ScrollArea>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center">
+                      <h1 className="text-2xl font-bold">No template selected</h1>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

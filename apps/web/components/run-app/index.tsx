@@ -255,7 +255,7 @@ export default function RunApp({ documentId, onDocumentChange }: RunAppProps) {
                       </div>
                     </div>
                     <div className="w-full md:w-1/2 space-y-12 relative h-[80vh] flex items-center justify-center">
-                      <div className="w-[70%] mx-auto">
+                      <div className="w-[90%] mx-auto">
                         <div className="text-card-foreground shadow-sm border-0 relative bg-opacity-80 backdrop-blur-md rounded-lg p-8 text-center transition-colors">
                           <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-100 to-gray-300 -z-10" />
                           <div className="absolute inset-[1px] rounded-lg bg-gradient-to-r from-gray-100 to-gray-300 bg-opacity-80 backdrop-blur-md -z-10" />
