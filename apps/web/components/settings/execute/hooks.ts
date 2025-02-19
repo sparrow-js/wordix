@@ -33,6 +33,7 @@ export const useExecute = (
   prevChatList?: ChatItem[],
   stopExecute?: (taskId: string) => void,
   onCompleted?: () => void,
+  onNodeHandler?: (node: any) => void,
 ) => {
   const [suggestedQuestions, setSuggestQuestions] = useState<string[]>([]);
 
@@ -507,6 +508,9 @@ export const useExecute = (
                 };
               }),
             );
+          },
+          onNodeHandler: (node: any) => {
+            if (onNodeHandler) onNodeHandler(node);
           },
           onTTSChunk: (messageId: string, audio: string) => {
             if (!audio || audio === "") return;

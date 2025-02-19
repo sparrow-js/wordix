@@ -115,7 +115,7 @@ const TailwindAdvancedEditor = ({ response }: any) => {
 
   return (
     <ResizablePanelGroup direction="horizontal">
-      <ResizablePanel defaultSize={60}>
+      <ResizablePanel defaultSize={65}>
         <div className="relative flex flex-col h-full">
           <div ref={scrollRef} className="w-full h-full min-w-[600px] overflow-y-auto content-scrollable">
             <div className="relative w-full">
@@ -187,14 +187,15 @@ const TailwindAdvancedEditor = ({ response }: any) => {
                   onCreate={({ editor }) => {
                     (window as any).editor = editor;
                     setEditor(editor);
+                    workbench.setEditor(editor)
                   }}
                   onSelectionUpdate={({ editor }) => {
                     const { commands, state, chain } = editor;
                     const { selection } = state;
                     const { from } = selection;
                     const node = state.doc.nodeAt(from);
-                    const toggleNodes = ["input", "generation", "imageGeneration"];
-                    if (!node || !toggleNodes.includes(node.type.name)) {
+                    const toggleNodes = ["input", "generation", "imageGeneration", "agentTool", "agentModel", "toolWorkflow", "toolAgent"];
+                    if (node && !toggleNodes.includes(node.type.name)) {
                       workbench.setHideSidebar();
                     }
                   }}
@@ -288,16 +289,11 @@ const TailwindAdvancedEditor = ({ response }: any) => {
               </EditorRoot>
             </div>
           </div>
-          {editor && (
-            <div className="absolute bottom-5 left-1/2 -translate-x-1/2 w-full max-w-[600px]">
-              <PrompChat editor={editor} />
-            </div>
-          )}
         </div>
       </ResizablePanel>
       <ResizableHandle />
       {workbench.showSidebar && editor && (
-        <ResizablePanel defaultSize={40}>
+        <ResizablePanel defaultSize={35}>
           <div className="w-full h-full">
             <Settings editor={editor} />
           </div>

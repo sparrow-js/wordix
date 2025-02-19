@@ -13,13 +13,11 @@ type Response = Promise<{
 const main = async (props: Props, retry = 3): Response => {
   const { query } = props;
   try {
-    console.log("****************", query);
     const searchResults = await search(query, {
       safeSearch: SafeSearchType.STRICT,
       time: "y",
     });
 
-    console.log("****************1", searchResults);
 
     const result = searchResults.results
       .map((item) => ({
@@ -29,7 +27,6 @@ const main = async (props: Props, retry = 3): Response => {
       }))
       .slice(0, 10);
 
-    console.log("****************3", JSON.stringify(result));
 
     return {
       result: JSON.stringify(result),

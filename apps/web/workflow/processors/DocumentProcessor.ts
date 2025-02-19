@@ -17,6 +17,7 @@ import { ParagraphHandler } from "../handlers/ParagraphHandler";
 import { PromptHandler } from "../handlers/PromptHandler";
 import { TextHandler } from "../handlers/TextHandler";
 import { ToolHandler } from "../handlers/ToolHandler";
+import { AgenticWorkflow } from "../handlers/AgenticWorkflow";
 
 import { DuckDuckGoTool } from "../tools/duckduckgo";
 import { FLUXTool } from "../tools/fluxTool";
@@ -120,6 +121,7 @@ export class DocumentProcessor extends BaseProcessor {
     this.handlers.set("blockquote", new BlockquoteHandler());
     this.handlers.set("image", new ImageHandler());
     this.handlers.set("imageGeneration", new ImageGenerationHandler());
+    this.handlers.set("agenticWorkflow", new AgenticWorkflow());
   }
 
   private registerDefaultTools(): void {
@@ -214,7 +216,6 @@ export class DocumentProcessor extends BaseProcessor {
       }
       await this.completeNode(node);
     } catch (e) {
-      console.error(e);
       this.context.onStreamResponse({
         event: "error",
         data: e,

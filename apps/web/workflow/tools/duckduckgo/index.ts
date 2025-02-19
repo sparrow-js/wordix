@@ -9,7 +9,6 @@ export class DuckDuckGoTool extends BaseTool {
     const type = input.type || "text";
     let result;
 
-    console.log("****************", input);
 
     try {
       switch (type) {

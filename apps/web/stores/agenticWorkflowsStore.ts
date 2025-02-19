@@ -1,10 +1,9 @@
+import AgenticWorkflow from "@/models/AgenticWorkflow";
 import { action, computed, makeObservable, observable } from "mobx";
-
-import IfElse from "@/models/IfElse";
 import type RootStore from "./RootStore";
 import Store from "./base/Store";
 
-export default class IfElseStore extends Store<IfElse> {
+export default class AgenticWorkflowsStore extends Store<AgenticWorkflow> {
   @observable
   selectedId = "";
 
@@ -12,44 +11,44 @@ export default class IfElseStore extends Store<IfElse> {
   documentId = "";
 
   @observable.deep
-  ifElses: IfElse[] = [];
+  agenticWorkflows: AgenticWorkflow[] = [];
 
   constructor(rootStore: RootStore) {
-    super(rootStore, IfElse);
+    super(rootStore, AgenticWorkflow);
     makeObservable(this);
   }
 
   node: any;
 
   @computed
-  get ifElse(): IfElse {
+  get agenticWorkflow(): AgenticWorkflow {
     return this.data.get(this.selectedId);
   }
 
   @computed
-  get list(): IfElse[] {
+  get list(): AgenticWorkflow[] {
     const document = this.rootStore.documents.get(this.documentId);
-    const ifElses = [];
+    const agenticWorkflows = [];
     if (document) {
       const { content } = document;
       content?.content
         .find((item) => item.type === "inputs")
-        ?.content.forEach((ifElse) => {
-          const ifElseValue = this.data.get(ifElse.attrs.id);
-          ifElseValue && ifElses.push(ifElseValue);
+        ?.content.forEach((workflow) => {
+          const workflowValue = this.data.get(workflow.attrs.id);
+          workflowValue && agenticWorkflows.push(workflowValue);
         });
     }
 
-    return ifElses;
+    return agenticWorkflows;
   }
 
   @action
-  addIfElse(item: any, content: any) {
+  addAgenticWorkflow(item: any, content: any) {
     if (!this.data.has(item.id)) {
-      const ifElse = this.add(item);
+      const workflow = this.add(item);
       if (content?.content) {
         content.content.forEach((item) => {
-          ifElse.addItem({
+          workflow.addItem({
             id: item.attrs.id,
             name: item.type.name,
             type: item.attrs.type,
@@ -58,7 +57,7 @@ export default class IfElseStore extends Store<IfElse> {
         });
       }
 
-      return ifElse;
+      return workflow;
     }
   }
 
@@ -73,14 +72,14 @@ export default class IfElseStore extends Store<IfElse> {
   }
 
   @action
-  setIfElses(ifElses: IfElse[]) {
-    this.ifElses = ifElses;
+  setAgenticWorkflows(workflows: AgenticWorkflow[]) {
+    this.agenticWorkflows = workflows;
   }
 
   @action
-  removeIfElse(id: string, editor: any) {
-    const ifElse = this.data.get(id);
-    if (ifElse) {
+  removeAgenticWorkflow(id: string, editor: any) {
+    const workflow = this.data.get(id);
+    if (workflow) {
       let foundNode = null;
       let foundPos = -1;
 
@@ -108,22 +107,18 @@ export default class IfElseStore extends Store<IfElse> {
   updateDataSyncToNode(key: string, value: any) {
     const keys = key.split(".");
     if (keys.length > 1) {
-      // Clone the existing object for nested keys
-      const currentData = JSON.parse(JSON.stringify(this.ifElse));
+      const currentData = JSON.parse(JSON.stringify(this.agenticWorkflow));
       let target = currentData;
 
-      // Navigate through the object until the second-to-last key
       for (let i = 0; i < keys.length - 1; i++) {
         target = target[keys[i]];
       }
 
-      // Set the value on the last key
       target[keys[keys.length - 1]] = value;
-      this.ifElse.update(currentData);
+      this.agenticWorkflow.update(currentData);
     } else {
-      // For single level keys, use the original logic
       const attr = { [key]: value };
-      this.ifElse.update(attr);
+      this.agenticWorkflow.update(attr);
     }
   }
 }

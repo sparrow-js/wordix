@@ -18,10 +18,13 @@ import SettingStore from "./SettingStore";
 import ToolStore from "./ToolStore";
 import ViewsStore from "./ViewsStore";
 import WorkspacesStore from "./WorkspacesStore";
+import AgenticWorkflowsStore from "./agenticWorkflowsStore";
 import type Store from "./base/Store";
 import GenerationsStore from "./generationsStore";
 import MentionsStore from "./mentionsStore";
 import WorkbenchStore from "./workbench";
+import AgentModelStore from "./agent-model";
+import AgentToolStore from "./agent-tool";
 
 export default class RootStore {
   views: ViewsStore;
@@ -44,7 +47,9 @@ export default class RootStore {
   workspaces: WorkspacesStore;
   apiKeys: ApiKeysStore;
   revisions: RevisionStore;
-
+  agenticWorkflows: AgenticWorkflowsStore;
+  agentModels: AgentModelStore;
+  agentTools: AgentToolStore;
   constructor() {
     // Models
     this.registerStore(ViewsStore);
@@ -67,6 +72,9 @@ export default class RootStore {
     this.registerStore(WorkspacesStore, "workspaces");
     this.registerStore(ApiKeysStore, "apiKeys");
     this.registerStore(RevisionStore, "revisions");
+    this.registerStore(AgenticWorkflowsStore, "agenticWorkflows");
+    this.registerStore(AgentModelStore, "agentModels");
+    this.registerStore(AgentToolStore, "agentTools");
   }
 
   /**

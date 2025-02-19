@@ -16,6 +16,9 @@ import ImageGeneration from "./imageGeneration";
 import Prompt from "./prompt";
 import Tool from "./tool";
 import LoadingDots from "../icons/loading-dots";
+import AgenticWorkflowSetting from "./agentic-workflow";
+import AgentToolSetting from "./agent-tool";
+import AgentModelSetting from "./agent-model";
 const MapComp = {
   generation: Generation,
   imageGeneration: ImageGeneration,
@@ -26,6 +29,9 @@ const MapComp = {
   codeExecutor: CodeExecutorEditor,
   prompt: Prompt,
   tool: Tool,
+  agenticWorkflow: AgenticWorkflowSetting,
+  agentTool: AgentToolSetting,
+  agentModel: AgentModelSetting,
 };
 
 interface InputSettingProps {
@@ -36,7 +42,7 @@ const Settings: React.FC<InputSettingProps> = ({ editor }) => {
   const [Comp, setComp] = useState<any>(null);
 
   useEffect(() => {
-    setComp(MapComp[setting.settingComponentName] || MapComp.inputSetting);
+    setComp(MapComp[setting.settingComponentName]);
   }, [setting.settingComponentName]);
 
   return (

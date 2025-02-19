@@ -15,7 +15,7 @@ import { useState } from "react";
 const LeftSidebar = observer(() => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
-  const { workspaces } = useStores();
+  const { workspaces, workbench } = useStores();
 
   const workspace = workspaces.get(workspaces.selectedWorkspaceId);
   const segments = useSelectedLayoutSegments();
@@ -114,6 +114,8 @@ const LeftSidebar = observer(() => {
           </Link>
         </div>
       </div>
+
+
     </div>
   );
 });

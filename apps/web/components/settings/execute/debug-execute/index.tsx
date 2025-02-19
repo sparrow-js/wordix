@@ -20,7 +20,7 @@ export type DebugWithSingleModelRefType = {
 };
 const DebugExecute = forwardRef<DebugWithSingleModelRefType, DebugWithSingleModelProps>(
   ({ checkCanSend, injectChatList }, ref) => {
-    const { execute, documents, prompts, workspaces } = useStores();
+    const { execute, documents, prompts, workspaces, workbench } = useStores();
 
     const { id, collectionId } = useParams<{ id: string; collectionId: string }>();
 
@@ -86,6 +86,9 @@ const DebugExecute = forwardRef<DebugWithSingleModelRefType, DebugWithSingleMode
       () => {
         execute.setStatus("end");
       },
+      (node) => {
+        workbench.setAgenticWorkflowRunning(node);
+      }
     );
 
     const completionParams = {};

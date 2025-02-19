@@ -105,6 +105,15 @@ export const suggestionItems = createSuggestionItems([
           editor.chain().focus().deleteRange(range).setPrompt({}).run();
         },
       },
+      {
+        title: "Agentic Workflow",
+        description: "Agentic Workflow.",
+        searchTerms: ["Agentic Workflow", "agentic"],
+        icon: <Brain size={18} />,
+        command: ({ editor, range }) => {
+          editor.chain().focus().deleteRange(range).setAgenticWorkflow({}).run();
+        },
+      },
     ],
   },
   // {

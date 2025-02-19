@@ -16,25 +16,27 @@ import { Sparkles } from "lucide-react";
 import { Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import LoadingDots from "./icons/loading-dots";
+import { CornerDownLeft } from "lucide-react";
+
 
 const models = [
   {
     name: "openAI gpt-4o",
     value: "gpt-4o",
-    icon: <AiOutlineOpenAI className="w-4 h-4 mr-2" />,
-    bigIcon: <AiOutlineOpenAI className="w-[36px] h-[36px]" />,
+    icon: <AiOutlineOpenAI className="w-5 h-5 mr-2" />,
+    bigIcon: <AiOutlineOpenAI className="w-5 h-5" />,
   },
   {
     name: "gemini 2.0",
     value: "gemini-2.0-flash-exp",
-    icon: <FcGoogle className="w-4 h-4 mr-2" />,
-    bigIcon: <FcGoogle className="w-[36px] h-[36px]" />,
+    icon: <FcGoogle className="w-5 h-5 mr-2" />,
+    bigIcon: <FcGoogle className="w-5 h-5" />,
   },
   {
     name: "deepseek v3",
     value: "deepseek-chat",
-    icon: <DeepSeek className="w-4 h-4 mr-2" />,
-    bigIcon: <DeepSeek className="w-[36px] h-[36px] pb-2" />,
+    icon: <DeepSeek className="w-5 h-5 mr-2" />,
+    bigIcon: <DeepSeek className="w-5 h-5" />,
   },
   // {
   //   name: "gemini 2.0 thinking",
@@ -91,14 +93,14 @@ const PrompChat = ({ editor }: { editor: Editor }) => {
 
   return (
     <footer className="text-white p-4 rounded-xl flex items-center justify-between space-x-4">
-      <div className="flex flex-1 items-end space-x-2 p-2 rounded-[31px] focus-within:bg-gray-800 bg-black hover:bg-gray-700">
-        <div className="flex flex-1 w-full min-h-[36px] items-center justify-center mx-4">
+      <div className="flex flex-1 items-end space-x-2 p-2 rounded-sm focus-within:bg-gray-100 bg-white hover:bg-gray-50 border border-gray-200">
+        <div className="flex flex-1 w-full min-h-[72px] justify-center mx-2">
           <textarea
             ref={inputRef}
-            className="flex-1 w-full border-none outline-none  leading-[20px] max-h-[80px] bg-transparent"
+            className="flex-1 w-full border-none outline-none leading-[20px] max-h-[80px] bg-transparent text-gray-900 mt-2"
             spellCheck="false"
             rows={1}
-            placeholder="Ask the wordix to do something"
+            placeholder="Ask Wordix"
             style={{
               resize: "none",
               overflowY: "scroll", // Allow scrolling
@@ -139,8 +141,7 @@ const PrompChat = ({ editor }: { editor: Editor }) => {
 
         <Button
           className={cn(
-            " rounded-full h-[36px] self-end",
-            chatValue.length === 0 ? "bg-stone-600 hover:bg-stone-600" : "bg-[#fad400] hover:bg-[#fce062] text-black",
+            "rounded-sm h-[30px] self-end shadow-sm transition-all duration-200 bg-gray-100 hover:bg-gray-200 text-gray-700",
           )}
           onClick={() => {
             if (chatValue.length === 0) return;
@@ -167,14 +168,11 @@ const PrompChat = ({ editor }: { editor: Editor }) => {
           {aiStorage.state === "loading" ? (
             <LoadingDots />
           ) : (
-            <>
-              <Sparkles className="h-4 w-4 mr-2" />
-              Run
-            </>
+            <CornerDownLeft className="h-4 w-4 text-gray-700" />
           )}
         </Button>
         <DropdownMenu>
-          <DropdownMenuTrigger>
+          <DropdownMenuTrigger className="p-2 bg-gray-100 text-gray-700 rounded-sm transition-all duration-200 hover:bg-gray-200 hover:shadow-md active:scale-95 w-[30px] h-[30px] flex items-center justify-center">
             <span className="flex items-center">{models.find((item) => item.value === model)?.bigIcon}</span>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
@@ -194,10 +192,6 @@ const PrompChat = ({ editor }: { editor: Editor }) => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      {/* <Button className="rounded-full">
-        <X className="h-6 w-6" />
-      </Button> */}
-      {/* <RunButton /> */}
     </footer>
   );
 };

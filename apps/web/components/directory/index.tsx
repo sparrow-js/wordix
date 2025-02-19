@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 import { Tree, type TreeApi } from "react-arborist";
 import type { NodeRendererProps } from "react-arborist";
+import PrompChat from "../promp-chat";
 
 import {
   DropdownMenu,
@@ -13,15 +14,28 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Check, FileText, FolderClosed, FolderIcon, FolderOpen, MoreHorizontal, Plus, X } from "lucide-react";
+import {
+  Bot,
+  Check,
+  FileText,
+  FolderClosed,
+  FolderIcon,
+  FolderOpen,
+  MoreHorizontal,
+  Plus,
+  Workflow,
+  X,
+} from "lucide-react";
 import styles from "./directory.module.css";
 import { FillFlexParent } from "./fill-flex-parent";
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import useStores from "@/hooks/useStores";
-import { FolderPlus, LayoutGrid } from "lucide-react";
+import { FolderPlus } from "lucide-react";
 import { observer } from "mobx-react";
+
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 type Data = { id: string; title: string; children?: Data[] };
 import type Collection from "@/models/Collection";
@@ -29,7 +43,6 @@ import type { NavigationNode } from "@/shared/types";
 import { nanoid } from "nanoid";
 import { useParams, useRouter } from "next/navigation";
 import type { NodeApi } from "react-arborist";
-import { RiAiGenerateText } from "react-icons/ri";
 import { getCoolHueImage } from "../coolhue";
 import LoadingCircle from "../icons/loading-circle";
 
@@ -43,7 +56,7 @@ function Directory() {
   const [count, setCount] = useState(0);
   const [followsFocus, setFollowsFocus] = useState(false);
   const [disableMulti, setDisableMulti] = useState(false);
-  const { collections, documents, workspaces } = useStores();
+  const { collections, documents, workspaces, workbench } = useStores();
   const [selected, setSelected] = useState<string>("");
   const router = useRouter();
   const { collectionId, id } = useParams<{ collectionId: string; id: string }>();
@@ -178,31 +191,64 @@ function Directory() {
     <div className="group top-[60px] h-full w-full items-center md:top-0">
       <div className="flex h-full w-full flex-col self-stretch bg-background">
         <div className="h-[60px] shrink-0 border-b border-border w-full">
-          <div className="flex h-full w-full items-center gap-2 px-3">
-            <Button
-              variant="outline"
-              size="icon"
-              className="aspect-square w-fit"
-              onClick={() => {
-                createDocument();
-              }}
-            >
-              {isCreateLoading ? <LoadingCircle dimensions="h-5 w-5" /> : <RiAiGenerateText className="h-5 w-5" />}
-            </Button>
-            <Button variant="outline" size="icon" className="aspect-square w-fit" onClick={() => createFolder()}>
-              <FolderPlus className="h-5 w-5" />
-            </Button>
-            <div className="flex w-full justify-end">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => {
-                  router.push(`/${collectionId}/docs`);
-                }}
-              >
-                <LayoutGrid className="h-5 w-5" />
-              </Button>
-            </div>
+          <div className="flex h-full w-full items-center gap-4 px-4">
+            <TooltipProvider delayDuration={300}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="secondary"
+                    size="icon"
+                    className="h-9 w-9 rounded-lg bg-indigo-50 hover:bg-indigo-500 dark:bg-indigo-950 dark:hover:bg-indigo-500 text-indigo-600 hover:text-white dark:text-indigo-300 shadow-sm hover:shadow-md transition-all duration-200 border-0"
+                  >
+                    <Bot className="h-4.5 w-4.5" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" className="text-xs font-medium">
+                  <p>Agentic Workflow</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <div className="h-5 w-[1px] bg-gradient-to-b from-indigo-200/30 via-indigo-300/50 to-indigo-200/30 dark:from-indigo-700/30 dark:via-indigo-600/50 dark:to-indigo-700/30" />
+
+            <TooltipProvider delayDuration={300}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="secondary"
+                    size="icon"
+                    className="h-9 w-9 rounded-lg bg-rose-50 hover:bg-rose-500 dark:bg-rose-950 dark:hover:bg-rose-500 text-rose-600 hover:text-white dark:text-rose-300 shadow-sm hover:shadow-md transition-all duration-200 border-0"
+                    onClick={() => createDocument()}
+                    disabled={isCreateLoading}
+                  >
+                    {isCreateLoading ? <LoadingCircle dimensions="h-5 w-5" /> : <Workflow className="h-5 w-5" />}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" className="text-xs font-medium">
+                  <p>Create Flow</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <div className="h-5 w-[1px] bg-gradient-to-b from-indigo-200/30 via-indigo-300/50 to-indigo-200/30 dark:from-indigo-700/30 dark:via-indigo-600/50 dark:to-indigo-700/30" />
+
+            <TooltipProvider delayDuration={300}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="secondary"
+                    size="icon"
+                    className="h-9 w-9 rounded-lg bg-emerald-50 hover:bg-emerald-500 dark:bg-emerald-950 dark:hover:bg-emerald-500 text-emerald-600 hover:text-white dark:text-emerald-300 shadow-sm hover:shadow-md transition-all duration-200 border-0"
+                    onClick={() => createFolder()}
+                  >
+                    <FolderPlus className="h-4.5 w-4.5" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom" className="text-xs font-medium">
+                  <p>Create Folder</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
         <div className="flex flex-col gap-4 p-2.5 h-full overflow-y-auto">
@@ -257,6 +303,11 @@ function Directory() {
               <p className="text-sm">No documents yet</p>
               <p className="text-xs">Create a new document to get started</p>
             </div>
+          )}
+        </div>
+        <div className="w-full">
+          {workbench.editor && (
+              <PrompChat editor={workbench.editor} />
           )}
         </div>
       </div>

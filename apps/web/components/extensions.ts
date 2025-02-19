@@ -46,6 +46,12 @@ import { Prompt } from "./extensions/prompt";
 import { Title } from "./extensions/title";
 import { Tool } from "./extensions/tool";
 
+import { AgenticWorkflow } from "./extensions/agentic-workflow";
+import { ToolAgent } from "./extensions/agentic-workflow/tool-agent";
+import { ToolWorkflow } from "./extensions/agentic-workflow/tool-workflow";
+import { AgentModel } from "./extensions/agentic-workflow/agent-model";
+import { AgentTool } from "./extensions/agentic-workflow/agent-tool";
+
 //TODO I am using cx here to get tailwind autocomplete working, idk if someone else can write a regex to just capture the class key in objects
 const aiHighlight = AIHighlight;
 //You can overwrite the placeholder with your own configuration
@@ -197,6 +203,36 @@ const codeExecutor = CodeExecutor.configure({
   },
 });
 
+const agenticWorkflow = AgenticWorkflow.configure({
+  HTMLAttributes: {
+    class: "AgenticWorkflow",
+  },
+});
+
+const toolAgent = ToolAgent.configure({
+  HTMLAttributes: {
+    class: "ToolAgent",
+  },
+});
+
+const toolWorkflow = ToolWorkflow.configure({
+  HTMLAttributes: {
+    class: "ToolWorkflow",
+  },
+});
+
+const agentModel = AgentModel.configure({
+  HTMLAttributes: {
+    class: "AgentModel",
+  },
+});
+
+const agentTool = AgentTool.configure({
+  HTMLAttributes: {
+    class: "AgentTool",
+  },
+});
+
 export const defaultExtensions = [
   starterKit,
   placeholder,
@@ -233,6 +269,12 @@ export const defaultExtensions = [
   Else.configure({
     HTMLAttributes: {},
   }),
+
+  agenticWorkflow,
+  toolAgent,
+  toolWorkflow,
+  agentModel,
+  agentTool,
 
   Comment,
   Tool.configure({

@@ -117,6 +117,7 @@ export type IOtherOptions = {
   onTTSChunk?: IOnTTSChunk;
   onTTSEnd?: IOnTTSEnd;
   onTextReplace?: IOnTextReplace;
+  onNodeHandler?: (node: any) => void;
 };
 
 type ResponseError = {
@@ -170,6 +171,7 @@ const handleStream = (
   onTTSChunk?: IOnTTSChunk,
   onTTSEnd?: IOnTTSEnd,
   onTextReplace?: IOnTextReplace,
+  onNodeHandler?: (node: any) => void,
   onError?: IOnError,
 ) => {
   if (!response.ok) throw new Error("Network response was not ok");
@@ -257,6 +259,8 @@ const handleStream = (
                 onTTSChunk?.(bufferObj.message_id, bufferObj.audio, bufferObj.audio_type);
               } else if (bufferObj.event === "tts_message_end") {
                 onTTSEnd?.(bufferObj.message_id, bufferObj.audio);
+              } else if (bufferObj.event.includes("node_")) {
+                onNodeHandler(bufferObj as any);
               } else if (bufferObj.event === "error") {
                 onError?.(bufferObj.data);
               }
@@ -487,6 +491,7 @@ export const ssePost = (
     onThought,
     onFile,
     onMessageEnd,
+    onNodeHandler,
     onMessageReplace,
     onWorkflowStarted,
     onWorkflowFinished,
@@ -585,6 +590,7 @@ export const ssePost = (
           onTTSChunk,
           onTTSEnd,
           onTextReplace,
+          onNodeHandler,
           onError,
         );
       })

@@ -1,6 +1,8 @@
 import { AnthropicIcon, CohereIcon, GeminiIcon, OpenaiIcon } from "@/components/settings/icons";
 import DeepSeek from "@/components/ui/icons/deepseek";
-
+import { AiOutlineOpenAI } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
+import { SiAnthropic } from "react-icons/si";
 export interface ModelConfig {
   name: string;
   maxTokens: number;
@@ -461,3 +463,10 @@ export async function getFormatMessage(message: any[], modelName: string) {
     }),
   );
 }
+
+export const agentModelOptions = [
+  { value: "gpt-4o", label: "GPT-4o", avatar: AiOutlineOpenAI },
+  { value: "gpt-4o-mini", label: "GPT-4o Mini", avatar: AiOutlineOpenAI },
+  { value: "claude-3-5-sonnet-20240620", label: "Claude 3.5 Sonnet", avatar: SiAnthropic },
+];
+

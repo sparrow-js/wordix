@@ -1,4 +1,4 @@
-import { action, makeAutoObservable, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 
 class WorkbenchStore {
   @observable
@@ -7,8 +7,14 @@ class WorkbenchStore {
   @observable
   showRunDetails = false;
 
+  @observable
+  agenticWorkflowRunning: any = null;
+
+  @observable
+  editor: any;
+
   constructor() {
-    makeAutoObservable(this);
+    makeObservable(this);
   }
 
   toggleSidebar = () => {
@@ -33,6 +39,16 @@ class WorkbenchStore {
   @action
   setHideRunDetails = () => {
     this.showRunDetails = false;
+  };
+
+  @action
+  setEditor = (editor: any) => {
+    this.editor = editor;
+  };
+
+  @action
+  setAgenticWorkflowRunning = (agenticWorkflowRunning: any) => {
+    this.agenticWorkflowRunning = agenticWorkflowRunning;
   };
 }
 
