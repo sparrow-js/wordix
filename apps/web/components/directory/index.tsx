@@ -65,6 +65,7 @@ function Directory() {
   const [collection, setCollection] = useState<Collection | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isCreateLoading, setIsCreateLoading] = useState(false);
+  const [isAgentLoading, setIsAgentLoading] = useState(false);
 
   useEffect(() => {
     const fetchCollection = async () => {
@@ -109,13 +110,18 @@ function Directory() {
 
   const onRename = ({ id, name }) => {};
 
-  const createDocument = async (parentId?: string) => {
-    if (isCreateLoading) return;
-    setIsCreateLoading(true);
+  const createDocument = async (parentId?: string, documentType?: string) => {
+    if (isCreateLoading || isAgentLoading) return;
+    if (documentType === "agent") {
+      setIsAgentLoading(true);
+    } else {
+      setIsCreateLoading(true);
+    }
     const document = await documents.save(
       {
-        title: "Untitled",
+        title: documentType === "agent" ? "New Agent" : "New Flow",
         collectionId: collectionId,
+        documentType: documentType || "flow",
         workspaceId: workspaces.selectedWorkspaceId,
         bannerImage: getCoolHueImage(),
       },
@@ -124,6 +130,7 @@ function Directory() {
     setSelected(document.id);
     await collection?.fetchDocuments({ force: true });
     setIsCreateLoading(false);
+    setIsAgentLoading(false);
     router.push(`/${collectionId}/docs/${document.id}`);
   };
 
@@ -199,8 +206,9 @@ function Directory() {
                     variant="secondary"
                     size="icon"
                     className="h-9 w-9 rounded-lg bg-indigo-50 hover:bg-indigo-500 dark:bg-indigo-950 dark:hover:bg-indigo-500 text-indigo-600 hover:text-white dark:text-indigo-300 shadow-sm hover:shadow-md transition-all duration-200 border-0"
+                    onClick={() => createDocument(null, 'agent')}
                   >
-                    <Bot className="h-4.5 w-4.5" />
+                    {isAgentLoading ? <LoadingCircle dimensions="h-5 w-5" /> : <Bot className="h-4.5 w-4.5" />}
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent side="bottom" className="text-xs font-medium">
@@ -329,6 +337,16 @@ function wraperNode(
     const [edit, setEdit] = useState(false);
     const [openOperate, setOpenOperate] = useState(false);
 
+    let prevFileIcon = <FileText className="w-4 h-4" />
+    const dataNode = node.data as any;
+    const isFlow = dataNode?.documentType === "flow" || !dataNode?.documentType;
+    if (isFlow) {
+      prevFileIcon = <Workflow className="w-4 h-4 text-rose-400" />
+    } else if (dataNode?.documentType === "agent") {
+      prevFileIcon = <Bot className="w-4 h-4 text-indigo-400" />
+    }
+
+
     return (
       <div
         ref={dragHandle}
@@ -345,7 +363,7 @@ function wraperNode(
           <FolderArrow node={node} />
         ) : (
           <span className="pl-1">
-            <FileText className="w-4 h-4" />
+            {prevFileIcon}
           </span>
         )}
 
@@ -394,7 +412,7 @@ function wraperNode(
                         createDocument(node.id);
                       }}
                     >
-                      <span className="mr-2">create file</span>
+                      <span className="mr-2">create flow</span>
                     </div>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
@@ -546,7 +564,7 @@ function Input({ node, updateFolderName }) {
 function FolderArrow({ node }: { node: NodeApi<Data> }) {
   return (
     <span className="pl-1">
-      {node.isInternal ? node.isOpen ? <FolderOpen className="w-4 h-4" /> : <FolderClosed className="w-4 h-4" /> : null}
+      {node.isInternal ? node.isOpen ? <FolderOpen className="w-4 h-4 text-emerald-400" /> : <FolderClosed className="w-4 h-4 text-emerald-400" /> : null}
     </span>
   );
 }

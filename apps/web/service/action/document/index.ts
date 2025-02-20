@@ -32,6 +32,7 @@ export async function createDocument(data: any, parentId?: string) {
       const newDocumentNode = {
         id: document.id,
         title: document.title,
+        documentType: document.documentType,
         urlId: document.urlId,
       };
 
@@ -47,6 +48,7 @@ export async function createDocument(data: any, parentId?: string) {
             id: document.id,
             title: document.title,
             urlId: document.urlId,
+            documentType: document.documentType,
           },
         ],
         document.collectionId,

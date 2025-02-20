@@ -48,22 +48,6 @@ const AgentToolSetting = observer(({ onDelete, editor }) => {
               />
             </div>
 
-
-            <div className="mb-9">
-              <p className="font-bold">
-                Description<span className="ml-1 text-xs font-normal text-stone-700"></span>
-              </p>
-              <p className="mb-1 mt-1 text-sm text-stone-400">Describe this workflow</p>
-              <Textarea
-                placeholder="Empty"
-                value={tool.description}
-                onChange={(e) => {
-                  agentTools.updateDataSyncToNode("description", e.target.value);
-                }}
-              />
-            </div>
-
-
             <div className="mb-9">
               <div className="flex items-center justify-between">
                 <p className="font-bold">
@@ -142,6 +126,23 @@ const AgentToolSetting = observer(({ onDelete, editor }) => {
                 </PopoverContent>
               </Popover>
             </div>
+
+            <div className="mb-9">
+              <p className="font-bold">
+                Description<span className="ml-1 text-xs font-normal text-stone-700"></span>
+              </p>
+              <p className="mb-1 mt-1 text-sm text-stone-400">Describe this workflow</p>
+              <Textarea
+                placeholder="Empty"
+                value={tool.description}
+                onChange={(e) => {
+                  agentTools.updateDataSyncToNode("description", e.target.value);
+                }}
+              />
+            </div>
+
+
+           
             <div className="mt-8">
                 <p className="font-bold">
                   Inputs describe

@@ -127,6 +127,7 @@ model Document {
   id               String              @id @default(uuid())
   urlId            String              @unique
   title            String
+  documentType     String              @default("flow")
   summary          String?
   previousTitles   String[]
   version          Int?

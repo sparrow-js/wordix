@@ -97,6 +97,7 @@ interface AgentConfig {
   use_e2b_executor?: boolean;
   additional_authorized_imports?: string[];
   authorized_imports?: string[];
+  onStreamResponse?: (stream: any) => void;
 }
 
 class MultiStepAgent implements Agent {
@@ -125,6 +126,7 @@ class MultiStepAgent implements Agent {
   private final_answer_checks: ((answer: any, memory: AgentMemory) => boolean)[] | null;
   public additional_authorized_imports: string[];
   public authorized_imports: string[];
+  protected onStreamResponse: (stream: any) => void;
 
   constructor(
     tools: Tool[],
@@ -144,6 +146,7 @@ class MultiStepAgent implements Agent {
     this.provide_run_summary = config.provide_run_summary || false;
     this.additional_authorized_imports = config.additional_authorized_imports || [];
     this.authorized_imports = config.authorized_imports || [];
+    this.onStreamResponse = config.onStreamResponse || (() => {});
     if (config.managed_agents) {
       for (const managed_agent of config.managed_agents) {
         if (!managed_agent.name || !managed_agent.description) {
@@ -719,6 +722,12 @@ export class ToolCallingAgent extends MultiStepAgent {
           memory_step.actionOutput = final_answer;
           return final_answer;
         }
+
+        this.onStreamResponse({
+          event: "message",
+          data: `\n Final answer: ${answer}` ,
+          stream: true
+        });
 
         this.logger.log(LogLevel.INFO, chalk.bold.hex(YELLOW_HEX)(`Final answer: ${answer}`));
         memory_step.actionOutput = answer;

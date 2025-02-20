@@ -85,6 +85,7 @@ export class DocumentProcessor extends BaseProcessor {
         if (this.stopped) {
           return;
         }
+        
         if (response.event === "message") {
           this.context.markdownOutput += response.data;
         }

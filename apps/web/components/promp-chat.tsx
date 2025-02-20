@@ -93,7 +93,7 @@ const PrompChat = ({ editor }: { editor: Editor }) => {
 
   return (
     <footer className="text-white p-4 rounded-xl flex items-center justify-between space-x-4">
-      <div className="flex flex-1 items-end space-x-2 p-2 rounded-sm focus-within:bg-gray-100 bg-white hover:bg-gray-50 border border-gray-200">
+      <div className="flex flex-1 items-end space-x-2 p-2 rounded-sm focus-within:bg-gray-100 bg-white hover:bg-gray-50 border border-gray-200 relative">
         <div className="flex flex-1 w-full min-h-[72px] justify-center mx-2">
           <textarea
             ref={inputRef}
@@ -139,7 +139,8 @@ const PrompChat = ({ editor }: { editor: Editor }) => {
           />
         </div>
 
-        <Button
+       <div className="flex items-center gap-2 absolute right-1 bottom-1">
+       <Button
           className={cn(
             "rounded-sm h-[30px] self-end shadow-sm transition-all duration-200 bg-gray-100 hover:bg-gray-200 text-gray-700",
           )}
@@ -191,6 +192,7 @@ const PrompChat = ({ editor }: { editor: Editor }) => {
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
+       </div>
       </div>
     </footer>
   );

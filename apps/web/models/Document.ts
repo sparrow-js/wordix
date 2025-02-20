@@ -30,6 +30,9 @@ export default class Document extends ParanoidModel {
   title: string;
 
   @observable
+  documentType: string;
+  
+  @observable
   collectionId: string;
 
   @observable.shallow

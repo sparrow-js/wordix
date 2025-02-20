@@ -32,8 +32,6 @@ class ToolWrapper extends Tool {
 
     async execute(args: any, tool_name: string): Promise<any> {
         const document = this.documents.find(doc => doc.id === tool_name);
-
-
         const processor = new DocumentProcessor(this.context.onStop, this.context.onStreamResponse, {
             variables: this.context.variables,
             depth: this.context.depth,
@@ -164,7 +162,8 @@ export class AgenticWorkflow extends BaseHandler{
             verbosity_level: LogLevel.INFO,
             planning_interval: undefined,
             additional_authorized_imports: [],
-            use_e2b_executor: false
+            use_e2b_executor: false,
+            onStreamResponse: context.onStreamResponse
         }
       );
 
