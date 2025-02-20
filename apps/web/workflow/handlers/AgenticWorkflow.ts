@@ -11,6 +11,15 @@ import { Tool } from '../smolagents.ts/tools';
 import { DocumentProcessor } from "../processors/DocumentProcessor";
 import prisma from "@/backend/prisma";
 
+const { setGlobalDispatcher, ProxyAgent } = require("undici");
+const dispatcher = new ProxyAgent({ uri: new URL("http://127.0.0.1:7890").toString() });
+//全局fetch调用启用代理
+setGlobalDispatcher(dispatcher);
+const client = new OpenAI({
+    apiKey: "sk-Yuxzg619EfPAnyd6rJ6el5xfQQzwFxI1HxS9vBfMC4bnqd2p", // This is the default and can be omitted
+    baseURL: "https://api.openai-proxy.org/v1",
+  });
+
 
 class ToolWrapper extends Tool {
     context: ProcessingContext;
@@ -34,7 +43,7 @@ class ToolWrapper extends Tool {
             workspaceId: this.context.workspaceId,
         });
         const contentDoc: DocNode = document.content;
-        await processor.processNode(contentDoc);
+        await processor.processNode(contentDoc, args);
 
 
         const context = processor.getContext();
@@ -43,6 +52,7 @@ class ToolWrapper extends Tool {
         const filteredMarkdown = context.markdown
             .filter(line => line.trim() !== '')
             .join(' ');
+
 
         return filteredMarkdown;
     }
@@ -63,8 +73,6 @@ export class AgenticWorkflow extends BaseHandler{
 
   async handle(node: DocNode, context: ProcessingContext): Promise<void> {
     
-
-
     // Extract model information
     const modelNode = node.content.find(item => item.type === 'agentModel');
  
@@ -152,7 +160,7 @@ export class AgenticWorkflow extends BaseHandler{
             return response.choices[0].message as any;
         },
         {
-            max_steps: 5,
+            max_steps: 3,
             verbosity_level: LogLevel.INFO,
             planning_interval: undefined,
             additional_authorized_imports: [],
@@ -160,7 +168,11 @@ export class AgenticWorkflow extends BaseHandler{
         }
       );
 
-     await agent.run("What is the weather in New York?")
+      const filteredMarkdown = context.markdown
+      .filter(line => line.trim() !== '')
+      .join(' ');
+
+     await agent.run(filteredMarkdown)
      await context.onStreamResponse({ event: "node_agenticworkflow_finished", data: modelNode.attrs.id, stream: true });
   }
 

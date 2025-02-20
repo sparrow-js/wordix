@@ -32,6 +32,8 @@ export class MentionHandler extends BaseHandler {
         });
       }
 
+      context.markdown = [];
+
       context.messages.push({
         type: "image_url",
         image_url: {
@@ -40,7 +42,6 @@ export class MentionHandler extends BaseHandler {
         },
       });
 
-      context.markdown = [];
     } else {
       markdown = `${typeof value === "object" ? JSON.stringify(value) : value || ""}`;
       context.markdown.push(markdown);

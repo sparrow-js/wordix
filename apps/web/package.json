@@ -116,7 +116,7 @@
     "immer": "^10.1.1",
     "install": "^0.13.0",
     "invariant": "^2.2.4",
-    "isolated-vm": "^4.7.2",
+    "isolated-vm": "^5.0.3",
     "joplin-turndown-plugin-gfm": "^1.0.12",
     "jotai": "2.9.2",
     "js-yaml": "^4.1.0",

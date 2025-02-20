@@ -34,6 +34,7 @@ export const executeFunction = async ({ variables, body, onStreamResponse, args:
     updatedVariables[key] = value;
   };
 
+
   const isolate = new ivm.Isolate();
   const context = isolate.createContextSync();
   const jail = context.global;

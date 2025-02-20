@@ -177,6 +177,7 @@ export class CodeHandler extends BaseHandler {
           }
         } catch (error) {
           console.error("Error executing code:", error);
+          await this.emitStream(context, "message", String(error), true, true);
           node._state.result = { error: String(error) };
           await this.emitStream(context, "code_execution", {
             id: attrs.id,
@@ -203,24 +204,24 @@ export class CodeHandler extends BaseHandler {
       const attrs = node.attrs as CodeExecutorAttrs;
 
       // Add label if present
-      if (attrs.label) {
-        markdown += `### ${attrs.label}\n\n`;
-      }
+      // if (attrs.label) {
+      //   markdown += `### ${attrs.label}\n\n`;
+      // }
 
       // Process nested code blocks
-      if (node.content) {
-        for (const block of node.content) {
-          if (block.type === "codeBlock") {
-            const blockAttrs = block.attrs as CodeBlockAttrs;
-            markdown += `\`\`\`${blockAttrs.language}\n`;
-            markdown += await this.handleCodeBlock(block, context);
-            if (!markdown.endsWith("\n")) {
-              markdown += "\n";
-            }
-            markdown += "```\n";
-          }
-        }
-      }
+      // if (node.content) {
+      //   for (const block of node.content) {
+      //     if (block.type === "codeBlock") {
+      //       const blockAttrs = block.attrs as CodeBlockAttrs;
+      //       markdown += `\`\`\`${blockAttrs.language}\n`;
+      //       markdown += await this.handleCodeBlock(block, context);
+      //       if (!markdown.endsWith("\n")) {
+      //         markdown += "\n";
+      //       }
+      //       markdown += "```\n";
+      //     }
+      //   }
+      // }
 
       // Add execution results if includeOutput is true
       if (attrs.includeOutput === "true" && node._state?.result) {
