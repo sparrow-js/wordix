@@ -57,7 +57,6 @@ const AgentToolSetting = observer(({ onDelete, editor }) => {
                   href={`/${collectionId}/docs/${tool?.promptId}`}
                   className="flex items-center px-3 py-1 text-sm text-blue-600 hover:text-blue-800 rounded-md hover:bg-blue-50 transition-colors"
                 >
-                  <File className="mr-2 h-4 w-4" />
                   <span>Open flow</span>
                 </Link>
               </div>
@@ -84,6 +83,15 @@ const AgentToolSetting = observer(({ onDelete, editor }) => {
                                 setOpen(false);
                                 const { document: documentInfo } = await documents.fetchWithSharedTree(document.id);
 
+
+                                const description = documentInfo?.content?.content
+                                ?.find((item) => item.type === "description")
+                                ?.content?.[0]?.content?.[0]?.text || "";
+
+                                agentTools.updateDataSyncToNode("description", description);
+
+
+                                console.log('documentInfo *************', documentInfo?.content?.content, description);
                                 const inputs = documentInfo?.content?.content
                                   ?.find((item) => item.type === "inputs")
                                   .content?.map((input) => {
@@ -97,10 +105,13 @@ const AgentToolSetting = observer(({ onDelete, editor }) => {
                                   inputs.map((input) => {
                                     parameters[input.id] = {
                                       type: "literal",
-                                      value: "",
+                                      value: input.description,
                                     };
                                   });
                                 }
+
+                                console.log('inputs *************', inputs, parameters);
+
 
                                 tool.update({
                                   flowLabel: document.title,
@@ -140,12 +151,10 @@ const AgentToolSetting = observer(({ onDelete, editor }) => {
                 }}
               />
             </div>
-
-
            
             <div className="mt-8">
                 <p className="font-bold">
-                  Inputs describe
+                  Parameters describe
                 </p>
                 <div className="px-2">
                   {tool?.inputs?.map((input) => {

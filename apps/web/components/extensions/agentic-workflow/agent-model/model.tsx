@@ -108,7 +108,7 @@ export const AgentModelNode = observer((props: any) => {
                 {modelConfig?.label || agentModel?.model}
             </span>
         </div>
-        <NodeViewContent className="h-0" as="div" />
+        <NodeViewContent className="h-0 hidden" as="div" />
       </div>
     </NodeViewWrapper>
   );

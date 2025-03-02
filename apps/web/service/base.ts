@@ -260,7 +260,7 @@ const handleStream = (
               } else if (bufferObj.event === "tts_message_end") {
                 onTTSEnd?.(bufferObj.message_id, bufferObj.audio);
               } else if (bufferObj.event.includes("node_")) {
-                onNodeHandler(bufferObj as any);
+                onNodeHandler?.(bufferObj as any);
               } else if (bufferObj.event === "error") {
                 onError?.(bufferObj.data);
               }

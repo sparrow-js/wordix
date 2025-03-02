@@ -1,8 +1,7 @@
 import { NodeViewContent, NodeViewWrapper } from "@tiptap/react";
 import { observer } from "mobx-react";
-import { useRef } from "react";
-import { Workflow } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Workflow, ChevronDown, ChevronRight } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 import useStores from "@/hooks/useStores";
 
 export const ToolWorkflowNode = observer((props: any) => {
@@ -12,6 +11,8 @@ export const ToolWorkflowNode = observer((props: any) => {
   const parameters = toolAttrs.parameters || {};
   const { agentTools, setting, workbench, documents } = useStores();
   const tool = agentTools.get(toolAttrs.id);
+
+  const [isExpanded, setIsExpanded] = useState(true);
 
   const init = async (tool, promptId) => {
     if (promptId && tool) {
@@ -95,22 +96,45 @@ export const ToolWorkflowNode = observer((props: any) => {
   return (
     <NodeViewWrapper ref={domRef} data-type="toolWorkflow" draggable="true" data-drag-handle className="cursor-move">
       <div className="bg-white rounded-lg shadow-md border border-gray-200 mt-4" contentEditable="false">
-        <h2 className="px-4 text-lg font-medium text-gray-800 my-4 flex items-center gap-2"
-          onClick={handleInteraction}
-          onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                  handleInteraction();
-              }
-          }}
-        >
-            <Workflow className="w-4 h-4" />
-            {tool?.label}
-        </h2>
-        <div className="w-full h-px bg-gray-200" />
-        <div className="p-4">
-          {tool?.description}
+        <div className="flex items-center">
+          <h2 className="flex-1 px-4 text-lg font-medium text-gray-800 my-4 flex items-center gap-2 cursor-pointer rounded-md transition-colors bg-gray-50/50"
+            onClick={handleInteraction}
+            onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    handleInteraction();
+                }
+            }}
+            role="button"
+            tabIndex={0}
+          >
+              <span className="flex items-center gap-2 text-blue-500 hover:text-blue-600 active:text-blue-800">
+                <Workflow className="w-4 h-4" />
+                {tool?.label}
+              </span>
+          </h2>
+          <button 
+            className="p-2 hover:bg-gray-100 rounded-lg mr-2"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsExpanded(!isExpanded);
+            }}
+          >
+            {isExpanded ? (
+              <ChevronDown className="w-4 h-4" />
+            ) : (
+              <ChevronRight className="w-4 h-4" />
+            )}
+          </button>
         </div>
-        <NodeViewContent className="h-0" as="div" />
+        {isExpanded && (
+          <>
+            <div className="w-full h-px bg-gray-200" />
+            <div className="p-4">
+              {tool?.description}
+            </div>
+            <NodeViewContent className="h-0" as="div" />
+          </>
+        )}
       </div>
     </NodeViewWrapper>
   );

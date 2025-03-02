@@ -1,9 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { NodeViewContent, NodeViewWrapper } from "@tiptap/react";
 import { observer } from "mobx-react";
-import { useRef } from "react";
-import { Bot } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Bot, ChevronDown, ChevronRight } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
 import useStores from "@/hooks/useStores";
 
 export const ToolAgentNode = observer((props: any) => {
@@ -13,6 +12,7 @@ export const ToolAgentNode = observer((props: any) => {
   const parameters = toolAttrs.parameters || {};
   const { agentTools, setting, workbench, documents } = useStores();
   const [agentTool, setAgentTool] = useState<any | null>(null);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
 
   const init = async (tool, promptId) => {
@@ -98,7 +98,7 @@ export const ToolAgentNode = observer((props: any) => {
   return (
     <NodeViewWrapper ref={domRef} data-type="toolAgent" draggable="true" data-drag-handle className="cursor-move">
       <div className="bg-white rounded-lg shadow-md border border-gray-200 mt-4" contentEditable="false">
-        <h2 className="px-4 text-lg font-medium text-gray-800 my-4 flex items-center gap-2"        
+        <h2 className="px-4 text-lg font-medium text-gray-800 my-4 flex items-center gap-2 cursor-pointer"        
           onClick={handleInteraction}
           onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
@@ -106,10 +106,25 @@ export const ToolAgentNode = observer((props: any) => {
               }
           }}>
             <Bot className="w-4 h-4" />
-            Agent
+            <span className="flex-1">Agent</span>
+            <div 
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsCollapsed(!isCollapsed);
+              }}
+              className="hover:bg-gray-100 rounded p-1"
+            >
+              {isCollapsed ? (
+                <ChevronRight className="w-4 h-4" />
+              ) : (
+                <ChevronDown className="w-4 h-4" />
+              )}
+            </div>
         </h2>
         <div className="w-full h-px bg-gray-200" />
-        <NodeViewContent className="grow px-2 border-b-2" as="div" />
+        {!isCollapsed && (
+          <NodeViewContent className="grow px-2 border-b-2" as="div" />
+        )}
       </div>
     </NodeViewWrapper>
   );

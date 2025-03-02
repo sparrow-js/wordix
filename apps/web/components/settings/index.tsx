@@ -16,7 +16,6 @@ import ImageGeneration from "./imageGeneration";
 import Prompt from "./prompt";
 import Tool from "./tool";
 import LoadingDots from "../icons/loading-dots";
-import AgenticWorkflowSetting from "./agentic-workflow";
 import AgentToolSetting from "./agent-tool";
 import AgentModelSetting from "./agent-model";
 const MapComp = {
@@ -29,7 +28,6 @@ const MapComp = {
   codeExecutor: CodeExecutorEditor,
   prompt: Prompt,
   tool: Tool,
-  agenticWorkflow: AgenticWorkflowSetting,
   agentTool: AgentToolSetting,
   agentModel: AgentModelSetting,
 };
