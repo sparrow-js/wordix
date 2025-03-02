@@ -2,7 +2,6 @@ import Image from "next/image";
 import { Suspense } from "react";
 import LoginGithubButton from "./login-git-button";
 import LoginGoogleButton from "./login-google-button";
-import LoginNotionButton from "./login-notion-button";
 
 export default function LoginPage() {
   return (
@@ -38,7 +37,7 @@ export default function LoginPage() {
           <LoginGithubButton />
         </Suspense>
       </div>
-
+      {/* 
       <div className="mx-auto mt-2 w-full">
         <Suspense
           fallback={
@@ -47,7 +46,7 @@ export default function LoginPage() {
         >
           <LoginNotionButton />
         </Suspense>
-      </div>
+      </div> */}
     </div>
   );
 }
